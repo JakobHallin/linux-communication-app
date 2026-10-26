@@ -1,0 +1,58 @@
+# Phase 5 — Group Voice
+
+**Version:** 0.5 · **Status:** Planned · **Prerequisite:** Phase 4 (LAN Text Chat) · **MVP milestone**
+
+[Roadmap](../PLAN.md) · [Testing strategy](../TEST_PLAN.md) · [README](../../README.md)
+
+## Goal
+
+Three to five LAN users can speak and listen simultaneously in the shared chat group with usable real-time voice quality.
+
+**In scope:** capture/playback, codec, UDP-based transport, sender-to-session association, server forwarding, multiple streams, mute, jitter and packet-loss handling. **Out of scope:** webcam video, screen sharing, internet NAT traversal unless LAN tests demonstrate a need.
+
+## Target media flow
+
+```mermaid
+flowchart LR
+    M[Microphone / capture] --> E[Audio encoder]
+    E --> U[UDP-based transport]
+    U --> S[Server: verify session]
+    S --> F[Forward to other group members]
+    F --> D[Receiver: jitter buffer / decoder]
+    D --> O[Speakers]
+```
+
+*Media transport and codec choices are intentionally deferred to this phase.*
+
+## Build in this order (Red → Green → Refactor)
+
+| Step | Behavior / implementation | New test first |
+| --- | --- | --- |
+| 5.1 | Choose audio API, codec, packet format, and latency target | Document compatibility and codec round-trip acceptance |
+| 5.2 | Capture and encode local microphone audio | Synthetic samples encode/decode; manual device check |
+| 5.3 | Add UDP I/O and authenticate/associate media session | Reject unassociated or unauthorized media packets |
+| 5.4 | Forward packets to group participants | Fake recipient set excludes sender/nonmembers |
+| 5.5 | Receive/play multiple independent audio streams | Deterministic fake-source tests |
+| 5.6 | Implement mute and basic jitter/loss tolerance | Mute, reorder, loss, and stream stop tests |
+| 5.7 | Verify real voice end to end | Three-to-five-person LAN listening/latency check |
+
+## File ownership
+
+| Area | Location |
+| --- | --- |
+| Media packet definitions | `common/` |
+| UDP media transport and forwarding | `server/` |
+| Capture, codec, playback, jitter buffer | `client/` |
+| Synthetic audio/fake devices | `tests/mocks/`, `tests/unit/` |
+| Real multi-client network checks | `tests/integration/`, `tests/scripts/` |
+
+For the initial server, forward encoded streams rather than mixing audio on the server unless measurements show that mixing is necessary.
+
+## Completion criteria — initial MVP
+
+- Three to five users can speak and hear other participants simultaneously.
+- Muting stops microphone transmission.
+- Loss/disconnects do not crash the server or clients.
+- Only valid group participants receive voice packets.
+- Automated audio/transport tests pass; physical audio devices are checked manually.
+- All earlier regression tests remain green.

@@ -1,0 +1,43 @@
+# Phase 6 — Webcam Video
+
+**Version:** 0.6 · **Status:** Planned · **Prerequisite:** Phase 5
+
+[Roadmap](../PLAN.md) · [Testing strategy](../TEST_PLAN.md) · [README](../../README.md)
+
+## Goal
+
+Multiple LAN participants can share webcam video while maintaining text and
+voice communication.
+
+**In scope:** camera start/stop, capture, encode/decode, low-latency transport,
+multi-stream display, and basic resolution/network adaptation. **Out of
+scope:** advanced conferencing UI and recording.
+
+## Planned flow
+
+```mermaid
+flowchart LR
+    C[Webcam] --> E[Encode frames]
+    E --> S[Server forwards authorized stream]
+    S --> R[Other clients decode/display]
+```
+
+## Build in this order (Red → Green → Refactor)
+
+| Step | Behavior / implementation | New test first |
+| --- | --- | --- |
+| 6.1 | Choose capture/codec/render APIs and frame format | Synthetic frame round-trip acceptance |
+| 6.2 | Webcam capture and enable/disable states | Fake capture lifecycle tests; manual device check |
+| 6.3 | Encode and decode frames | Repeatable synthetic sample tests |
+| 6.4 | Forward frames to authorized members | Mock forwarding / membership tests |
+| 6.5 | Receive and display multiple streams | Fake multi-stream rendering/lifecycle tests |
+| 6.6 | Respond to changing resolution/network conditions | Stream restart, slow receiver, and size-limit tests |
+| 6.7 | Run LAN video + voice integration | Real clients and webcams, earlier tests green |
+
+## Completion criteria
+
+- Multiple participants can share webcam video while voice and text continue.
+- Stream start/stop and slow receivers are handled without unbounded resource
+  use.
+- Synthetic-frame tests pass; real webcam behavior is checked manually.
+- Earlier phase tests remain green.

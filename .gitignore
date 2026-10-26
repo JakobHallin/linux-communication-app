@@ -1,0 +1,19 @@
+# Build outputs
+/build/
+/cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+compile_commands.json
+
+# Local artifacts
+*.log
+*.tmp
+*.db
+*.sqlite
+*.sqlite3
+.env
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
