@@ -45,6 +45,17 @@ add_executable(communication_client
     client/src/main.cpp
     client/src/text_client.cpp
 )
+
+add_executable(phase6_video_capture_smoke
+    tests/manual/phase6_video_capture_smoke.cpp
+    client/src/video_capture_device.cpp
+    common/src/mjpeg_frame.cpp
+    common/src/video_frame.cpp
+)
+target_include_directories(phase6_video_capture_smoke PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/client/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/common/include
+)
 if(ENABLE_LIVE_AUDIO_CLIENT)
     find_package(ALSA REQUIRED)
     target_sources(communication_client PRIVATE
@@ -310,6 +321,7 @@ if(BUILD_TESTING)
     )
     add_test(NAME phase6_mjpeg_frame_test COMMAND phase6_mjpeg_frame_test)
     set_tests_properties(phase6_mjpeg_frame_test PROPERTIES LABELS "phase6;unit")
+
 
     add_executable(phase3_handshake_test
         tests/integration/phase3_handshake_test.cpp

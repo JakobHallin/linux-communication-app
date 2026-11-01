@@ -64,6 +64,25 @@ V4L2 capture read with MJPEG validation and the `VideoFrame` metadata. A
 failed capture or invalid payload produces no frame, so callers do not have
 to forward unchecked camera bytes.
 
+For a real hardware check, build and run the manual
+`phase6_video_capture_smoke` executable. It opens `/dev/video0` by default,
+captures ten frames, validates each MJPEG payload, and serializes each video
+envelope. Pass a different device path and frame count when needed, for
+example `./build/phase6_video_capture_smoke /dev/video2 30`. This is a manual
+check rather than a CTest because webcam devices are not guaranteed in CI.
+
+To see the captured video live, install `ffplay` if necessary and pipe the
+project's validated MJPEG payloads into it:
+
+```bash
+./build/phase6_video_capture_smoke /dev/video0 0 --stdout-mjpeg \
+  | ffplay -f mjpeg -framerate 30 -i -
+```
+
+The `0` frame count means continuous capture. Press `q` in the `ffplay`
+window, then stop the capture process with `Ctrl+C`. This displays the actual
+frames captured by the project's V4L2 path; it is not a separate camera test.
+
 ## Build in this order (Red → Green → Refactor)
 
 | Step | Behavior / implementation | New test first |
