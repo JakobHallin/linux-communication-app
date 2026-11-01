@@ -43,7 +43,7 @@ test infrastructure is not a meaningful failing behavior test.
   disconnect handling.
 - **Phase 4:** Docker startup and real five-client text delivery.
 - **Phase 5:** synthetic audio forwarding and stream lifecycle, followed by a
-  manual LAN voice check with real devices.
+  manual local and LAN voice check with real devices.
 - **Phases 6–7:** synthetic video/screen frames and stream lifecycle, followed
   by checks on supported cameras and Linux desktop environments.
 - **Phase 8:** room membership and cross-room text/media isolation.
@@ -51,3 +51,42 @@ test infrastructure is not a meaningful failing behavior test.
 
 Activate these checks as each phase begins; they are not expected to pass in
 the current bootstrap.
+
+## Phase 5 live audio check
+
+The normal CTest suite deliberately uses synthetic samples. That makes codec
+and packet behavior repeatable, but it cannot prove that a real microphone and
+speaker work. The hardware check is therefore a separate manual executable.
+
+Install the ALSA development package once:
+
+```bash
+sudo apt update
+sudo apt install libasound2-dev
+```
+
+Build the loopback executable:
+
+```bash
+cmake -S . -B build -DENABLE_LIVE_AUDIO_DEMO=ON
+cmake --build build --target live_audio_loopback
+```
+
+Run it with the default ALSA capture and playback devices:
+
+```bash
+./build/live_audio_loopback
+```
+
+The executable continuously captures 20 ms mono frames at 48 kHz, encodes
+them with Opus, decodes them, and plays them back. Press `Ctrl-C` to stop. A
+device name can be supplied when `default` is not appropriate:
+
+```bash
+./build/live_audio_loopback <capture-device> <playback-device>
+```
+
+List available ALSA devices with `arecord -l` and `aplay -l`. This is a local
+capture/codec/playback check, not yet the Phase 5 LAN test; UDP forwarding and
+multi-client playback still need to be implemented. Do not register this in
+CTest because CI machines commonly have no sound hardware.

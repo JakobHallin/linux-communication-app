@@ -65,6 +65,24 @@ sudo apt install libopus-dev
 The Docker builder installs the equivalent `libopus-dev` package and the
 runtime image carries `libopus0`.
 
+### Manual real-device audio check
+
+The synthetic codec test is automated; it does not prove that Linux can open
+the selected microphone and speaker. Build the optional ALSA loopback after
+installing the ALSA development package:
+
+```bash
+sudo apt install libasound2-dev
+cmake -S . -B build -DENABLE_LIVE_AUDIO_DEMO=ON
+cmake --build build --target live_audio_loopback
+./build/live_audio_loopback
+```
+
+This gives the audible path `microphone -> Opus encode/decode -> speaker`.
+Press `Ctrl-C` to stop. It is intentionally a manual check rather than a
+CTest test because build agents often have no physical audio devices. The
+actual network voice check remains step 5.7.
+
 ## File ownership
 
 | Area | Location |

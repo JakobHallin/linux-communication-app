@@ -11,6 +11,10 @@ option(ENABLE_PHASE4_CONTAINER_TEST
     "Register the Phase 4 test that requires an externally running container"
     OFF
 )
+option(ENABLE_LIVE_AUDIO_DEMO
+    "Build the manual ALSA microphone-to-speaker loopback demo"
+    OFF
+)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -225,5 +229,25 @@ endif()
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
     target_compile_options(communication_server PRIVATE -Wall -Wextra -Wpedantic)
     target_compile_options(communication_client PRIVATE -Wall -Wextra -Wpedantic)
+endif()
+
+if(ENABLE_LIVE_AUDIO_DEMO)
+    find_package(ALSA REQUIRED)
+    add_executable(live_audio_loopback
+        client/src/live_audio_loopback.cpp
+        common/src/audio_codec.cpp
+    )
+    target_include_directories(live_audio_loopback PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/common/include
+        ${OPUS_INCLUDE_DIR}
+        ${ALSA_INCLUDE_DIRS}
+    )
+    target_link_libraries(live_audio_loopback PRIVATE
+        ${OPUS_LIBRARY}
+        ${ALSA_LIBRARIES}
+    )
+    if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+        target_compile_options(live_audio_loopback PRIVATE -Wall -Wextra -Wpedantic)
+    endif()
 endif()
 
