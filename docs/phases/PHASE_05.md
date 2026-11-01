@@ -108,6 +108,12 @@ Phase 5.6 now has `AudioJitterBuffer` and mute coverage in
 in sequence order, a missing frame becomes a silent concealment frame, invalid
 frames are rejected, and muted senders are excluded from the mix.
 
+The automated Phase 5.7 precursor is
+`tests/integration/phase5_voice_e2e_test.cpp`. It sends a real Opus-encoded
+frame through localhost UDP, authorizes and forwards it, decodes it at the
+receiver, and submits it to the mixer. The final acceptance check still needs
+two or more real clients with microphones and speakers on the LAN.
+
 ## File ownership
 
 | Area | Location |
