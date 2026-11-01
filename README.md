@@ -62,6 +62,54 @@ ctest --test-dir build --output-on-failure
 Press Enter in either client terminal to disconnect it. The server remains
 running and reports the active connection count.
 
+## Run the live voice client
+
+Install the development libraries once, then configure a voice-enabled build:
+
+```bash
+sudo apt install libasound2-dev libopus-dev
+cmake -S . -B build-voice -DENABLE_LIVE_AUDIO_CLIENT=ON -DBUILD_TESTING=OFF
+cmake --build build-voice --target communication_server communication_client
+```
+
+Start the server in one terminal and two voice clients in two additional
+terminals. Each client registers its UDP port over TCP, captures microphone
+audio, and plays audio received from the other clients:
+
+```bash
+./build-voice/communication_server
+./build-voice/communication_client 127.0.0.1 8080 Alice --voice
+./build-voice/communication_client 127.0.0.1 8080 Bob --voice
+```
+
+For the integrated analog microphone/speaker on many laptops, the explicit
+device form is often more reliable than `default`:
+
+```bash
+./build-voice/communication_client 127.0.0.1 8080 Alice --voice plughw:0,0 plughw:0,0
+```
+
+When running two voice clients on the same computer, `plughw` is exclusive.
+Use ALSA's shared capture/playback plugins instead:
+
+```bash
+./build-voice/communication_client 127.0.0.1 8080 Alice --voice plug:dsnoop:0 plug:dmix:0
+./build-voice/communication_client 127.0.0.1 8080 Bob --voice plug:dsnoop:0 plug:dmix:0
+```
+
+The optional fifth and sixth arguments select the ALSA capture and playback
+devices. Use `/mute` to stop or resume microphone transmission and `/quit` to
+stop a client. The normal `build` remains text-only so CI and machines without
+ALSA hardware can still compile the application.
+
+For the final LAN check, run the server on one machine, note its LAN address
+and the UDP relay port printed at startup, then allow TCP `8080` and that UDP
+port through its firewall. Run each client against the server's LAN address:
+
+```bash
+./build-voice/communication_client SERVER_LAN_IP 8080 Alice --voice default default
+```
+
 ## Documentation
 
 - [Project plan](docs/PLAN.md) — first phase and longer-term roadmap
@@ -82,7 +130,7 @@ running and reports the active connection count.
 - [x] Phase 2 — Replace blocking server I/O with `io_uring`
 - [x] Phase 3 — Two-client text chat with framing, validation, ordering, and cleanup
 - [x] Phase 4 — Dockerized LAN text chat with five native clients
-- [ ] Phase 5 — Group voice (UDP relay and unified text-client integration in progress; real ALSA client pending)
+- [ ] Phase 5 — Group voice (local two-client ALSA/Opus demo verified with mute; 3–5 client LAN acceptance pending)
 
 **Workflow:** use TDD for each behavior: write a meaningful failing test,
 implement the minimum to pass, then refactor. The roadmap describes planned

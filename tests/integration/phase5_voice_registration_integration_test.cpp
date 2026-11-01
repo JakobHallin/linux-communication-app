@@ -47,22 +47,19 @@ int main() {
     assert(senderSocket >= 0 && receiverSocket >= 0);
     const auto senderEndpoint = bindUdpSocket(senderSocket);
     const auto receiverEndpoint = bindUdpSocket(receiverSocket);
-    assert(client.sendVoicePort(ntohs(senderEndpoint.sin_port)));
-    const auto ready = client.receiveLine(1000);
-    assert(otherClient.sendVoicePort(ntohs(receiverEndpoint.sin_port)));
-    const auto otherReady = otherClient.receiveLine(1000);
-    if (!ready.has_value() || !otherReady.has_value()) {
-        std::cerr << "Missing voice registration response: "
-                  << (ready.has_value() ? *ready : "<none>") << " / "
-                  << (otherReady.has_value() ? *otherReady : "<none>") << '\n';
-        return 1;
-    }
-    assert(ready->starts_with("VOICE_READY 1 "));
-    assert(otherReady->starts_with("VOICE_READY 1 "));
+    const auto ready = client.registerVoice(ntohs(senderEndpoint.sin_port), 1000);
+    const auto otherReady = otherClient.registerVoice(ntohs(receiverEndpoint.sin_port), 1000);
+    assert(ready.has_value());
+    assert(otherReady.has_value());
+    assert(ready->sessionId == 1);
+    assert(otherReady->sessionId == 1);
+    assert(ready->senderId != otherReady->senderId);
+    assert(ready->mediaPort == server.mediaPort());
+    assert(otherReady->mediaPort == server.mediaPort());
 
     const media::AudioPacket packet{
-        .sessionId = 1,
-        .senderId = 1,
+        .sessionId = ready->sessionId,
+        .senderId = ready->senderId,
         .sequence = 0,
         .payload = {0x01, 0x02, 0x03}
     };

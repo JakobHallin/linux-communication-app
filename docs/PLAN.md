@@ -49,12 +49,13 @@ is near; the immediate commitment is to finish and test the current phase.
 
 The Phase 5 automated tests currently validate the media protocol, UDP
 authorization, forwarding, mixing, jitter handling, and Opus processing. Those
-tests use synthetic frames or test sockets; they are not real application
-clients.
+tests use synthetic frames or test sockets; they are not a substitute for the
+real hardware check.
 
-Phase 5 therefore requires a real unified client implementation before the
-phase can be marked complete. The client must retain the existing LAN text
-connection while adding a separate UDP voice path. Each client must be able to:
+Phase 5 now has an opt-in real unified client implementation, but the phase
+cannot be marked complete until the live LAN acceptance check is performed.
+The client retains the existing LAN text connection and adds a separate UDP
+voice path. Each client must be able to:
 
 1. establish the TCP application connection and complete the text handshake;
 2. send and receive LAN text messages over that TCP connection;

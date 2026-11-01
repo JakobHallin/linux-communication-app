@@ -15,6 +15,10 @@ option(ENABLE_LIVE_AUDIO_DEMO
     "Build the manual ALSA microphone-to-speaker loopback demo"
     OFF
 )
+option(ENABLE_LIVE_AUDIO_CLIENT
+    "Build communication_client with ALSA microphone and speaker support"
+    OFF
+)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -37,6 +41,26 @@ add_executable(communication_client
     client/src/main.cpp
     client/src/text_client.cpp
 )
+if(ENABLE_LIVE_AUDIO_CLIENT)
+    find_package(ALSA REQUIRED)
+    target_sources(communication_client PRIVATE
+        client/src/voice_client.cpp
+        client/src/audio_client_session.cpp
+        common/src/audio_codec.cpp
+        common/src/audio_jitter_buffer.cpp
+        common/src/audio_stream_mixer.cpp
+    )
+    target_include_directories(communication_client PRIVATE
+        ${ALSA_INCLUDE_DIRS}
+        ${OPUS_INCLUDE_DIR}
+    )
+    target_compile_definitions(communication_client PRIVATE ENABLE_LIVE_AUDIO_CLIENT)
+    target_link_libraries(communication_client PRIVATE
+        audio_transport
+        ${ALSA_LIBRARIES}
+        ${OPUS_LIBRARY}
+    )
+endif()
 
 target_include_directories(communication_server PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/server/src

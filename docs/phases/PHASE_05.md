@@ -123,9 +123,11 @@ Client implementation now starts with
 `client/include/audio_client_session.h` and
 `tests/unit/phase5_audio_client_session_test.cpp`. The session owns the media
 identity, sequence numbers, and mute decision before packets are sent. The
-next client increment is connecting this session to ALSA capture and the UDP
-transport while retaining the TCP text/control channel from Phase 4. The
-client is not complete if it can carry voice but loses LAN text behavior.
+The optional `communication_client` voice build now connects this session to
+ALSA capture, Opus encoding, the UDP transport, decoding, per-sender jitter
+buffers, mixing, and ALSA playback while retaining the TCP text/control
+channel from Phase 4. The normal client build remains text-only for CI and
+machines without audio development packages.
 
 The first registration contract is now tested by
 `tests/unit/phase5_voice_registration_test.cpp` and
@@ -134,14 +136,40 @@ the client sends `VOICE_PORT <port>` over TCP and receives
 `VOICE_READY <session> <sender> <media-port>` after the normal text handshake.
 The server now associates the registered endpoint with the live UDP relay and
 forwards a real authorized datagram to another registered client. The remaining
-client work is attaching ALSA capture, Opus encoding, decoding, and playback to
-this registered path.
+Phase 5 work is manual two-to-five-client LAN validation and clean handling of
+device/network failure during a live session.
+
+The local two-client hardware check is now successful when using shared ALSA
+devices and headphones. Microphone capture, Opus transport, playback, and the
+`/mute` control have been manually verified. The remaining acceptance check is
+three to five clients across the LAN, including disconnect and recovery.
+
+### LAN acceptance runbook
+
+1. Build the voice-enabled targets on the server and each client machine.
+2. On the server machine, run `./build-voice/communication_server`. Record the
+   UDP audio relay port printed at startup.
+3. Allow TCP port `8080` and the printed UDP relay port through the server
+   machine's firewall.
+4. Find the server machine's LAN address, for example with `hostname -I`.
+5. On three to five client machines, run the client with the server address:
+
+   ```bash
+   ./build-voice/communication_client SERVER_LAN_IP 8080 Alice --voice default default
+   ```
+
+   Use a different display name on each machine and use headphones during the
+   test. On a machine running multiple clients, use shared ALSA devices such as
+   `plug:dsnoop:0 plug:dmix:0` instead.
+6. Verify that text messages arrive, each participant can speak and hear other
+   participants, `/mute` stops microphone transmission, and a client can leave
+   without stopping the remaining session.
 
 `tests/integration/phase5_unified_text_client_test.cpp` now verifies the
 client-side TCP layer against the real server: two client sessions connect,
 complete the display-name handshake, and exchange a text message. The client
-executable still needs to use this session class before the manual unified
-text-and-voice run.
+executable now uses this session class for the manual unified text-and-voice
+run.
 
 ## File ownership
 

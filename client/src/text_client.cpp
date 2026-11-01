@@ -6,6 +6,7 @@
 #include <unistd.h>
 
 #include <string>
+#include <sstream>
 
 namespace client {
     TextClient::TextClient(std::string serverHost, std::uint16_t serverPort)
@@ -36,6 +37,27 @@ namespace client {
     bool TextClient::sendVoicePort(std::uint16_t voicePort) {
         if (voicePort == 0) return false;
         return sendLine("VOICE_PORT " + std::to_string(voicePort));
+    }
+
+    std::optional<VoiceReady> TextClient::registerVoice(
+        std::uint16_t voicePort, int timeoutMilliseconds) {
+        if (!sendVoicePort(voicePort)) return std::nullopt;
+        const auto response = receiveLine(timeoutMilliseconds);
+        if (!response.has_value()) return std::nullopt;
+
+        std::istringstream stream(*response);
+        std::string command;
+        unsigned int session = 0;
+        unsigned int sender = 0;
+        unsigned int mediaPort = 0;
+        if (!(stream >> command >> session >> sender >> mediaPort) ||
+            command != "VOICE_READY" || session > UINT32_MAX ||
+            sender > UINT32_MAX || mediaPort == 0 || mediaPort > UINT16_MAX) {
+            return std::nullopt;
+        }
+        return VoiceReady{static_cast<std::uint32_t>(session),
+                          static_cast<std::uint32_t>(sender),
+                          static_cast<std::uint16_t>(mediaPort)};
     }
 
     bool TextClient::sendMessage(const std::string& message) {

@@ -6,6 +6,12 @@
 #include <string>
 
 namespace client {
+    struct VoiceReady {
+        std::uint32_t sessionId;
+        std::uint32_t senderId;
+        std::uint16_t mediaPort;
+    };
+
     class TextClient {
     public:
         TextClient(std::string host, std::uint16_t port);
@@ -16,6 +22,8 @@ namespace client {
         bool connectToServer();
         bool sendName(const std::string& name);
         bool sendVoicePort(std::uint16_t port);
+        std::optional<VoiceReady> registerVoice(std::uint16_t port,
+                                                int timeoutMilliseconds);
         bool sendMessage(const std::string& message);
         std::optional<std::string> receiveLine(int timeoutMilliseconds);
         void close();
