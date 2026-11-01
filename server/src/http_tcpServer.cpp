@@ -14,6 +14,10 @@
 #include <unistd.h>
 
 namespace http {
+    namespace {
+        constexpr std::size_t maximumOutgoingBytes = 64 * 1024;
+    }
+
     struct TcpServer::Connection {
         explicit Connection(int socket) : socket(socket) {}
 
@@ -22,6 +26,7 @@ namespace http {
         ChatFrameParser parser;
         std::string name;
         std::deque<std::string> outgoing;
+        std::size_t outgoingBytes = 0;
         bool identified = false;
         std::size_t sendOffset = 0;
         bool sendInFlight = false;
@@ -252,6 +257,7 @@ namespace http {
                     closeConnection(connection->socket);
                 }
             } else {
+                connection->outgoingBytes -= connection->outgoing.front().size();
                 connection->outgoing.pop_front();
                 connection->sendOffset = 0;
                 connection->sendInFlight = false;
@@ -316,6 +322,11 @@ namespace http {
         if (connection.closing) {
             return;
         }
+        if (message.size() > maximumOutgoingBytes - connection.outgoingBytes) {
+            closeConnection(connection.socket);
+            return;
+        }
+        connection.outgoingBytes += message.size();
         connection.outgoing.push_back(std::move(message));
         if (!connection.sendInFlight && queueSend(connection) < 0) {
             closeConnection(connection.socket);
