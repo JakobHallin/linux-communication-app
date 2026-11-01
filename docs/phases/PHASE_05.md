@@ -1,6 +1,6 @@
 # Phase 5 — Group Voice
 
-**Version:** 0.5 · **Status:** Planned · **Prerequisite:** Phase 4 (LAN Text Chat) · **MVP milestone**
+**Version:** 0.5 · **Status:** In Progress · **Prerequisite:** Phase 4 (LAN Text Chat) · **MVP milestone**
 
 [Roadmap](../PLAN.md) · [Testing strategy](../TEST_PLAN.md) · [README](../../README.md)
 
@@ -35,6 +35,25 @@ flowchart LR
 | 5.5 | Receive/play multiple independent audio streams | Deterministic fake-source tests |
 | 5.6 | Implement mute and basic jitter/loss tolerance | Mute, reorder, loss, and stream stop tests |
 | 5.7 | Verify real voice end to end | Three-to-five-person LAN listening/latency check |
+
+## Initial media contract
+
+The first implementation targets Opus-encoded, mono voice frames at 48 kHz
+with a 20 ms audio duration. The server forwards encoded frames and does not
+mix them. Media uses UDP because occasional packet loss is preferable to
+blocking later audio behind an old packet.
+
+Each packet will use a small versioned header containing:
+
+- protocol magic and version;
+- session identifier;
+- sender identifier;
+- monotonically increasing sequence number; and
+- encoded payload length followed by the Opus payload.
+
+The complete packet is limited to 1,200 bytes so it remains below the usual
+Ethernet path-MTU budget. The packet serializer/deserializer is tested before
+adding capture devices, codecs, or network sockets.
 
 ## File ownership
 

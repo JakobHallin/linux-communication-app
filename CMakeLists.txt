@@ -80,6 +80,16 @@ if(BUILD_TESTING)
     add_test(NAME phase3_display_name_test COMMAND phase3_display_name_test)
     set_tests_properties(phase3_display_name_test PROPERTIES LABELS "phase3;unit")
 
+    add_executable(phase5_audio_packet_test
+        tests/unit/phase5_audio_packet_test.cpp
+        common/src/audio_packet.cpp
+    )
+    target_include_directories(phase5_audio_packet_test PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/common/include
+    )
+    add_test(NAME phase5_audio_packet_test COMMAND phase5_audio_packet_test)
+    set_tests_properties(phase5_audio_packet_test PROPERTIES LABELS "phase5;unit")
+
     add_executable(phase3_handshake_test
         tests/integration/phase3_handshake_test.cpp
         server/src/http_tcpServer.cpp
