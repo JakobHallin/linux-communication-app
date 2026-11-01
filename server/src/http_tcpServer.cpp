@@ -7,6 +7,8 @@
 #include <cstring>
 #include <deque>
 #include <iostream>
+#include <string_view>
+#include <vector>
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include <unistd.h>
@@ -17,12 +19,14 @@ namespace http {
 
         int socket;
         char buffer[1024]{};
-        std::string input;
+        ChatFrameParser parser;
         std::string name;
         std::deque<std::string> outgoing;
         bool identified = false;
         std::size_t sendOffset = 0;
         bool sendInFlight = false;
+        bool closing = false;
+        std::size_t outstandingOperations = 0;
     };
 
     struct TcpServer::Operation {
@@ -140,12 +144,14 @@ namespace http {
 
         auto* operation = new Operation{Operation::Type::Receive, &connection};
         pendingOperations.insert(operation);
+        ++connection.outstandingOperations;
         io_uring_prep_recv(submission, connection.socket, connection.buffer,
                            sizeof(connection.buffer), 0);
         io_uring_sqe_set_data(submission, operation);
         int result = io_uring_submit(ring);
         if (result <= 0) {
             pendingOperations.erase(operation);
+            --connection.outstandingOperations;
             delete operation;
         }
         return result <= 0 ? (result < 0 ? result : -EIO) : 0;
@@ -164,6 +170,7 @@ namespace http {
 
         auto* operation = new Operation{Operation::Type::Send, &connection};
         pendingOperations.insert(operation);
+        ++connection.outstandingOperations;
         connection.sendInFlight = true;
         const std::string& message = connection.outgoing.front();
         io_uring_prep_send(submission, connection.socket,
@@ -173,6 +180,7 @@ namespace http {
         int result = io_uring_submit(ring);
         if (result <= 0) {
             pendingOperations.erase(operation);
+            --connection.outstandingOperations;
             connection.sendInFlight = false;
             delete operation;
         }
@@ -197,7 +205,15 @@ namespace http {
                     std::cout << "Client connected; active connections: "
                               << connections.size() << '\n';
                 }
-                if (queueReceive(*connections.at(socket)) < 0) {
+                Connection* accepted = nullptr;
+                {
+                    std::lock_guard lock(connectionsMutex);
+                    auto it = connections.find(socket);
+                    if (it != connections.end()) {
+                        accepted = it->second.get();
+                    }
+                }
+                if (accepted == nullptr || queueReceive(*accepted) < 0) {
                     closeConnection(socket);
                 }
             }
@@ -209,12 +225,17 @@ namespace http {
 
         Connection* connection = operation->connection;
         Operation::Type type = operation->type;
+        if (connection != nullptr) {
+            --connection->outstandingOperations;
+        }
         delete operation;
 
-        if (connection == nullptr || result <= 0) {
-            if (connection != nullptr) {
-                closeConnection(connection->socket);
-            }
+        if (connection == nullptr) {
+            return;
+        }
+
+        if (connection->closing || result <= 0) {
+            closeConnection(connection->socket);
             return;
         }
 
@@ -244,58 +265,57 @@ namespace http {
     }
 
     bool TcpServer::handleReceived(Connection& connection, std::size_t size) {
-        connection.input.append(connection.buffer, size);
-        if (connection.input.size() > 1024) {
-            return false;
-        }
+        try {
+            const auto frames = connection.parser.push(
+                std::string_view(connection.buffer, size));
 
-        if (!connection.identified && connection.input.find('\n') == std::string::npos) {
-            if (connection.input.rfind("NAME ", 0) == 0) {
-                if (connection.input.size() >= sizeof(connection.buffer)) {
-                    return false;
-                }
+            // Preserve the Phase 2 raw-echo contract while the Phase 3
+            // newline-framed protocol is introduced.
+            if (frames.empty() && !connection.identified &&
+                std::string_view(connection.buffer, size).rfind("NAME ", 0) != 0) {
+                enqueueMessage(connection,
+                               std::string(connection.buffer, size));
                 return true;
             }
-            if (connection.input.size() >= sizeof(connection.buffer)) {
-                return false;
-            }
-            enqueueMessage(connection, connection.input);
-            connection.input.clear();
-            return true;
-        }
 
-        std::size_t newline = connection.input.find('\n');
-        while (newline != std::string::npos) {
-            std::string line = connection.input.substr(0, newline);
-            connection.input.erase(0, newline + 1);
-            if (!line.empty() && line.back() == '\r') {
-                line.pop_back();
+            for (const std::string& frame : frames) {
+                if (!processFrame(connection, frame)) {
+                    return false;
+                }
             }
-
-            if (!connection.identified) {
-                if (line.rfind("NAME ", 0) != 0) {
-                    return false;
-                }
-                std::string name = line.substr(5);
-                if (!isValidDisplayName(name)) {
-                    return false;
-                }
-                connection.name = std::move(name);
-                connection.identified = true;
-                enqueueMessage(connection, "WELCOME " + connection.name + "\n");
-            } else {
-                if (line.rfind("MSG ", 0) != 0 || line.size() == 4) {
-                    return false;
-                }
-                broadcast(connection, "FROM " + connection.name + " " +
-                                      line.substr(4) + "\n");
-            }
-            newline = connection.input.find('\n');
+        } catch (const std::length_error&) {
+            return false;
         }
         return true;
     }
 
+    bool TcpServer::processFrame(Connection& connection, const std::string& frame) {
+        if (!connection.identified) {
+            if (frame.rfind("NAME ", 0) != 0) {
+                return false;
+            }
+            std::string name = frame.substr(5);
+            if (!isValidDisplayName(name)) {
+                return false;
+            }
+            connection.name = std::move(name);
+            connection.identified = true;
+            enqueueMessage(connection, "WELCOME " + connection.name + "\n");
+            return true;
+        }
+
+        if (frame.rfind("MSG ", 0) != 0 || frame.size() == 4) {
+            return false;
+        }
+        broadcast(connection, "FROM " + connection.name + " " +
+                              frame.substr(4) + "\n");
+        return true;
+    }
+
     void TcpServer::enqueueMessage(Connection& connection, std::string message) {
+        if (connection.closing) {
+            return;
+        }
         connection.outgoing.push_back(std::move(message));
         if (!connection.sendInFlight && queueSend(connection) < 0) {
             closeConnection(connection.socket);
@@ -303,11 +323,18 @@ namespace http {
     }
 
     void TcpServer::broadcast(const Connection& sender, const std::string& message) {
-        std::lock_guard lock(connectionsMutex);
-        for (const auto& [socket, connection] : connections) {
-            if (socket != sender.socket && connection->identified) {
-                enqueueMessage(*connection, message);
+        std::vector<Connection*> recipients;
+        {
+            std::lock_guard lock(connectionsMutex);
+            for (const auto& [socket, connection] : connections) {
+                if (socket != sender.socket && connection->identified &&
+                    !connection->closing) {
+                    recipients.push_back(connection.get());
+                }
             }
+        }
+        for (Connection* recipient : recipients) {
+            enqueueMessage(*recipient, message);
         }
     }
 
@@ -317,11 +344,17 @@ namespace http {
         if (connection == connections.end()) {
             return;
         }
-        shutdown(socket, SHUT_RDWR);
-        close(socket);
-        connections.erase(connection);
-        std::cout << "Client disconnected; active connections: "
-                  << connections.size() << '\n';
+        Connection& client = *connection->second;
+        if (!client.closing) {
+            client.closing = true;
+            shutdown(client.socket, SHUT_RDWR);
+            close(client.socket);
+        }
+        if (client.outstandingOperations == 0) {
+            std::cout << "Client disconnected; active connections: "
+                      << connections.size() - 1 << '\n';
+            connections.erase(connection);
+        }
     }
 
     void TcpServer::closeServer() {
@@ -333,10 +366,12 @@ namespace http {
         {
             std::lock_guard lock(connectionsMutex);
             for (const auto& [socket, connection] : connections) {
-                shutdown(socket, SHUT_RDWR);
-                close(socket);
+                if (!connection->closing) {
+                    connection->closing = true;
+                    shutdown(socket, SHUT_RDWR);
+                    close(socket);
+                }
             }
-            connections.clear();
         }
         if (serverSocket >= 0) {
             shutdown(serverSocket, SHUT_RDWR);
@@ -352,6 +387,8 @@ namespace http {
             delete operation;
         }
         pendingOperations.clear();
+        std::lock_guard lock(connectionsMutex);
+        connections.clear();
     }
 
     std::uint16_t TcpServer::port() const {

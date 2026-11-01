@@ -7,6 +7,7 @@
 #include <deque>
 #include <memory>
 #include <mutex>
+#include <string>
 #include <unordered_set>
 #include <unordered_map>
 
@@ -34,6 +35,7 @@ namespace http {
         int queueSend(Connection& connection);
         void closeConnection(int socket);
         bool handleReceived(Connection& connection, std::size_t size);
+        bool processFrame(Connection& connection, const std::string& frame);
         void enqueueMessage(Connection& connection, std::string message);
         void broadcast(const Connection& sender, const std::string& message);
         void processCompletion(Operation* operation, int result);
