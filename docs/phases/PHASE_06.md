@@ -48,6 +48,11 @@ payload; decoding and display will be added after capture works. A later step
 can introduce a software codec when measurements show that camera MJPEG is not
 available or efficient enough.
 
+The capture lifecycle test now verifies that an unavailable V4L2 device fails
+cleanly, remains stopped, rejects frame reads, and can be stopped repeatedly.
+The real-device path is intentionally not registered as a normal CTest because
+CI machines may not contain `/dev/video*` hardware.
+
 ## Build in this order (Red → Green → Refactor)
 
 | Step | Behavior / implementation | New test first |
