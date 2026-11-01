@@ -52,6 +52,15 @@ if(BUILD_TESTING)
     )
     add_test(NAME phase2_io_uring_test COMMAND phase2_io_uring_test)
     set_tests_properties(phase2_io_uring_test PROPERTIES LABELS "phase2;integration")
+
+    add_executable(phase3_chat_frame_test
+        tests/unit/phase3_chat_frame_test.cpp
+    )
+    target_include_directories(phase3_chat_frame_test PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/server/src
+    )
+    add_test(NAME phase3_chat_frame_test COMMAND phase3_chat_frame_test)
+    set_tests_properties(phase3_chat_frame_test PROPERTIES LABELS "phase3;unit")
 endif()
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
