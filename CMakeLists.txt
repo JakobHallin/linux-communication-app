@@ -91,6 +91,22 @@ if(BUILD_TESTING)
     )
     add_test(NAME phase3_handshake_test COMMAND phase3_handshake_test)
     set_tests_properties(phase3_handshake_test PROPERTIES LABELS "phase3;integration")
+
+    add_executable(phase3_message_relay_test
+        tests/integration/phase3_message_relay_test.cpp
+        server/src/http_tcpServer.cpp
+        server/src/chat_protocol.cpp
+    )
+    target_include_directories(phase3_message_relay_test PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/server/src
+        ${LIBURING_INCLUDE_DIR}
+    )
+    target_link_libraries(phase3_message_relay_test PRIVATE
+        Threads::Threads
+        ${LIBURING_LIBRARY}
+    )
+    add_test(NAME phase3_message_relay_test COMMAND phase3_message_relay_test)
+    set_tests_properties(phase3_message_relay_test PROPERTIES LABELS "phase3;integration")
 endif()
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
