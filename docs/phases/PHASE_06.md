@@ -40,6 +40,14 @@ round-trip serialization, invalid headers, truncation, zero dimensions, and the
 maximum frame size. Webcam capture and codec selection remain separate steps;
 this protocol layer is intentionally hardware-independent.
 
+The initial Linux implementation will use V4L2 (`/dev/video*`) for webcam
+discovery and capture. The first real capture format will be camera-provided
+MJPEG, because it avoids adding a software encoder before device lifecycle and
+transport behavior are proven. The encoded MJPEG bytes fit the `VideoFrame`
+payload; decoding and display will be added after capture works. A later step
+can introduce a software codec when measurements show that camera MJPEG is not
+available or efficient enough.
+
 ## Build in this order (Red → Green → Refactor)
 
 | Step | Behavior / implementation | New test first |
