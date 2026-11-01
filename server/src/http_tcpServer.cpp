@@ -4,6 +4,7 @@
 #include <liburing.h>
 
 #include <cerrno>
+#include <chrono>
 #include <cstring>
 #include <deque>
 #include <iostream>
@@ -11,6 +12,7 @@
 #include <vector>
 #include <netinet/in.h>
 #include <sys/socket.h>
+#include <thread>
 #include <unistd.h>
 
 namespace http {
@@ -19,15 +21,20 @@ namespace http {
     }
 
     struct TcpServer::Connection {
-        explicit Connection(int socket) : socket(socket) {}
+        Connection(int socket, const sockaddr_in& peer, std::uint32_t sender)
+            : socket(socket), peerAddress(peer), senderId(sender) {}
 
         int socket;
+        sockaddr_in peerAddress{};
+        std::uint32_t sessionId = 1;
+        std::uint32_t senderId;
         char buffer[1024]{};
         ChatFrameParser parser;
         std::string name;
         std::deque<std::string> outgoing;
         std::size_t outgoingBytes = 0;
         bool identified = false;
+        bool voiceRegistered = false;
         std::size_t sendOffset = 0;
         bool sendInFlight = false;
         bool closing = false;
@@ -94,6 +101,27 @@ namespace http {
         boundPort = ntohs(address.sin_port);
         running = true;
         std::cout << "io_uring server listening on 127.0.0.1:" << boundPort << '\n';
+
+        if (!audioTransport.start()) {
+            std::cerr << "Failed to start UDP audio transport\n";
+            cleanup();
+            return -1;
+        }
+        std::cout << "Audio UDP relay listening on port " << audioTransport.port() << '\n';
+        audioThread = std::thread([this] {
+            while (running) {
+                std::optional<media::AudioPacket> packet;
+                {
+                    std::lock_guard lock(audioMutex);
+                    packet = audioTransport.receive(5);
+                }
+                if (packet) {
+                    std::lock_guard lock(audioMutex);
+                    audioTransport.forward(*packet);
+                }
+                std::this_thread::sleep_for(std::chrono::milliseconds(1));
+            }
+        });
 
         if (queueAccept() < 0) {
             cleanup();
@@ -204,7 +232,15 @@ namespace http {
         if (operation->type == Operation::Type::Accept) {
             delete operation;
             if (result >= 0) {
-                auto connection = std::make_unique<Connection>(result);
+                sockaddr_in peer{};
+                socklen_t peerLength = sizeof(peer);
+                if (getpeername(result, reinterpret_cast<sockaddr*>(&peer),
+                                &peerLength) < 0) {
+                    close(result);
+                    return;
+                }
+                auto connection = std::make_unique<Connection>(
+                    result, peer, nextSenderId++);
                 int socket = connection->socket;
                 {
                     std::lock_guard lock(connectionsMutex);
@@ -318,8 +354,20 @@ namespace http {
             if (!voicePort.has_value()) {
                 return false;
             }
+            sockaddr_in endpoint = connection.peerAddress;
+            endpoint.sin_port = htons(*voicePort);
+            std::uint16_t mediaPort = 0;
+            {
+                std::lock_guard lock(audioMutex);
+                audioTransport.registerParticipant(connection.sessionId,
+                                                   connection.senderId, endpoint);
+                mediaPort = audioTransport.port();
+            }
+            connection.voiceRegistered = true;
             enqueueMessage(connection, "VOICE_READY " +
-                                          std::to_string(*voicePort) + "\n");
+                                          std::to_string(connection.sessionId) + " " +
+                                          std::to_string(connection.senderId) + " " +
+                                          std::to_string(mediaPort) + "\n");
             return true;
         }
         broadcast(connection, "FROM " + connection.name + " " +
@@ -365,6 +413,11 @@ namespace http {
             return;
         }
         Connection& client = *connection->second;
+        if (client.voiceRegistered) {
+            std::lock_guard audioLock(audioMutex);
+            audioTransport.unregisterSender(client.sessionId, client.senderId);
+            client.voiceRegistered = false;
+        }
         if (!client.closing) {
             client.closing = true;
             shutdown(client.socket, SHUT_RDWR);
@@ -383,9 +436,21 @@ namespace http {
 
     void TcpServer::cleanup() {
         running = false;
+        if (audioThread.joinable()) {
+            audioThread.join();
+        }
+        {
+            std::lock_guard audioLock(audioMutex);
+            audioTransport.close();
+        }
         {
             std::lock_guard lock(connectionsMutex);
             for (const auto& [socket, connection] : connections) {
+                if (connection->voiceRegistered) {
+                    std::lock_guard audioLock(audioMutex);
+                    audioTransport.unregisterSender(connection->sessionId,
+                                                    connection->senderId);
+                }
                 if (!connection->closing) {
                     connection->closing = true;
                     shutdown(socket, SHUT_RDWR);
@@ -413,6 +478,11 @@ namespace http {
 
     std::uint16_t TcpServer::port() const {
         return boundPort.load();
+    }
+
+    std::uint16_t TcpServer::mediaPort() const {
+        std::lock_guard lock(audioMutex);
+        return audioTransport.port();
     }
 
     std::size_t TcpServer::activeConnectionCount() const {

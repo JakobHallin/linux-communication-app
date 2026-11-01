@@ -20,6 +20,14 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/common/include)
+
+add_library(audio_transport STATIC
+    common/src/audio_packet.cpp
+    common/src/audio_session.cpp
+    common/src/audio_udp_transport.cpp
+)
+
 add_executable(communication_server
     server/src/main.cpp
     server/src/http_tcpServer.cpp
@@ -37,7 +45,11 @@ target_include_directories(communication_server PRIVATE
 target_include_directories(communication_client PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/client/include
 )
-target_link_libraries(communication_server PRIVATE Threads::Threads ${LIBURING_LIBRARY})
+target_link_libraries(communication_server PRIVATE
+    Threads::Threads
+    ${LIBURING_LIBRARY}
+    audio_transport
+)
 
 if(BUILD_TESTING)
     add_executable(phase1_connection_test
@@ -52,6 +64,7 @@ if(BUILD_TESTING)
     target_link_libraries(phase1_connection_test PRIVATE
         Threads::Threads
         ${LIBURING_LIBRARY}
+        audio_transport
     )
     add_test(NAME phase1_connection_test COMMAND phase1_connection_test)
     set_tests_properties(phase1_connection_test PROPERTIES LABELS "phase1;integration")
@@ -68,6 +81,7 @@ if(BUILD_TESTING)
     target_link_libraries(phase2_io_uring_test PRIVATE
         Threads::Threads
         ${LIBURING_LIBRARY}
+        audio_transport
     )
     add_test(NAME phase2_io_uring_test COMMAND phase2_io_uring_test)
     set_tests_properties(phase2_io_uring_test PROPERTIES LABELS "phase2;integration")
@@ -171,6 +185,7 @@ if(BUILD_TESTING)
     target_link_libraries(phase5_voice_registration_integration_test PRIVATE
         Threads::Threads
         ${LIBURING_LIBRARY}
+        audio_transport
     )
     add_test(NAME phase5_voice_registration_integration_test
         COMMAND phase5_voice_registration_integration_test)
@@ -191,6 +206,7 @@ if(BUILD_TESTING)
     target_link_libraries(phase5_unified_text_client_test PRIVATE
         Threads::Threads
         ${LIBURING_LIBRARY}
+        audio_transport
     )
     add_test(NAME phase5_unified_text_client_test COMMAND phase5_unified_text_client_test)
     set_tests_properties(phase5_unified_text_client_test PROPERTIES LABELS "phase5;integration")
@@ -247,6 +263,7 @@ if(BUILD_TESTING)
     target_link_libraries(phase3_handshake_test PRIVATE
         Threads::Threads
         ${LIBURING_LIBRARY}
+        audio_transport
     )
     add_test(NAME phase3_handshake_test COMMAND phase3_handshake_test)
     set_tests_properties(phase3_handshake_test PROPERTIES LABELS "phase3;integration")
@@ -263,6 +280,7 @@ if(BUILD_TESTING)
     target_link_libraries(phase3_message_relay_test PRIVATE
         Threads::Threads
         ${LIBURING_LIBRARY}
+        audio_transport
     )
     add_test(NAME phase3_message_relay_test COMMAND phase3_message_relay_test)
     set_tests_properties(phase3_message_relay_test PROPERTIES LABELS "phase3;integration")
@@ -279,6 +297,7 @@ if(BUILD_TESTING)
     target_link_libraries(phase3_order_disconnect_test PRIVATE
         Threads::Threads
         ${LIBURING_LIBRARY}
+        audio_transport
     )
     add_test(NAME phase3_order_disconnect_test COMMAND phase3_order_disconnect_test)
     set_tests_properties(phase3_order_disconnect_test PROPERTIES LABELS "phase3;integration")
@@ -295,6 +314,7 @@ if(BUILD_TESTING)
     target_link_libraries(phase3_invalid_input_test PRIVATE
         Threads::Threads
         ${LIBURING_LIBRARY}
+        audio_transport
     )
     add_test(NAME phase3_invalid_input_test COMMAND phase3_invalid_input_test)
     set_tests_properties(phase3_invalid_input_test PROPERTIES LABELS "phase3;integration")
@@ -311,6 +331,7 @@ if(BUILD_TESTING)
     target_link_libraries(phase3_slow_client_test PRIVATE
         Threads::Threads
         ${LIBURING_LIBRARY}
+        audio_transport
     )
     add_test(NAME phase3_slow_client_test COMMAND phase3_slow_client_test)
     set_tests_properties(phase3_slow_client_test PROPERTIES LABELS "phase3;integration")
@@ -327,6 +348,7 @@ if(BUILD_TESTING)
     target_link_libraries(phase4_multi_client_test PRIVATE
         Threads::Threads
         ${LIBURING_LIBRARY}
+        audio_transport
     )
     add_test(NAME phase4_multi_client_test COMMAND phase4_multi_client_test)
     set_tests_properties(phase4_multi_client_test PROPERTIES LABELS "phase4;integration")

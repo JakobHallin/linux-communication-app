@@ -10,6 +10,9 @@
 #include <string>
 #include <unordered_set>
 #include <unordered_map>
+#include <thread>
+
+#include "audio_udp_transport.h"
 
 struct io_uring;
 
@@ -25,6 +28,7 @@ namespace http {
         int start();
         void closeServer();
         std::uint16_t port() const;
+        std::uint16_t mediaPort() const;
         std::size_t activeConnectionCount() const;
 
     private:
@@ -46,11 +50,15 @@ namespace http {
         std::uint16_t requestedPort;
         bool bindAllInterfaces;
         std::atomic<std::uint16_t> boundPort{0};
+        std::atomic<std::uint32_t> nextSenderId{1};
         std::atomic<bool> running{false};
         io_uring* ring = nullptr;
         std::unordered_map<int, std::unique_ptr<Connection>> connections;
         std::unordered_set<Operation*> pendingOperations;
         mutable std::mutex connectionsMutex;
+        media::AudioUdpTransport audioTransport;
+        std::thread audioThread;
+        mutable std::mutex audioMutex;
     };
 } // namespace http
 
