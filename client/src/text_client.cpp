@@ -33,6 +33,11 @@ namespace client {
         return sendLine("NAME " + name);
     }
 
+    bool TextClient::sendVoicePort(std::uint16_t voicePort) {
+        if (voicePort == 0) return false;
+        return sendLine("VOICE_PORT " + std::to_string(voicePort));
+    }
+
     bool TextClient::sendMessage(const std::string& message) {
         return sendLine("MSG " + message);
     }

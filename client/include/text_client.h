@@ -15,6 +15,7 @@ namespace client {
 
         bool connectToServer();
         bool sendName(const std::string& name);
+        bool sendVoicePort(std::uint16_t port);
         bool sendMessage(const std::string& message);
         std::optional<std::string> receiveLine(int timeoutMilliseconds);
         void close();

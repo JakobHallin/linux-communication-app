@@ -314,7 +314,13 @@ namespace http {
         }
 
         if (frame.rfind("MSG ", 0) != 0 || frame.size() == 4) {
-            return false;
+            const auto voicePort = parseVoicePort(frame);
+            if (!voicePort.has_value()) {
+                return false;
+            }
+            enqueueMessage(connection, "VOICE_READY " +
+                                          std::to_string(*voicePort) + "\n");
+            return true;
         }
         broadcast(connection, "FROM " + connection.name + " " +
                               frame.substr(4) + "\n");

@@ -127,6 +127,13 @@ next client increment is connecting this session to ALSA capture and the UDP
 transport while retaining the TCP text/control channel from Phase 4. The
 client is not complete if it can carry voice but loses LAN text behavior.
 
+The first registration contract is now tested by
+`tests/unit/phase5_voice_registration_test.cpp` and
+`tests/integration/phase5_voice_registration_integration_test.cpp`:
+the client sends `VOICE_PORT <port>` over TCP and receives
+`VOICE_READY <port>` after the normal text handshake. The next increment will
+associate that registered endpoint with the UDP relay and client sender ID.
+
 `tests/integration/phase5_unified_text_client_test.cpp` now verifies the
 client-side TCP layer against the real server: two client sessions connect,
 complete the display-name handshake, and exchange a text message. The client
