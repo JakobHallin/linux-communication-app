@@ -139,6 +139,22 @@ if(BUILD_TESTING)
     )
     add_test(NAME phase3_invalid_input_test COMMAND phase3_invalid_input_test)
     set_tests_properties(phase3_invalid_input_test PROPERTIES LABELS "phase3;integration")
+
+    add_executable(phase3_slow_client_test
+        tests/integration/phase3_slow_client_test.cpp
+        server/src/http_tcpServer.cpp
+        server/src/chat_protocol.cpp
+    )
+    target_include_directories(phase3_slow_client_test PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/server/src
+        ${LIBURING_INCLUDE_DIR}
+    )
+    target_link_libraries(phase3_slow_client_test PRIVATE
+        Threads::Threads
+        ${LIBURING_LIBRARY}
+    )
+    add_test(NAME phase3_slow_client_test COMMAND phase3_slow_client_test)
+    set_tests_properties(phase3_slow_client_test PROPERTIES LABELS "phase3;integration")
 endif()
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
