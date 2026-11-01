@@ -119,6 +119,13 @@ frame through localhost UDP, authorizes and forwards it, decodes it at the
 receiver, and submits it to the mixer. The final acceptance check still needs
 two or more real clients with microphones and speakers on the LAN.
 
+Client implementation now starts with
+`client/include/audio_client_session.h` and
+`tests/unit/phase5_audio_client_session_test.cpp`. The session owns the media
+identity, sequence numbers, and mute decision before packets are sent. The
+next client increment is connecting this session to ALSA capture and the UDP
+transport; this test alone is not a real microphone client.
+
 ## File ownership
 
 | Area | Location |

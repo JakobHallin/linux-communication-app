@@ -129,6 +129,18 @@ if(BUILD_TESTING)
     add_test(NAME phase5_audio_resilience_test COMMAND phase5_audio_resilience_test)
     set_tests_properties(phase5_audio_resilience_test PROPERTIES LABELS "phase5;unit")
 
+    add_executable(phase5_audio_client_session_test
+        tests/unit/phase5_audio_client_session_test.cpp
+        client/src/audio_client_session.cpp
+        common/src/audio_packet.cpp
+    )
+    target_include_directories(phase5_audio_client_session_test PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/client/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/common/include
+    )
+    add_test(NAME phase5_audio_client_session_test COMMAND phase5_audio_client_session_test)
+    set_tests_properties(phase5_audio_client_session_test PROPERTIES LABELS "phase5;unit")
+
     add_executable(phase5_udp_transport_test
         tests/integration/phase5_udp_transport_test.cpp
         common/src/audio_packet.cpp
