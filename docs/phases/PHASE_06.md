@@ -4,6 +4,16 @@
 
 [Roadmap](../PLAN.md) · [Testing strategy](../TEST_PLAN.md) · [README](../../README.md)
 
+## Audio environment note
+
+The Phase 5 live voice check works in the current local setup, but the
+microphone environment has noticeable background noise and occasional buzzing.
+Treat that as an environment/audio-device limitation for now, not as proof that
+the network voice path is failing. Use headphones, keep microphone boost low,
+and disable ALSA loopback while testing Phase 6 video so audio feedback does
+not obscure video results. Later audio-quality work should consider noise
+suppression, echo cancellation, and microphone-level controls.
+
 ## Goal
 
 Multiple LAN participants can share webcam video while maintaining text and

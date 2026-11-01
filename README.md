@@ -102,6 +102,10 @@ devices. Use `/mute` to stop or resume microphone transmission and `/quit` to
 stop a client. The normal `build` remains text-only so CI and machines without
 ALSA hardware can still compile the application.
 
+Pass `none` as the capture device to run a listener-only voice client. It does
+not open or transmit microphone audio, but it still plays received audio.
+Pass `none` as the playback device as well to run a completely silent client.
+
 For the final LAN check, run the server on one machine, note its LAN address
 and the UDP relay port printed at startup, then allow TCP `8080` and that UDP
 port through its firewall. Run each client against the server's LAN address:
@@ -109,6 +113,19 @@ port through its firewall. Run each client against the server's LAN address:
 ```bash
 ./build-voice/communication_client SERVER_LAN_IP 8080 Alice --voice default default
 ```
+
+You can also perform the Phase 5 multi-client acceptance test entirely on one
+host. The launcher starts three local clients with one microphone-only sender,
+one playback-only listener, and one muted client with microphone and playback
+disabled to avoid acoustic feedback. Because only one client captures and one
+client plays back, it uses the normal desktop `default` ALSA devices.
+
+```bash
+./tests/scripts/phase5_local_voice_demo.sh
+```
+
+Use headphones. Set `ACTIVE_CLIENT=Bob` or `ACTIVE_CLIENT=Carol` to test a
+different sender. Press `Ctrl-C` to cleanly stop all processes.
 
 ## Documentation
 

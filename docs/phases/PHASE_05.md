@@ -144,6 +144,15 @@ devices and headphones. Microphone capture, Opus transport, playback, and the
 `/mute` control have been manually verified. The remaining acceptance check is
 three to five clients across the LAN, including disconnect and recovery.
 
+The same multi-client behavior can be accepted locally with
+`tests/scripts/phase5_local_voice_demo.sh`. It starts three real application
+clients on one host, uses shared ALSA devices, leaves one client microphone-only,
+runs one client as playback-only, and runs one client as fully muted with both
+microphone and playback disabled. This validates local participant registration,
+UDP forwarding, playback, text compatibility, and cleanup. The normal `/mute`
+behavior remains available for testing microphone control on a regular voice
+client.
+
 ### LAN acceptance runbook
 
 1. Build the voice-enabled targets on the server and each client machine.

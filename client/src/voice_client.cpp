@@ -127,8 +127,12 @@ namespace client {
     void VoiceClient::activate() {
         if (!running || impl->running) return;
         impl->running = true;
-        impl->captureThread = std::thread(&VoiceClient::captureLoop, this);
-        impl->playbackThread = std::thread(&VoiceClient::playbackLoop, this);
+        if (captureDevice != "none") {
+            impl->captureThread = std::thread(&VoiceClient::captureLoop, this);
+        }
+        if (playbackDevice != "none") {
+            impl->playbackThread = std::thread(&VoiceClient::playbackLoop, this);
+        }
     }
 
     void VoiceClient::stop() {
