@@ -55,6 +55,7 @@ if(BUILD_TESTING)
 
     add_executable(phase3_chat_frame_test
         tests/unit/phase3_chat_frame_test.cpp
+        server/src/chat_protocol.cpp
     )
     target_include_directories(phase3_chat_frame_test PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/server/src

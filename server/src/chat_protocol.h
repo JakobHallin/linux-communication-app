@@ -10,6 +10,10 @@ namespace http {
     public:
         explicit ChatFrameParser(std::size_t maximumFrameSize = 1024);
         std::vector<std::string> push(std::string_view bytes);
+
+    private:
+        std::size_t maximumFrameSize;
+        std::string pending;
     };
 } // namespace http
 
