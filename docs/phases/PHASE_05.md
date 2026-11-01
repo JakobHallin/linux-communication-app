@@ -92,7 +92,9 @@ revoked senders are rejected by
 `tests/unit/phase5_audio_session_test.cpp`. The real UDP receive path is now
 covered by `tests/integration/phase5_udp_transport_test.cpp`: it rejects an
 unassociated datagram and accepts a datagram after its sender is registered.
-Forwarding packets to other participants is the next Phase 5.4 behavior.
+That same test now verifies Phase 5.4 forwarding: an authorized packet reaches
+other members of the same session, excludes its sender, and does not reach a
+different session.
 
 ## File ownership
 

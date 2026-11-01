@@ -60,9 +60,20 @@ namespace media {
         sessions.registerSender(sessionId, senderId);
     }
 
+    void AudioUdpTransport::registerParticipant(std::uint32_t sessionId,
+                                                std::uint32_t senderId,
+                                                const sockaddr_in& endpoint) {
+        registerSender(sessionId, senderId);
+        endpoints[sessionId][senderId] = endpoint;
+    }
+
     void AudioUdpTransport::unregisterSender(std::uint32_t sessionId,
                                              std::uint32_t senderId) {
         sessions.unregisterSender(sessionId, senderId);
+        const auto session = endpoints.find(sessionId);
+        if (session == endpoints.end()) return;
+        session->second.erase(senderId);
+        if (session->second.empty()) endpoints.erase(session);
     }
 
     std::optional<AudioPacket> AudioUdpTransport::receive(int timeoutMilliseconds) {
@@ -88,5 +99,24 @@ namespace media {
             const auto packet = deserializeAudioPacket(bytes);
             if (packet && sessions.accepts(*packet)) return packet;
         }
+    }
+
+    std::size_t AudioUdpTransport::forward(const AudioPacket& packet) {
+        if (socketFd < 0 || !sessions.accepts(packet)) return 0;
+        const auto session = endpoints.find(packet.sessionId);
+        if (session == endpoints.end()) return 0;
+
+        const auto bytes = serializeAudioPacket(packet);
+        if (bytes.empty()) return 0;
+
+        std::size_t forwarded = 0;
+        for (const auto& [participantId, endpoint] : session->second) {
+            if (participantId == packet.senderId) continue;
+            const auto sent = sendto(socketFd, bytes.data(), bytes.size(), 0,
+                                     reinterpret_cast<const sockaddr*>(&endpoint),
+                                     sizeof(endpoint));
+            if (sent == static_cast<ssize_t>(bytes.size())) ++forwarded;
+        }
+        return forwarded;
     }
 }
