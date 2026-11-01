@@ -4,10 +4,11 @@
 #include <atomic>
 #include <cstddef>
 #include <cstdint>
+#include <memory>
 #include <mutex>
-#include <thread>
-#include <unordered_set>
-#include <vector>
+#include <unordered_map>
+
+struct io_uring;
 
 namespace http {
     class TcpServer {
@@ -23,15 +24,23 @@ namespace http {
         std::size_t activeConnectionCount() const;
 
     private:
-        void handleClient(int clientSocket);
+        struct Connection;
+        struct Operation;
+
+        int queueAccept();
+        int queueReceive(Connection& connection);
+        int queueSend(Connection& connection);
+        void closeConnection(int socket);
+        void processCompletion(Operation* operation, int result);
+        void cleanup();
 
         int serverSocket = -1;
         std::uint16_t requestedPort;
         std::atomic<std::uint16_t> boundPort{0};
         std::atomic<bool> running{false};
-        mutable std::mutex clientsMutex;
-        std::unordered_set<int> clients;
-        std::vector<std::thread> clientThreads;
+        io_uring* ring = nullptr;
+        std::unordered_map<int, std::unique_ptr<Connection>> connections;
+        mutable std::mutex connectionsMutex;
     };
 } // namespace http
 

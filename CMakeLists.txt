@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 3.20)
 project(linux_communication_app LANGUAGES CXX)
 
 find_package(Threads REQUIRED)
+find_path(LIBURING_INCLUDE_DIR liburing.h REQUIRED)
+find_library(LIBURING_LIBRARY uring REQUIRED)
+include(CTest)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -15,15 +18,44 @@ add_executable(communication_client client/src/main.cpp)
 
 target_include_directories(communication_server PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/server/src
+    ${LIBURING_INCLUDE_DIR}
 )
-target_link_libraries(communication_server PRIVATE Threads::Threads)
+target_link_libraries(communication_server PRIVATE Threads::Threads ${LIBURING_LIBRARY})
 
-add_subdirectory(tests)
+if(BUILD_TESTING)
+    add_executable(phase1_connection_test
+        tests/integration/phase1/phase1_connection_test.cpp
+        server/src/http_tcpServer.cpp
+    )
+    target_include_directories(phase1_connection_test PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/server/src
+        ${LIBURING_INCLUDE_DIR}
+    )
+    target_link_libraries(phase1_connection_test PRIVATE
+        Threads::Threads
+        ${LIBURING_LIBRARY}
+    )
+    add_test(NAME phase1_connection_test COMMAND phase1_connection_test)
+    set_tests_properties(phase1_connection_test PROPERTIES LABELS "phase1;integration")
+
+    add_executable(phase2_io_uring_test
+        tests/integration/phase2/phase2_io_uring_test.cpp
+        server/src/http_tcpServer.cpp
+    )
+    target_include_directories(phase2_io_uring_test PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/server/src
+        ${LIBURING_INCLUDE_DIR}
+    )
+    target_link_libraries(phase2_io_uring_test PRIVATE
+        Threads::Threads
+        ${LIBURING_LIBRARY}
+    )
+    add_test(NAME phase2_io_uring_test COMMAND phase2_io_uring_test)
+    set_tests_properties(phase2_io_uring_test PROPERTIES LABELS "phase2;integration")
+endif()
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
     target_compile_options(communication_server PRIVATE -Wall -Wextra -Wpedantic)
     target_compile_options(communication_client PRIVATE -Wall -Wextra -Wpedantic)
 endif()
 
-# Milestone 1.2 will add real CTest targets and the selected test framework.
-# Milestone 1.4 will add liburing linkage to the networking implementation.

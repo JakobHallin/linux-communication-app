@@ -1,6 +1,6 @@
 # Phase 2 — `io_uring` Server
 
-**Version:** 0.2 · **Status:** Planned · **Prerequisite:** Phase 1
+**Version:** 0.2 · **Status:** In progress · **Prerequisite:** Phase 1
 
 [Roadmap](../PLAN.md) · [Testing strategy](../TEST_PLAN.md) · [README](../../README.md)
 
@@ -53,3 +53,16 @@ tests as regression coverage.
 - One and two real clients can connect and disconnect cleanly.
 - Outstanding operations and buffers are cleaned up safely during shutdown.
 - Phase 1 and Phase 2 active tests pass.
+
+## Dependency
+
+Install the Linux `liburing` development package before configuring the
+project:
+
+```bash
+sudo apt update
+sudo apt install liburing-dev
+```
+
+The project CMake configuration detects `liburing.h` and links the `uring`
+library for the server and integration tests.
