@@ -62,6 +62,16 @@ target_include_directories(phase6_video_capture_smoke PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/client/include
     ${CMAKE_CURRENT_SOURCE_DIR}/common/include
 )
+
+add_executable(phase6_video_receive_smoke
+    tests/manual/phase6_video_receive_smoke.cpp
+    client/src/text_client.cpp
+    common/src/video_frame.cpp
+)
+target_include_directories(phase6_video_receive_smoke PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/client/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/common/include
+)
 if(ENABLE_LIVE_AUDIO_CLIENT)
     find_package(ALSA REQUIRED)
     target_sources(communication_client PRIVATE

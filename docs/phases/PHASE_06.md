@@ -110,6 +110,20 @@ This sends webcam frames to the server; a display/receiver path is the next
 increment, while the manual `ffplay` smoke command remains the direct way to
 watch the local camera frames today.
 
+The receiving smoke client is now available for the end-to-end visual check.
+Start one sending client, then register a second client as a viewer and pipe
+its received MJPEG frames into `ffplay`:
+
+```bash
+./build/communication_client 127.0.0.1 8080 Alice --video /dev/video0
+./build/phase6_video_receive_smoke 127.0.0.1 8080 Bob 0 --stdout-mjpeg \
+  | ffplay -f mjpeg -framerate 30 -i -
+```
+
+The viewer's `0` duration means it runs until interrupted. This is the first
+manual path that proves webcam capture, TCP registration, server forwarding,
+UDP reception, frame validation, and visible playback together.
+
 ## Build in this order (Red → Green → Refactor)
 
 | Step | Behavior / implementation | New test first |
