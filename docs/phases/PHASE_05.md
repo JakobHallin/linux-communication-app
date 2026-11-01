@@ -89,8 +89,10 @@ Before accepting a UDP media datagram, the server-side media layer must verify
 that its session and sender are associated. `AudioSessionRegistry` now covers
 that first security behavior: unregistered sessions, wrong senders, and
 revoked senders are rejected by
-`tests/unit/phase5_audio_session_test.cpp`. The next increment is to place
-this check in a real UDP receive path and test valid packet delivery.
+`tests/unit/phase5_audio_session_test.cpp`. The real UDP receive path is now
+covered by `tests/integration/phase5_udp_transport_test.cpp`: it rejects an
+unassociated datagram and accepts a datagram after its sender is registered.
+Forwarding packets to other participants is the next Phase 5.4 behavior.
 
 ## File ownership
 
