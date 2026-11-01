@@ -10,6 +10,7 @@
 namespace http {
     bool isValidDisplayName(std::string_view name);
     std::optional<std::uint16_t> parseVoicePort(std::string_view frame);
+    std::optional<std::uint16_t> parseVideoPort(std::string_view frame);
 
     class ChatFrameParser {
     public:

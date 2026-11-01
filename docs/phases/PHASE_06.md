@@ -88,6 +88,11 @@ only registered session/sender pairs, forwards a frame to other participants
 in the same session, and never reflects a frame back to its sender. Its
 integration test uses local UDP sockets and does not require a webcam.
 
+The TCP control-plane increment now validates `VIDEO_PORT <port>` messages
+separately from voice registration. Invalid, missing, zero, overflowing, and
+mixed-content ports are rejected before endpoint registration is added to the
+server.
+
 ## Build in this order (Red → Green → Refactor)
 
 | Step | Behavior / implementation | New test first |

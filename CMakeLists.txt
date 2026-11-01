@@ -325,6 +325,16 @@ if(BUILD_TESTING)
     set_tests_properties(phase6_video_udp_transport_test PROPERTIES
         LABELS "phase6;integration")
 
+    add_executable(phase6_video_control_test
+        tests/unit/phase6_video_control_test.cpp
+        server/src/chat_protocol.cpp
+    )
+    target_include_directories(phase6_video_control_test PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/server/src
+    )
+    add_test(NAME phase6_video_control_test COMMAND phase6_video_control_test)
+    set_tests_properties(phase6_video_control_test PROPERTIES LABELS "phase6;unit")
+
     add_executable(phase6_mjpeg_frame_test
         tests/unit/phase6_mjpeg_frame_test.cpp
         common/src/mjpeg_frame.cpp

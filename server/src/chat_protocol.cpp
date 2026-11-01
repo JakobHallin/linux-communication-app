@@ -34,6 +34,23 @@ namespace http {
         return static_cast<std::uint16_t>(port);
     }
 
+    std::optional<std::uint16_t> parseVideoPort(std::string_view frame) {
+        constexpr std::string_view prefix = "VIDEO_PORT ";
+        if (!frame.starts_with(prefix) || frame.size() == prefix.size()) {
+            return std::nullopt;
+        }
+
+        const auto digits = frame.substr(prefix.size());
+        unsigned int port = 0;
+        const auto result = std::from_chars(digits.data(), digits.data() + digits.size(),
+                                            port);
+        if (result.ec != std::errc{} || result.ptr != digits.data() + digits.size() ||
+            port == 0 || port > 65'535) {
+            return std::nullopt;
+        }
+        return static_cast<std::uint16_t>(port);
+    }
+
     ChatFrameParser::ChatFrameParser(std::size_t maximumFrameSize)
         : maximumFrameSize(maximumFrameSize) {}
 
