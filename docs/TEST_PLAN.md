@@ -43,7 +43,8 @@ test infrastructure is not a meaningful failing behavior test.
   disconnect handling.
 - **Phase 4:** Docker startup and real five-client text delivery.
 - **Phase 5:** synthetic audio forwarding and stream lifecycle, followed by a
-  manual local and LAN voice check with real devices.
+  manual local-device check and a LAN voice check using real application
+  clients.
 - **Phases 6–7:** synthetic video/screen frames and stream lifecycle, followed
   by checks on supported cameras and Linux desktop environments.
 - **Phase 8:** room membership and cross-room text/media isolation.
@@ -90,3 +91,13 @@ List available ALSA devices with `arecord -l` and `aplay -l`. This is a local
 capture/codec/playback check, not yet the Phase 5 LAN test; UDP forwarding and
 multi-client playback still need to be implemented. Do not register this in
 CTest because CI machines commonly have no sound hardware.
+
+## Phase 5 real-client acceptance
+
+The Phase 5 UDP and voice tests use test sockets to verify the protocol and
+transport. They do not count as real clients. Before Phase 5 is complete,
+build and run the application audio client on at least two machines or two
+local client processes, each with a microphone and speaker/headphones. Verify
+that one client can speak and the other can hear, that both directions work,
+that mute stops transmission, and that disconnecting one client does not stop
+the other client or crash the server.

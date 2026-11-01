@@ -36,6 +36,11 @@ flowchart LR
 | 5.6 | Implement mute and basic jitter/loss tolerance | Mute, reorder, loss, and stream stop tests |
 | 5.7 | Verify real voice end to end | Three-to-five-person LAN listening/latency check |
 
+The tests through 5.6 are protocol and media-component tests. They may use
+synthetic audio or test sockets. Phase 5.7 additionally requires a real
+`audio_client` executable; the phase cannot be marked complete while only the
+loopback demo and test harnesses exist.
+
 ## Initial media contract
 
 The first implementation targets Opus-encoded, mono voice frames at 48 kHz
@@ -128,7 +133,8 @@ For the initial server, forward encoded streams rather than mixing audio on the 
 
 ## Completion criteria — initial MVP
 
-- Three to five users can speak and hear other participants simultaneously.
+- Three to five real application clients can speak and hear other participants simultaneously.
+- The application client captures, sends, receives, decodes, mixes, and plays voice.
 - Muting stops microphone transmission.
 - Loss/disconnects do not crash the server or clients.
 - Only valid group participants receive voice packets.
