@@ -13,6 +13,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 add_executable(communication_server
     server/src/main.cpp
     server/src/http_tcpServer.cpp
+    server/src/chat_protocol.cpp
 )
 add_executable(communication_client client/src/main.cpp)
 
@@ -26,6 +27,7 @@ if(BUILD_TESTING)
     add_executable(phase1_connection_test
         tests/integration/phase1/phase1_connection_test.cpp
         server/src/http_tcpServer.cpp
+        server/src/chat_protocol.cpp
     )
     target_include_directories(phase1_connection_test PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/server/src
@@ -41,6 +43,7 @@ if(BUILD_TESTING)
     add_executable(phase2_io_uring_test
         tests/integration/phase2/phase2_io_uring_test.cpp
         server/src/http_tcpServer.cpp
+        server/src/chat_protocol.cpp
     )
     target_include_directories(phase2_io_uring_test PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/server/src
@@ -72,6 +75,22 @@ if(BUILD_TESTING)
     )
     add_test(NAME phase3_display_name_test COMMAND phase3_display_name_test)
     set_tests_properties(phase3_display_name_test PROPERTIES LABELS "phase3;unit")
+
+    add_executable(phase3_handshake_test
+        tests/integration/phase3_handshake_test.cpp
+        server/src/http_tcpServer.cpp
+        server/src/chat_protocol.cpp
+    )
+    target_include_directories(phase3_handshake_test PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/server/src
+        ${LIBURING_INCLUDE_DIR}
+    )
+    target_link_libraries(phase3_handshake_test PRIVATE
+        Threads::Threads
+        ${LIBURING_LIBRARY}
+    )
+    add_test(NAME phase3_handshake_test COMMAND phase3_handshake_test)
+    set_tests_properties(phase3_handshake_test PROPERTIES LABELS "phase3;integration")
 endif()
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")

@@ -32,6 +32,7 @@ namespace http {
         int queueReceive(Connection& connection);
         int queueSend(Connection& connection);
         void closeConnection(int socket);
+        bool handleReceived(Connection& connection, std::size_t size);
         void processCompletion(Operation* operation, int result);
         void cleanup();
 

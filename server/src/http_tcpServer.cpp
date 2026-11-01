@@ -1,4 +1,5 @@
 #include <http_tcpServer.h>
+#include <chat_protocol.h>
 
 #include <liburing.h>
 
@@ -15,6 +16,9 @@ namespace http {
 
         int socket;
         char buffer[1024]{};
+        std::string input;
+        std::string name;
+        bool identified = false;
         std::size_t sendOffset = 0;
         std::size_t sendLength = 0;
     };
@@ -205,9 +209,13 @@ namespace http {
         }
 
         if (type == Operation::Type::Receive) {
-            connection->sendOffset = 0;
-            connection->sendLength = static_cast<std::size_t>(result);
-            if (queueSend(*connection) < 0) {
+            if (!handleReceived(*connection, static_cast<std::size_t>(result))) {
+                closeConnection(connection->socket);
+            } else if (connection->sendLength > 0) {
+                if (queueSend(*connection) < 0) {
+                    closeConnection(connection->socket);
+                }
+            } else if (queueReceive(*connection) < 0) {
                 closeConnection(connection->socket);
             }
         } else {
@@ -220,6 +228,54 @@ namespace http {
                 closeConnection(connection->socket);
             }
         }
+    }
+
+    bool TcpServer::handleReceived(Connection& connection, std::size_t size) {
+        if (connection.identified) {
+            connection.sendOffset = 0;
+            connection.sendLength = size;
+            return true;
+        }
+
+        connection.input.append(connection.buffer, size);
+        if (connection.input.size() > 1024) {
+            return false;
+        }
+
+        std::size_t newline = connection.input.find('\n');
+        if (newline == std::string::npos) {
+            // Preserve the Phase 2 raw echo contract until a framed handshake
+            // is complete. A NAME prefix is held for the next receive.
+            if (connection.input.rfind("NAME ", 0) == 0) {
+                connection.sendLength = 0;
+                return true;
+            }
+            connection.sendOffset = 0;
+            connection.sendLength = size;
+            return true;
+        }
+
+        std::string line = connection.input.substr(0, newline);
+        if (!line.empty() && line.back() == '\r') {
+            line.pop_back();
+        }
+        if (line.rfind("NAME ", 0) != 0) {
+            return false;
+        }
+
+        std::string name = line.substr(5);
+        if (!isValidDisplayName(name)) {
+            return false;
+        }
+
+        connection.name = std::move(name);
+        connection.identified = true;
+        const std::string welcome = "WELCOME " + connection.name + "\n";
+        std::memcpy(connection.buffer, welcome.data(), welcome.size());
+        connection.sendOffset = 0;
+        connection.sendLength = welcome.size();
+        connection.input.erase(0, newline + 1);
+        return true;
     }
 
     void TcpServer::closeConnection(int socket) {
