@@ -35,7 +35,16 @@ docker run --rm --security-opt \
 COMMUNICATION_SERVER_HOST=127.0.0.1 \
 COMMUNICATION_SERVER_PORT=8080 \
 ./build/phase4_container_connection_test
+
+# With the same container running:
+COMMUNICATION_SERVER_HOST=127.0.0.1 \
+COMMUNICATION_SERVER_PORT=8080 \
+./build/phase4_five_client_test
 ```
+
+The five-client test connects five native Linux clients to the one server
+container, completes five handshakes, and verifies that one message reaches
+the other four clients with the correct sender and content.
 
 ### Why `seccomp-io-uring.json` is needed
 

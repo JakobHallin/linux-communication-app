@@ -179,11 +179,19 @@ if(BUILD_TESTING)
     add_executable(phase4_container_connection_test
         tests/integration/phase4_container_connection_test.cpp
     )
+    add_executable(phase4_five_client_test
+        tests/integration/phase4_five_client_test.cpp
+    )
     if(ENABLE_PHASE4_CONTAINER_TEST)
         add_test(NAME phase4_container_connection_test
             COMMAND phase4_container_connection_test
         )
         set_tests_properties(phase4_container_connection_test PROPERTIES
+            LABELS "phase4;integration;container"
+            ENVIRONMENT "COMMUNICATION_SERVER_HOST=127.0.0.1;COMMUNICATION_SERVER_PORT=8080"
+        )
+        add_test(NAME phase4_five_client_test COMMAND phase4_five_client_test)
+        set_tests_properties(phase4_five_client_test PROPERTIES
             LABELS "phase4;integration;container"
             ENVIRONMENT "COMMUNICATION_SERVER_HOST=127.0.0.1;COMMUNICATION_SERVER_PORT=8080"
         )
