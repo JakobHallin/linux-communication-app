@@ -39,8 +39,8 @@ flowchart LR
 ## Initial media contract
 
 The first implementation targets Opus-encoded, mono voice frames at 48 kHz
-with a 20 ms audio duration. The server forwards encoded frames and does not
-mix them. Media uses UDP because occasional packet loss is preferable to
+with a 20 ms audio duration and a 32 kbps target bitrate. The server forwards
+encoded frames and does not mix them. Media uses UDP because occasional packet loss is preferable to
 blocking later audio behind an old packet.
 
 Each packet will use a small versioned header containing:
@@ -54,6 +54,16 @@ Each packet will use a small versioned header containing:
 The complete packet is limited to 1,200 bytes so it remains below the usual
 Ethernet path-MTU budget. The packet serializer/deserializer is tested before
 adding capture devices, codecs, or network sockets.
+
+The codec test requires the Opus development package on the host:
+
+```bash
+sudo apt update
+sudo apt install libopus-dev
+```
+
+The Docker builder installs the equivalent `libopus-dev` package and the
+runtime image carries `libopus0`.
 
 ## File ownership
 

@@ -4,6 +4,8 @@ project(linux_communication_app LANGUAGES CXX)
 find_package(Threads REQUIRED)
 find_path(LIBURING_INCLUDE_DIR liburing.h REQUIRED)
 find_library(LIBURING_LIBRARY uring REQUIRED)
+find_path(OPUS_INCLUDE_DIR opus/opus.h REQUIRED)
+find_library(OPUS_LIBRARY opus REQUIRED)
 include(CTest)
 option(ENABLE_PHASE4_CONTAINER_TEST
     "Register the Phase 4 test that requires an externally running container"
@@ -89,6 +91,18 @@ if(BUILD_TESTING)
     )
     add_test(NAME phase5_audio_packet_test COMMAND phase5_audio_packet_test)
     set_tests_properties(phase5_audio_packet_test PROPERTIES LABELS "phase5;unit")
+
+    add_executable(phase5_opus_codec_test
+        tests/unit/phase5_opus_codec_test.cpp
+        common/src/audio_codec.cpp
+    )
+    target_include_directories(phase5_opus_codec_test PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/common/include
+        ${OPUS_INCLUDE_DIR}
+    )
+    target_link_libraries(phase5_opus_codec_test PRIVATE ${OPUS_LIBRARY})
+    add_test(NAME phase5_opus_codec_test COMMAND phase5_opus_codec_test)
+    set_tests_properties(phase5_opus_codec_test PROPERTIES LABELS "phase5;unit")
 
     add_executable(phase3_handshake_test
         tests/integration/phase3_handshake_test.cpp
