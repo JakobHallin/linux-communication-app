@@ -277,7 +277,8 @@ namespace http {
 
             // Preserve the Phase 2 raw-echo contract while the Phase 3
             // newline-framed protocol is introduced.
-            if (frames.empty() && !connection.identified &&
+            if (frames.empty() && size < sizeof(connection.buffer) &&
+                !connection.identified &&
                 std::string_view(connection.buffer, size).rfind("NAME ", 0) != 0) {
                 enqueueMessage(connection,
                                std::string(connection.buffer, size));

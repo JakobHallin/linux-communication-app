@@ -1,6 +1,6 @@
 # Phase 3 — Text Chat
 
-**Version:** 0.3 · **Status:** Planned · **Prerequisite:** Phase 2
+**Version:** 0.3 · **Status:** Complete · **Prerequisite:** Phase 2
 
 [Roadmap](../PLAN.md) · [Testing strategy](../TEST_PLAN.md) · [README](../../README.md)
 
