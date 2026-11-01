@@ -93,6 +93,23 @@ separately from voice registration. Invalid, missing, zero, overflowing, and
 mixed-content ports are rejected before endpoint registration is added to the
 server.
 
+The server and `TextClient` now use this control message to register video
+UDP endpoints and return `VIDEO_READY <session> <sender> <media-port>`. The
+server starts a separate video relay port and removes video registrations when
+clients disconnect. Actual webcam capture is still supplied by the Phase 6
+V4L2 client path; this increment connects that path to the authorized relay.
+
+The client video session now opens a local UDP socket, starts the V4L2 capture
+device only after successful registration, and sends validated serialized
+frames to the server relay. If the camera cannot start, activation fails
+explicitly instead of appearing to work without sending video.
+
+The unified client can enable this path with
+`./build/communication_client SERVER 8080 Alice --video /dev/video0`.
+This sends webcam frames to the server; a display/receiver path is the next
+increment, while the manual `ffplay` smoke command remains the direct way to
+watch the local camera frames today.
+
 ## Build in this order (Red → Green → Refactor)
 
 | Step | Behavior / implementation | New test first |

@@ -35,6 +35,7 @@ namespace http {
         std::size_t outgoingBytes = 0;
         bool identified = false;
         bool voiceRegistered = false;
+        bool videoRegistered = false;
         std::size_t sendOffset = 0;
         bool sendInFlight = false;
         bool closing = false;
@@ -108,16 +109,28 @@ namespace http {
             return -1;
         }
         std::cout << "Audio UDP relay listening on port " << audioTransport.port() << '\n';
+        if (!videoTransport.start()) {
+            std::cerr << "Failed to start UDP video transport\n";
+            cleanup();
+            return -1;
+        }
+        std::cout << "Video UDP relay listening on port " << videoTransport.port() << '\n';
         audioThread = std::thread([this] {
             while (running) {
-                std::optional<media::AudioPacket> packet;
+                std::optional<media::AudioPacket> audioPacket;
+                std::optional<media::VideoFrame> videoFrame;
                 {
                     std::lock_guard lock(audioMutex);
-                    packet = audioTransport.receive(5);
+                    audioPacket = audioTransport.receive(1);
+                    videoFrame = videoTransport.receive(1);
                 }
-                if (packet) {
+                if (audioPacket) {
                     std::lock_guard lock(audioMutex);
-                    audioTransport.forward(*packet);
+                    audioTransport.forward(*audioPacket);
+                }
+                if (videoFrame) {
+                    std::lock_guard lock(audioMutex);
+                    videoTransport.forward(*videoFrame);
                 }
                 std::this_thread::sleep_for(std::chrono::milliseconds(1));
             }
@@ -350,25 +363,41 @@ namespace http {
         }
 
         if (frame.rfind("MSG ", 0) != 0 || frame.size() == 4) {
-            const auto voicePort = parseVoicePort(frame);
-            if (!voicePort.has_value()) {
-                return false;
+            if (const auto voicePort = parseVoicePort(frame); voicePort.has_value()) {
+                sockaddr_in endpoint = connection.peerAddress;
+                endpoint.sin_port = htons(*voicePort);
+                std::uint16_t mediaPort = 0;
+                {
+                    std::lock_guard lock(audioMutex);
+                    audioTransport.registerParticipant(connection.sessionId,
+                                                       connection.senderId, endpoint);
+                    mediaPort = audioTransport.port();
+                }
+                connection.voiceRegistered = true;
+                enqueueMessage(connection, "VOICE_READY " +
+                                              std::to_string(connection.sessionId) + " " +
+                                              std::to_string(connection.senderId) + " " +
+                                              std::to_string(mediaPort) + "\n");
+                return true;
             }
-            sockaddr_in endpoint = connection.peerAddress;
-            endpoint.sin_port = htons(*voicePort);
-            std::uint16_t mediaPort = 0;
-            {
-                std::lock_guard lock(audioMutex);
-                audioTransport.registerParticipant(connection.sessionId,
-                                                   connection.senderId, endpoint);
-                mediaPort = audioTransport.port();
+            if (const auto videoPort = parseVideoPort(frame); videoPort.has_value()) {
+                sockaddr_in endpoint = connection.peerAddress;
+                endpoint.sin_port = htons(*videoPort);
+                std::uint16_t mediaPort = 0;
+                {
+                    std::lock_guard lock(audioMutex);
+                    videoTransport.registerParticipant(connection.sessionId,
+                                                       connection.senderId, endpoint);
+                    mediaPort = videoTransport.port();
+                }
+                connection.videoRegistered = true;
+                enqueueMessage(connection, "VIDEO_READY " +
+                                              std::to_string(connection.sessionId) + " " +
+                                              std::to_string(connection.senderId) + " " +
+                                              std::to_string(mediaPort) + "\n");
+                return true;
             }
-            connection.voiceRegistered = true;
-            enqueueMessage(connection, "VOICE_READY " +
-                                          std::to_string(connection.sessionId) + " " +
-                                          std::to_string(connection.senderId) + " " +
-                                          std::to_string(mediaPort) + "\n");
-            return true;
+            return false;
         }
         broadcast(connection, "FROM " + connection.name + " " +
                               frame.substr(4) + "\n");
@@ -418,6 +447,11 @@ namespace http {
             audioTransport.unregisterSender(client.sessionId, client.senderId);
             client.voiceRegistered = false;
         }
+        if (client.videoRegistered) {
+            std::lock_guard mediaLock(audioMutex);
+            videoTransport.unregisterParticipant(client.sessionId, client.senderId);
+            client.videoRegistered = false;
+        }
         if (!client.closing) {
             client.closing = true;
             shutdown(client.socket, SHUT_RDWR);
@@ -442,6 +476,7 @@ namespace http {
         {
             std::lock_guard audioLock(audioMutex);
             audioTransport.close();
+            videoTransport.close();
         }
         {
             std::lock_guard lock(connectionsMutex);
@@ -450,6 +485,11 @@ namespace http {
                     std::lock_guard audioLock(audioMutex);
                     audioTransport.unregisterSender(connection->sessionId,
                                                     connection->senderId);
+                }
+                if (connection->videoRegistered) {
+                    std::lock_guard audioLock(audioMutex);
+                    videoTransport.unregisterParticipant(connection->sessionId,
+                                                         connection->senderId);
                 }
                 if (!connection->closing) {
                     connection->closing = true;
@@ -483,6 +523,11 @@ namespace http {
     std::uint16_t TcpServer::mediaPort() const {
         std::lock_guard lock(audioMutex);
         return audioTransport.port();
+    }
+
+    std::uint16_t TcpServer::videoMediaPort() const {
+        std::lock_guard lock(audioMutex);
+        return videoTransport.port();
     }
 
     std::size_t TcpServer::activeConnectionCount() const {

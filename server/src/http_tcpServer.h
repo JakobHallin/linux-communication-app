@@ -13,6 +13,7 @@
 #include <thread>
 
 #include "audio_udp_transport.h"
+#include "video_udp_transport.h"
 
 struct io_uring;
 
@@ -29,6 +30,7 @@ namespace http {
         void closeServer();
         std::uint16_t port() const;
         std::uint16_t mediaPort() const;
+        std::uint16_t videoMediaPort() const;
         std::size_t activeConnectionCount() const;
 
     private:
@@ -57,6 +59,7 @@ namespace http {
         std::unordered_set<Operation*> pendingOperations;
         mutable std::mutex connectionsMutex;
         media::AudioUdpTransport audioTransport;
+        media::VideoUdpTransport videoTransport;
         std::thread audioThread;
         mutable std::mutex audioMutex;
     };

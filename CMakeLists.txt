@@ -40,10 +40,16 @@ add_executable(communication_server
     server/src/main.cpp
     server/src/http_tcpServer.cpp
     server/src/chat_protocol.cpp
+    common/src/video_udp_transport.cpp
+    common/src/video_frame.cpp
 )
 add_executable(communication_client
     client/src/main.cpp
     client/src/text_client.cpp
+    client/src/video_client.cpp
+    client/src/video_capture_device.cpp
+    common/src/video_frame.cpp
+    common/src/mjpeg_frame.cpp
 )
 
 add_executable(phase6_video_capture_smoke
@@ -95,6 +101,8 @@ if(BUILD_TESTING)
         tests/integration/phase1/phase1_connection_test.cpp
         server/src/http_tcpServer.cpp
         server/src/chat_protocol.cpp
+        common/src/video_udp_transport.cpp
+        common/src/video_frame.cpp
     )
     target_include_directories(phase1_connection_test PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/server/src
@@ -112,6 +120,8 @@ if(BUILD_TESTING)
         tests/integration/phase2/phase2_io_uring_test.cpp
         server/src/http_tcpServer.cpp
         server/src/chat_protocol.cpp
+        common/src/video_udp_transport.cpp
+        common/src/video_frame.cpp
     )
     target_include_directories(phase2_io_uring_test PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/server/src
@@ -215,6 +225,8 @@ if(BUILD_TESTING)
         client/src/text_client.cpp
         server/src/http_tcpServer.cpp
         server/src/chat_protocol.cpp
+        common/src/video_udp_transport.cpp
+        common/src/video_frame.cpp
     )
     target_include_directories(phase5_voice_registration_integration_test PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/client/include
@@ -236,6 +248,8 @@ if(BUILD_TESTING)
         client/src/text_client.cpp
         server/src/http_tcpServer.cpp
         server/src/chat_protocol.cpp
+        common/src/video_udp_transport.cpp
+        common/src/video_frame.cpp
     )
     target_include_directories(phase5_unified_text_client_test PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/client/include
@@ -335,6 +349,20 @@ if(BUILD_TESTING)
     add_test(NAME phase6_video_control_test COMMAND phase6_video_control_test)
     set_tests_properties(phase6_video_control_test PROPERTIES LABELS "phase6;unit")
 
+    add_executable(phase6_video_client_test
+        tests/unit/phase6_video_client_test.cpp
+        client/src/video_client.cpp
+        client/src/video_capture_device.cpp
+        common/src/video_frame.cpp
+        common/src/mjpeg_frame.cpp
+    )
+    target_include_directories(phase6_video_client_test PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/client/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/common/include
+    )
+    add_test(NAME phase6_video_client_test COMMAND phase6_video_client_test)
+    set_tests_properties(phase6_video_client_test PROPERTIES LABELS "phase6;unit")
+
     add_executable(phase6_mjpeg_frame_test
         tests/unit/phase6_mjpeg_frame_test.cpp
         common/src/mjpeg_frame.cpp
@@ -350,6 +378,8 @@ if(BUILD_TESTING)
         tests/integration/phase3_handshake_test.cpp
         server/src/http_tcpServer.cpp
         server/src/chat_protocol.cpp
+        common/src/video_udp_transport.cpp
+        common/src/video_frame.cpp
     )
     target_include_directories(phase3_handshake_test PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/server/src
@@ -367,6 +397,8 @@ if(BUILD_TESTING)
         tests/integration/phase3_message_relay_test.cpp
         server/src/http_tcpServer.cpp
         server/src/chat_protocol.cpp
+        common/src/video_udp_transport.cpp
+        common/src/video_frame.cpp
     )
     target_include_directories(phase3_message_relay_test PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/server/src
@@ -384,6 +416,8 @@ if(BUILD_TESTING)
         tests/integration/phase3_order_disconnect_test.cpp
         server/src/http_tcpServer.cpp
         server/src/chat_protocol.cpp
+        common/src/video_udp_transport.cpp
+        common/src/video_frame.cpp
     )
     target_include_directories(phase3_order_disconnect_test PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/server/src
@@ -401,6 +435,8 @@ if(BUILD_TESTING)
         tests/integration/phase3_invalid_input_test.cpp
         server/src/http_tcpServer.cpp
         server/src/chat_protocol.cpp
+        common/src/video_udp_transport.cpp
+        common/src/video_frame.cpp
     )
     target_include_directories(phase3_invalid_input_test PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/server/src
@@ -418,6 +454,8 @@ if(BUILD_TESTING)
         tests/integration/phase3_slow_client_test.cpp
         server/src/http_tcpServer.cpp
         server/src/chat_protocol.cpp
+        common/src/video_udp_transport.cpp
+        common/src/video_frame.cpp
     )
     target_include_directories(phase3_slow_client_test PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/server/src
@@ -435,6 +473,8 @@ if(BUILD_TESTING)
         tests/integration/phase4_multi_client_test.cpp
         server/src/http_tcpServer.cpp
         server/src/chat_protocol.cpp
+        common/src/video_udp_transport.cpp
+        common/src/video_frame.cpp
     )
     target_include_directories(phase4_multi_client_test PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/server/src

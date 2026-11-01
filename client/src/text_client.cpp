@@ -60,6 +60,32 @@ namespace client {
                           static_cast<std::uint16_t>(mediaPort)};
     }
 
+    bool TextClient::sendVideoPort(std::uint16_t videoPort) {
+        if (videoPort == 0) return false;
+        return sendLine("VIDEO_PORT " + std::to_string(videoPort));
+    }
+
+    std::optional<VideoReady> TextClient::registerVideo(
+        std::uint16_t videoPort, int timeoutMilliseconds) {
+        if (!sendVideoPort(videoPort)) return std::nullopt;
+        const auto response = receiveLine(timeoutMilliseconds);
+        if (!response.has_value()) return std::nullopt;
+
+        std::istringstream stream(*response);
+        std::string command;
+        unsigned int session = 0;
+        unsigned int sender = 0;
+        unsigned int mediaPort = 0;
+        if (!(stream >> command >> session >> sender >> mediaPort) ||
+            command != "VIDEO_READY" || session > UINT32_MAX ||
+            sender > UINT32_MAX || mediaPort == 0 || mediaPort > UINT16_MAX) {
+            return std::nullopt;
+        }
+        return VideoReady{static_cast<std::uint32_t>(session),
+                          static_cast<std::uint32_t>(sender),
+                          static_cast<std::uint16_t>(mediaPort)};
+    }
+
     bool TextClient::sendMessage(const std::string& message) {
         return sendLine("MSG " + message);
     }
