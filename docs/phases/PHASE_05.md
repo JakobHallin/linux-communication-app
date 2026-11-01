@@ -83,6 +83,15 @@ Press `Ctrl-C` to stop. It is intentionally a manual check rather than a
 CTest test because build agents often have no physical audio devices. The
 actual network voice check remains step 5.7.
 
+### Phase 5.3 progress
+
+Before accepting a UDP media datagram, the server-side media layer must verify
+that its session and sender are associated. `AudioSessionRegistry` now covers
+that first security behavior: unregistered sessions, wrong senders, and
+revoked senders are rejected by
+`tests/unit/phase5_audio_session_test.cpp`. The next increment is to place
+this check in a real UDP receive path and test valid packet delivery.
+
 ## File ownership
 
 | Area | Location |
