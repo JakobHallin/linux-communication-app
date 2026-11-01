@@ -1,6 +1,6 @@
 # Phase 6 — Webcam Video
 
-**Version:** 0.6 · **Status:** Planned · **Prerequisite:** Phase 5
+**Version:** 0.6 · **Status:** In Progress · **Prerequisite:** Phase 5
 
 [Roadmap](../PLAN.md) · [Testing strategy](../TEST_PLAN.md) · [README](../../README.md)
 
@@ -52,6 +52,12 @@ The capture lifecycle test now verifies that an unavailable V4L2 device fails
 cleanly, remains stopped, rejects frame reads, and can be stopped repeatedly.
 The real-device path is intentionally not registered as a normal CTest because
 CI machines may not contain `/dev/video*` hardware.
+
+The next TDD increment validates camera-provided MJPEG boundaries before a
+payload is wrapped in a `VideoFrame`. It requires the JPEG start/end markers,
+rejects empty or oversized data, and rejects invalid dimensions. This keeps
+bad camera data out of the transport layer without requiring a physical camera
+or software decoder in automated tests.
 
 ## Build in this order (Red → Green → Refactor)
 
