@@ -31,10 +31,10 @@ connection and delivery acceptance tests.
 
 | Phase | Goal | Status |
 | --- | --- | --- |
-| 1 — Basic connections | Connect one client, then two, to a local TCP server | Current |
+| 1 — Basic connections | Connect one client, then two, to a local TCP server | Complete |
 | 2 — `io_uring` server | Move server network I/O to Linux `io_uring`; retain connection behavior | Complete |
-| 3 — Text chat | Two clients exchange messages through the server | Planned |
-| 4 — LAN text chat | Dockerized server and five native clients exchange text | Planned |
+| 3 — Text chat | Two clients exchange messages through the server | Complete |
+| 4 — LAN text chat | Dockerized server and five native clients exchange text | In progress |
 | 5 — Group voice | Three to five LAN users speak and listen together | Planned |
 | 6 — Webcam video | Share webcam streams alongside voice and text | Planned |
 | 7 — Screen sharing | Share a desktop or supported application window | Planned |

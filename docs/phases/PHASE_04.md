@@ -1,6 +1,6 @@
 # Phase 4 — LAN Text Chat
 
-**Version:** 0.4 · **Status:** Planned · **Prerequisite:** Phase 3
+**Version:** 0.4 · **Status:** In Progress · **Prerequisite:** Phase 3
 
 [Roadmap](../PLAN.md) · [Testing strategy](../TEST_PLAN.md) · [README](../../README.md)
 
