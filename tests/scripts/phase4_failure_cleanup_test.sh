@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 set -u
 
+# Prerequisites:
+#   make -C build
+#   docker build -t linux-communication-server:phase4 .
+# `make` builds local C++ targets; it does not build the Docker image.
+
 container_name="linux-communication-server-phase4-cleanup-test"
 image_name="linux-communication-server:phase4"
 profile="docker/seccomp-io-uring.json"
