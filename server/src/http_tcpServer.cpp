@@ -251,7 +251,13 @@ namespace http {
 
         if (!connection.identified && connection.input.find('\n') == std::string::npos) {
             if (connection.input.rfind("NAME ", 0) == 0) {
+                if (connection.input.size() >= sizeof(connection.buffer)) {
+                    return false;
+                }
                 return true;
+            }
+            if (connection.input.size() >= sizeof(connection.buffer)) {
+                return false;
             }
             enqueueMessage(connection, connection.input);
             connection.input.clear();
