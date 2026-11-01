@@ -32,6 +32,14 @@ flowchart LR
     S --> R[Other clients decode/display]
 ```
 
+### Phase 6.1 progress
+
+The first TDD increment defines a versioned `VideoFrame` envelope with session,
+sender, sequence, dimensions, and encoded payload fields. Its unit test covers
+round-trip serialization, invalid headers, truncation, zero dimensions, and the
+maximum frame size. Webcam capture and codec selection remain separate steps;
+this protocol layer is intentionally hardware-independent.
+
 ## Build in this order (Red → Green → Refactor)
 
 | Step | Behavior / implementation | New test first |

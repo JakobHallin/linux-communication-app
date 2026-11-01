@@ -32,6 +32,10 @@ add_library(audio_transport STATIC
     common/src/audio_udp_transport.cpp
 )
 
+add_library(video_protocol STATIC
+    common/src/video_frame.cpp
+)
+
 add_executable(communication_server
     server/src/main.cpp
     server/src/http_tcpServer.cpp
@@ -274,6 +278,16 @@ if(BUILD_TESTING)
     target_link_libraries(phase5_opus_codec_test PRIVATE ${OPUS_LIBRARY})
     add_test(NAME phase5_opus_codec_test COMMAND phase5_opus_codec_test)
     set_tests_properties(phase5_opus_codec_test PROPERTIES LABELS "phase5;unit")
+
+    add_executable(phase6_video_frame_test
+        tests/unit/phase6_video_frame_test.cpp
+        common/src/video_frame.cpp
+    )
+    target_include_directories(phase6_video_frame_test PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/common/include
+    )
+    add_test(NAME phase6_video_frame_test COMMAND phase6_video_frame_test)
+    set_tests_properties(phase6_video_frame_test PROPERTIES LABELS "phase6;unit")
 
     add_executable(phase3_handshake_test
         tests/integration/phase3_handshake_test.cpp
