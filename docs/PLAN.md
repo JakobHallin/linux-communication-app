@@ -52,16 +52,19 @@ authorization, forwarding, mixing, jitter handling, and Opus processing. Those
 tests use synthetic frames or test sockets; they are not real application
 clients.
 
-Phase 5 therefore requires a real `audio_client` implementation before the
-phase can be marked complete. Each client must be able to:
+Phase 5 therefore requires a real unified client implementation before the
+phase can be marked complete. The client must retain the existing LAN text
+connection while adding a separate UDP voice path. Each client must be able to:
 
-1. establish or reuse its application session with the server;
-2. register its session and sender identity for media authorization;
-3. capture microphone frames through the supported Linux audio API;
-4. encode and send Opus frames over UDP;
-5. receive forwarded frames from other participants;
-6. decode, reorder, mix, and play received audio; and
-7. shut down cleanly, including mute and disconnect behavior.
+1. establish the TCP application connection and complete the text handshake;
+2. send and receive LAN text messages over that TCP connection;
+3. establish or reuse its application session for media;
+4. register its session and sender identity for media authorization;
+5. capture microphone frames through the supported Linux audio API;
+6. encode and send Opus frames over UDP;
+7. receive forwarded frames from other participants;
+8. decode, reorder, mix, and play received audio; and
+9. shut down both channels cleanly, including mute and disconnect behavior.
 
 The final Phase 5 acceptance check requires at least two real clients with
 microphones and speakers on the same LAN. The automated localhost voice test

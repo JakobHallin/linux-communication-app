@@ -124,7 +124,8 @@ Client implementation now starts with
 `tests/unit/phase5_audio_client_session_test.cpp`. The session owns the media
 identity, sequence numbers, and mute decision before packets are sent. The
 next client increment is connecting this session to ALSA capture and the UDP
-transport; this test alone is not a real microphone client.
+transport while retaining the TCP text/control channel from Phase 4. The
+client is not complete if it can carry voice but loses LAN text behavior.
 
 ## File ownership
 

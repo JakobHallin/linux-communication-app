@@ -96,8 +96,9 @@ CTest because CI machines commonly have no sound hardware.
 
 The Phase 5 UDP and voice tests use test sockets to verify the protocol and
 transport. They do not count as real clients. Before Phase 5 is complete,
-build and run the application audio client on at least two machines or two
+build and run the unified application client on at least two machines or two
 local client processes, each with a microphone and speaker/headphones. Verify
-that one client can speak and the other can hear, that both directions work,
-that mute stops transmission, and that disconnecting one client does not stop
-the other client or crash the server.
+that text messages still work over TCP while voice is active over UDP, that
+one client can speak and the other can hear, that both directions work, that
+mute stops transmission, and that disconnecting one client does not stop the
+other client or crash the server.
