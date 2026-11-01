@@ -103,6 +103,11 @@ streams, and outputs silence when no streams remain. Real speaker playback is
 still provided by the manual ALSA loopback; the next network step is connecting
 received UDP frames to this mixer.
 
+Phase 5.6 now has `AudioJitterBuffer` and mute coverage in
+`tests/unit/phase5_audio_resilience_test.cpp`. Out-of-order frames are emitted
+in sequence order, a missing frame becomes a silent concealment frame, invalid
+frames are rejected, and muted senders are excluded from the mix.
+
 ## File ownership
 
 | Area | Location |

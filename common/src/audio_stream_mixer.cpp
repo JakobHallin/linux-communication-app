@@ -13,8 +13,13 @@ namespace media {
         return true;
     }
 
+    void AudioStreamMixer::setMuted(std::uint32_t senderId, bool isMuted) {
+        muted[senderId] = isMuted;
+    }
+
     void AudioStreamMixer::remove(std::uint32_t senderId) {
         streams.erase(senderId);
+        muted.erase(senderId);
     }
 
     std::vector<std::int16_t> AudioStreamMixer::mix() const {
@@ -25,11 +30,15 @@ namespace media {
 
         for (std::size_t sample = 0; sample < output.size(); ++sample) {
             std::int64_t sum = 0;
+            std::size_t activeStreams = 0;
             for (const auto& [senderId, stream] : streams) {
-                (void)senderId;
+                if (muted.contains(senderId) && muted.at(senderId)) continue;
                 sum += stream[sample];
+                ++activeStreams;
             }
-            const auto mixed = sum / static_cast<std::int64_t>(streams.size());
+            const auto mixed = activeStreams == 0
+                ? 0
+                : sum / static_cast<std::int64_t>(activeStreams);
             output[sample] = static_cast<std::int16_t>(std::clamp<std::int64_t>(
                 mixed, INT16_MIN, INT16_MAX));
         }
