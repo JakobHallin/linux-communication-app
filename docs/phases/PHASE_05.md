@@ -96,6 +96,13 @@ That same test now verifies Phase 5.4 forwarding: an authorized packet reaches
 other members of the same session, excludes its sender, and does not reach a
 different session.
 
+Phase 5.5 now has a deterministic client-side mixer test in
+`tests/unit/phase5_multi_stream_mixer_test.cpp`. It accepts independent decoded
+frames by sender, mixes active streams without clipping, removes stopped
+streams, and outputs silence when no streams remain. Real speaker playback is
+still provided by the manual ALSA loopback; the next network step is connecting
+received UDP frames to this mixer.
+
 ## File ownership
 
 | Area | Location |

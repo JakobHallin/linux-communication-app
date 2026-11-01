@@ -106,6 +106,17 @@ if(BUILD_TESTING)
     add_test(NAME phase5_audio_session_test COMMAND phase5_audio_session_test)
     set_tests_properties(phase5_audio_session_test PROPERTIES LABELS "phase5;unit")
 
+    add_executable(phase5_multi_stream_mixer_test
+        tests/unit/phase5_multi_stream_mixer_test.cpp
+        common/src/audio_stream_mixer.cpp
+    )
+    target_include_directories(phase5_multi_stream_mixer_test PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/common/include
+        ${OPUS_INCLUDE_DIR}
+    )
+    add_test(NAME phase5_multi_stream_mixer_test COMMAND phase5_multi_stream_mixer_test)
+    set_tests_properties(phase5_multi_stream_mixer_test PROPERTIES LABELS "phase5;unit")
+
     add_executable(phase5_udp_transport_test
         tests/integration/phase5_udp_transport_test.cpp
         common/src/audio_packet.cpp
