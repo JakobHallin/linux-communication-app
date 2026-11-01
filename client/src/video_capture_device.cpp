@@ -1,4 +1,5 @@
 #include "video_capture_device.h"
+#include "mjpeg_frame.h"
 
 #include <fcntl.h>
 #include <linux/videodev2.h>
@@ -119,6 +120,18 @@ namespace client {
         std::vector<std::uint8_t> frame(begin, begin + buffer.bytesused);
         if (ioctlRetry(fileDescriptor, VIDIOC_QBUF, &buffer) < 0) return std::nullopt;
         return frame;
+    }
+
+    std::optional<media::VideoFrame> VideoCaptureDevice::readVideoFrame(
+        std::uint32_t sessionId,
+        std::uint32_t senderId,
+        std::uint32_t sequence,
+        int timeoutMilliseconds) {
+        const auto payload = readFrame(timeoutMilliseconds);
+        if (!payload.has_value()) return std::nullopt;
+
+        return media::makeMjpegVideoFrame(
+            sessionId, senderId, sequence, frameWidth, frameHeight, *payload);
     }
 
     bool VideoCaptureDevice::configure() {

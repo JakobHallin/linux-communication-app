@@ -8,6 +8,7 @@ int main() {
     assert(!unavailable.start());
     assert(!unavailable.running());
     assert(!unavailable.readFrame(0).has_value());
+    assert(!unavailable.readVideoFrame(1, 2, 3, 0).has_value());
     unavailable.stop();
 
     std::cout << "Phase 6 video capture lifecycle test passed\n";

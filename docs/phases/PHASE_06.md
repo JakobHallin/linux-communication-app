@@ -59,6 +59,11 @@ rejects empty or oversized data, and rejects invalid dimensions. This keeps
 bad camera data out of the transport layer without requiring a physical camera
 or software decoder in automated tests.
 
+The capture wrapper now exposes `readVideoFrame(...)`, which combines one
+V4L2 capture read with MJPEG validation and the `VideoFrame` metadata. A
+failed capture or invalid payload produces no frame, so callers do not have
+to forward unchecked camera bytes.
+
 ## Build in this order (Red → Green → Refactor)
 
 | Step | Behavior / implementation | New test first |

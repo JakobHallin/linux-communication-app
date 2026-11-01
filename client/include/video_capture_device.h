@@ -6,6 +6,8 @@
 #include <string>
 #include <vector>
 
+#include "video_frame.h"
+
 namespace client {
     class VideoCaptureDevice {
     public:
@@ -20,6 +22,11 @@ namespace client {
         std::uint16_t width() const;
         std::uint16_t height() const;
         std::optional<std::vector<std::uint8_t>> readFrame(int timeoutMilliseconds);
+        std::optional<media::VideoFrame> readVideoFrame(
+            std::uint32_t sessionId,
+            std::uint32_t senderId,
+            std::uint32_t sequence,
+            int timeoutMilliseconds);
 
     private:
         struct Buffer {
