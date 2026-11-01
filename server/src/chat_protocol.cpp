@@ -1,8 +1,21 @@
 #include "chat_protocol.h"
 
+#include <cctype>
 #include <stdexcept>
 
 namespace http {
+    bool isValidDisplayName(std::string_view name) {
+        if (name.empty() || name.size() > 32) {
+            return false;
+        }
+        for (unsigned char character : name) {
+            if (!(std::isalnum(character) || character == '_' || character == '-')) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     ChatFrameParser::ChatFrameParser(std::size_t maximumFrameSize)
         : maximumFrameSize(maximumFrameSize) {}
 

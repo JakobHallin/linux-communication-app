@@ -6,6 +6,8 @@
 #include <vector>
 
 namespace http {
+    bool isValidDisplayName(std::string_view name);
+
     class ChatFrameParser {
     public:
         explicit ChatFrameParser(std::size_t maximumFrameSize = 1024);

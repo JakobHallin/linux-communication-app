@@ -62,6 +62,16 @@ if(BUILD_TESTING)
     )
     add_test(NAME phase3_chat_frame_test COMMAND phase3_chat_frame_test)
     set_tests_properties(phase3_chat_frame_test PROPERTIES LABELS "phase3;unit")
+
+    add_executable(phase3_display_name_test
+        tests/unit/phase3_display_name_test.cpp
+        server/src/chat_protocol.cpp
+    )
+    target_include_directories(phase3_display_name_test PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/server/src
+    )
+    add_test(NAME phase3_display_name_test COMMAND phase3_display_name_test)
+    set_tests_properties(phase3_display_name_test PROPERTIES LABELS "phase3;unit")
 endif()
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
