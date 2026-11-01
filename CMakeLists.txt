@@ -25,11 +25,17 @@ add_executable(communication_server
     server/src/http_tcpServer.cpp
     server/src/chat_protocol.cpp
 )
-add_executable(communication_client client/src/main.cpp)
+add_executable(communication_client
+    client/src/main.cpp
+    client/src/text_client.cpp
+)
 
 target_include_directories(communication_server PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/server/src
     ${LIBURING_INCLUDE_DIR}
+)
+target_include_directories(communication_client PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/client/include
 )
 target_link_libraries(communication_server PRIVATE Threads::Threads ${LIBURING_LIBRARY})
 
