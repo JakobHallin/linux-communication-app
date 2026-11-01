@@ -3,7 +3,7 @@
 
 int main() {
     std::cout << "starting program" << std::endl;
-    http::TcpServer server;
+    http::TcpServer server(8080, true);
     int result = server.start();
 
     if (result != 0) {

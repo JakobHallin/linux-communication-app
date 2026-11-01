@@ -16,7 +16,8 @@ struct io_uring;
 namespace http {
     class TcpServer {
     public:
-        explicit TcpServer(std::uint16_t port = 8080);
+        explicit TcpServer(std::uint16_t port = 8080,
+                           bool bindAllInterfaces = false);
         ~TcpServer();
         TcpServer(const TcpServer&) = delete;
         TcpServer& operator=(const TcpServer&) = delete;
@@ -43,6 +44,7 @@ namespace http {
 
         int serverSocket = -1;
         std::uint16_t requestedPort;
+        bool bindAllInterfaces;
         std::atomic<std::uint16_t> boundPort{0};
         std::atomic<bool> running{false};
         io_uring* ring = nullptr;

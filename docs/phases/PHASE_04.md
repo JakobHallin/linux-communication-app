@@ -23,6 +23,49 @@ Keep clients as native processes; only the server runs in Docker. Check the
 container's `io_uring` support and permissions when testing the image. Do not
 use broad security bypasses as a substitute for a suitable container setup.
 
+For Docker's default seccomp policy, use the project profile that permits only
+the server's required runtime calls and the three `io_uring` syscalls:
+
+```bash
+docker run --rm --security-opt \
+  seccomp=./docker/seccomp-io-uring.json \
+  -p 8080:8080 linux-communication-server:phase4
+
+# In another terminal, with the container running:
+COMMUNICATION_SERVER_HOST=127.0.0.1 \
+COMMUNICATION_SERVER_PORT=8080 \
+./build/phase4_container_connection_test
+```
+
+### Why `seccomp-io-uring.json` is needed
+
+Docker applies a seccomp system-call filter to containers by default. The
+filter is an important security boundary: it limits which kernel operations a
+process inside the container can request.
+
+This server uses Linux `io_uring` for network I/O. Creating and operating an
+`io_uring` instance requires these system calls:
+
+- `io_uring_setup`
+- `io_uring_enter`
+- `io_uring_register`
+
+Docker's default profile blocks them, so the server can build successfully but
+exits at startup inside a normal container with `Operation not permitted`.
+The project profile is based on Docker's normal allowlist and adds only those
+three calls. It therefore keeps the container's normal syscall restrictions in
+place.
+
+Do not replace the profile with `seccomp=unconfined` for regular development or
+deployment. That disables the container's syscall filter instead of granting
+the server only what it needs.
+
+Native Linux runs do not need this file. Every later phase that keeps the
+server in Docker and continues using `io_uring` should reuse the same profile,
+then re-test it when the base image, Docker version, kernel, or server I/O
+model changes. If a future phase replaces `io_uring`, the profile should be
+reviewed and the three exceptions removed if they are no longer required.
+
 ## Completion criteria
 
 - Five real clients exchange text through one Dockerized server.

@@ -5,6 +5,10 @@ find_package(Threads REQUIRED)
 find_path(LIBURING_INCLUDE_DIR liburing.h REQUIRED)
 find_library(LIBURING_LIBRARY uring REQUIRED)
 include(CTest)
+option(ENABLE_PHASE4_CONTAINER_TEST
+    "Register the Phase 4 test that requires an externally running container"
+    OFF
+)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -171,6 +175,19 @@ if(BUILD_TESTING)
     )
     add_test(NAME phase4_multi_client_test COMMAND phase4_multi_client_test)
     set_tests_properties(phase4_multi_client_test PROPERTIES LABELS "phase4;integration")
+
+    add_executable(phase4_container_connection_test
+        tests/integration/phase4_container_connection_test.cpp
+    )
+    if(ENABLE_PHASE4_CONTAINER_TEST)
+        add_test(NAME phase4_container_connection_test
+            COMMAND phase4_container_connection_test
+        )
+        set_tests_properties(phase4_container_connection_test PROPERTIES
+            LABELS "phase4;integration;container"
+            ENVIRONMENT "COMMUNICATION_SERVER_HOST=127.0.0.1;COMMUNICATION_SERVER_PORT=8080"
+        )
+    endif()
 endif()
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")

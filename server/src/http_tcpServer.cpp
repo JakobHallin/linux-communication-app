@@ -41,7 +41,8 @@ namespace http {
         Connection* connection = nullptr;
     };
 
-    TcpServer::TcpServer(std::uint16_t port) : requestedPort(port) {}
+    TcpServer::TcpServer(std::uint16_t port, bool bindAllInterfaces)
+        : requestedPort(port), bindAllInterfaces(bindAllInterfaces) {}
 
     TcpServer::~TcpServer() {
         closeServer();
@@ -71,7 +72,8 @@ namespace http {
 
         sockaddr_in address{};
         address.sin_family = AF_INET;
-        address.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
+        address.sin_addr.s_addr = htonl(
+            bindAllInterfaces ? INADDR_ANY : INADDR_LOOPBACK);
         address.sin_port = htons(requestedPort);
 
         if (bind(serverSocket, reinterpret_cast<sockaddr*>(&address),
