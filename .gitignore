@@ -1,6 +1,7 @@
 # Build outputs
 /build/
 /cmake-build-*/
+communication_server
 CMakeFiles/
 CMakeCache.txt
 compile_commands.json
