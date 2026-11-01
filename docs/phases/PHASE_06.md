@@ -83,6 +83,11 @@ The `0` frame count means continuous capture. Press `q` in the `ffplay`
 window, then stop the capture process with `Ctrl+C`. This displays the actual
 frames captured by the project's V4L2 path; it is not a separate camera test.
 
+The first transport increment adds an authorized video UDP relay. It accepts
+only registered session/sender pairs, forwards a frame to other participants
+in the same session, and never reflects a frame back to its sender. Its
+integration test uses local UDP sockets and does not require a webcam.
+
 ## Build in this order (Red → Green → Refactor)
 
 | Step | Behavior / implementation | New test first |
