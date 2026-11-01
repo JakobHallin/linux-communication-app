@@ -2,7 +2,7 @@
 
 A **Linux-only C++20 communication app**. Start by connecting one client, then two; next introduce server-side `io_uring`, then build chat and grow toward the multi-client LAN app with voice, video, screen sharing, and multiple rooms.
 
-> **Current state:** Repository bootstrap only. The server and client executables print a startup message and exit. No networking, rooms, media, or automated tests are implemented yet.
+> **Current state:** Phase 1 basic local connections are implemented. The blocking TCP server accepts two concurrent terminal clients and reports connection/disconnection events.
 
 ## First phases
 
@@ -42,19 +42,25 @@ flowchart TB
 | Deployment | Local processes first; Docker planned after the local flow works |
 | Development / testing | TDD with focused tests for real behavior |
 
-## Build the current starter
+## Build and run Phase 1
 
 Requires Linux, CMake, and a C++20 compiler.
 
 ```bash
 cmake -S . -B build
 cmake --build build
+ctest --test-dir build --output-on-failure
+
+# Terminal 1
 ./build/communication_server
+
+# Terminals 2 and 3
+./build/communication_client
 ./build/communication_client
 ```
 
-The programs are **bootstraps**, not a functional TCP server or client. The
-first phase below is the next implementation target.
+Press Enter in either client terminal to disconnect it. The server remains
+running and reports the active connection count.
 
 ## Documentation
 
@@ -72,7 +78,7 @@ first phase below is the next implementation target.
 
 ## Development status
 
-- [ ] Phase 1 — One client, then two clients, connect to a local TCP server
+- [x] Phase 1 — One client, then two clients, connect to a local TCP server
 
 **Workflow:** use TDD for each behavior: write a meaningful failing test,
 implement the minimum to pass, then refactor. The roadmap describes planned

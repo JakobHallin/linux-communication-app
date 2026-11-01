@@ -1,6 +1,6 @@
 # Phase 1 — Basic Connections
 
-**Status:** Not implemented · **Goal:** Prove one- and two-client connections
+**Status:** Implemented · **Goal:** Prove one- and two-client connections
 
 [Project plan](../PLAN.md) · [Testing](../TEST_PLAN.md) · [README](../../README.md)
 
@@ -41,3 +41,16 @@ protocols, rooms, or a large test harness yet.
 
 The documented local workflow starts a server and two clients, both clients
 connect concurrently, and tests verify connection and disconnect behavior.
+
+## Local workflow
+
+```bash
+cmake -S . -B build
+cmake --build build
+ctest --test-dir build --output-on-failure
+```
+
+Start `./build/communication_server` in one terminal, then start
+`./build/communication_client` in two other terminals. Each client remains
+connected until Enter is pressed. The server listens on `127.0.0.1:8080` and
+reports active connections and disconnects.
