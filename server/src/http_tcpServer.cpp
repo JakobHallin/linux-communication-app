@@ -115,13 +115,15 @@ namespace http {
         }
 
         auto* operation = new Operation{Operation::Type::Accept};
+        pendingOperations.insert(operation);
         io_uring_prep_accept(submission, serverSocket, nullptr, nullptr, 0);
         io_uring_sqe_set_data(submission, operation);
         int result = io_uring_submit(ring);
-        if (result < 0) {
+        if (result <= 0) {
+            pendingOperations.erase(operation);
             delete operation;
         }
-        return result < 0 ? result : 0;
+        return result <= 0 ? (result < 0 ? result : -EIO) : 0;
     }
 
     int TcpServer::queueReceive(Connection& connection) {
@@ -131,14 +133,16 @@ namespace http {
         }
 
         auto* operation = new Operation{Operation::Type::Receive, &connection};
+        pendingOperations.insert(operation);
         io_uring_prep_recv(submission, connection.socket, connection.buffer,
                            sizeof(connection.buffer), 0);
         io_uring_sqe_set_data(submission, operation);
         int result = io_uring_submit(ring);
-        if (result < 0) {
+        if (result <= 0) {
+            pendingOperations.erase(operation);
             delete operation;
         }
-        return result < 0 ? result : 0;
+        return result <= 0 ? (result < 0 ? result : -EIO) : 0;
     }
 
     int TcpServer::queueSend(Connection& connection) {
@@ -148,21 +152,25 @@ namespace http {
         }
 
         auto* operation = new Operation{Operation::Type::Send, &connection};
+        pendingOperations.insert(operation);
         io_uring_prep_send(submission, connection.socket,
                            connection.buffer + connection.sendOffset,
                            connection.sendLength - connection.sendOffset, 0);
         io_uring_sqe_set_data(submission, operation);
         int result = io_uring_submit(ring);
-        if (result < 0) {
+        if (result <= 0) {
+            pendingOperations.erase(operation);
             delete operation;
         }
-        return result < 0 ? result : 0;
+        return result <= 0 ? (result < 0 ? result : -EIO) : 0;
     }
 
     void TcpServer::processCompletion(Operation* operation, int result) {
         if (operation == nullptr) {
             return;
         }
+
+        pendingOperations.erase(operation);
 
         if (operation->type == Operation::Type::Accept) {
             delete operation;
@@ -251,6 +259,10 @@ namespace http {
             delete ring;
             ring = nullptr;
         }
+        for (Operation* operation : pendingOperations) {
+            delete operation;
+        }
+        pendingOperations.clear();
     }
 
     std::uint16_t TcpServer::port() const {

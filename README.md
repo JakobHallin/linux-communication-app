@@ -2,7 +2,7 @@
 
 A **Linux-only C++20 communication app**. Start by connecting one client, then two; next introduce server-side `io_uring`, then build chat and grow toward the multi-client LAN app with voice, video, screen sharing, and multiple rooms.
 
-> **Current state:** Phase 1 basic local connections are implemented. The blocking TCP server accepts two concurrent terminal clients and reports connection/disconnection events.
+> **Current state:** Phase 1 and Phase 2 are implemented and tested. The server uses Linux `io_uring` for asynchronous network I/O and supports concurrent local clients.
 
 ## First phases
 
@@ -79,6 +79,7 @@ running and reports the active connection count.
 ## Development status
 
 - [x] Phase 1 — One client, then two clients, connect to a local TCP server
+- [x] Phase 2 — Replace blocking server I/O with `io_uring`
 
 **Workflow:** use TDD for each behavior: write a meaningful failing test,
 implement the minimum to pass, then refactor. The roadmap describes planned

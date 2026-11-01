@@ -32,7 +32,7 @@ connection and delivery acceptance tests.
 | Phase | Goal | Status |
 | --- | --- | --- |
 | 1 — Basic connections | Connect one client, then two, to a local TCP server | Current |
-| 2 — `io_uring` server | Move server network I/O to Linux `io_uring`; retain connection behavior | Planned |
+| 2 — `io_uring` server | Move server network I/O to Linux `io_uring`; retain connection behavior | Complete |
 | 3 — Text chat | Two clients exchange messages through the server | Planned |
 | 4 — LAN text chat | Dockerized server and five native clients exchange text | Planned |
 | 5 — Group voice | Three to five LAN users speak and listen together | Planned |
@@ -43,4 +43,4 @@ connection and delivery acceptance tests.
 
 Later phases describe the intended direction, not completed functionality.
 Use TDD within each phase, and refine implementation details when that phase
-is near; the immediate commitment is to finish and test Phase 1.
+is near; the immediate commitment is to finish and test the current phase.

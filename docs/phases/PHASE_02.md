@@ -1,6 +1,6 @@
 # Phase 2 — `io_uring` Server
 
-**Version:** 0.2 · **Status:** In progress · **Prerequisite:** Phase 1
+**Version:** 0.2 · **Status:** Complete · **Prerequisite:** Phase 1
 
 [Roadmap](../PLAN.md) · [Testing strategy](../TEST_PLAN.md) · [README](../../README.md)
 

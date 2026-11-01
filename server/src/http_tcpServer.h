@@ -6,6 +6,7 @@
 #include <cstdint>
 #include <memory>
 #include <mutex>
+#include <unordered_set>
 #include <unordered_map>
 
 struct io_uring;
@@ -40,6 +41,7 @@ namespace http {
         std::atomic<bool> running{false};
         io_uring* ring = nullptr;
         std::unordered_map<int, std::unique_ptr<Connection>> connections;
+        std::unordered_set<Operation*> pendingOperations;
         mutable std::mutex connectionsMutex;
     };
 } // namespace http
