@@ -127,6 +127,12 @@ next client increment is connecting this session to ALSA capture and the UDP
 transport while retaining the TCP text/control channel from Phase 4. The
 client is not complete if it can carry voice but loses LAN text behavior.
 
+`tests/integration/phase5_unified_text_client_test.cpp` now verifies the
+client-side TCP layer against the real server: two client sessions connect,
+complete the display-name handshake, and exchange a text message. The client
+executable still needs to use this session class before the manual unified
+text-and-voice run.
+
 ## File ownership
 
 | Area | Location |

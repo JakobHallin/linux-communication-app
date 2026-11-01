@@ -141,6 +141,24 @@ if(BUILD_TESTING)
     add_test(NAME phase5_audio_client_session_test COMMAND phase5_audio_client_session_test)
     set_tests_properties(phase5_audio_client_session_test PROPERTIES LABELS "phase5;unit")
 
+    add_executable(phase5_unified_text_client_test
+        tests/integration/phase5_unified_text_client_test.cpp
+        client/src/text_client.cpp
+        server/src/http_tcpServer.cpp
+        server/src/chat_protocol.cpp
+    )
+    target_include_directories(phase5_unified_text_client_test PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/client/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/server/src
+        ${LIBURING_INCLUDE_DIR}
+    )
+    target_link_libraries(phase5_unified_text_client_test PRIVATE
+        Threads::Threads
+        ${LIBURING_LIBRARY}
+    )
+    add_test(NAME phase5_unified_text_client_test COMMAND phase5_unified_text_client_test)
+    set_tests_properties(phase5_unified_text_client_test PROPERTIES LABELS "phase5;integration")
+
     add_executable(phase5_udp_transport_test
         tests/integration/phase5_udp_transport_test.cpp
         common/src/audio_packet.cpp
