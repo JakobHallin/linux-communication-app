@@ -82,6 +82,7 @@ running and reports the active connection count.
 - [x] Phase 2 — Replace blocking server I/O with `io_uring`
 - [x] Phase 3 — Two-client text chat with framing, validation, ordering, and cleanup
 - [x] Phase 4 — Dockerized LAN text chat with five native clients
+- [ ] Phase 5 — Group voice (packet contract started)
 
 **Workflow:** use TDD for each behavior: write a meaningful failing test,
 implement the minimum to pass, then refactor. The roadmap describes planned

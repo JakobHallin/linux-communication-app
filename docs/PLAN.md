@@ -35,7 +35,7 @@ connection and delivery acceptance tests.
 | 2 — `io_uring` server | Move server network I/O to Linux `io_uring`; retain connection behavior | Complete |
 | 3 — Text chat | Two clients exchange messages through the server | Complete |
 | 4 — LAN text chat | Dockerized server and five native clients exchange text | Complete |
-| 5 — Group voice | Three to five LAN users speak and listen together | Planned |
+| 5 — Group voice | Three to five LAN users speak and listen together | In progress |
 | 6 — Webcam video | Share webcam streams alongside voice and text | Planned |
 | 7 — Screen sharing | Share a desktop or supported application window | Planned |
 | 8 — Multiple rooms | Isolate text and media among independently managed rooms | Planned |
