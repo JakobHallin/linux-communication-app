@@ -1,6 +1,6 @@
 # Phase 4 — LAN Text Chat
 
-**Version:** 0.4 · **Status:** In Progress · **Prerequisite:** Phase 3
+**Version:** 0.4 · **Status:** Complete · **Prerequisite:** Phase 3
 
 [Roadmap](../PLAN.md) · [Testing strategy](../TEST_PLAN.md) · [README](../../README.md)
 
@@ -45,6 +45,18 @@ COMMUNICATION_SERVER_PORT=8080 \
 The five-client test connects five native Linux clients to the one server
 container, completes five handshakes, and verifies that one message reaches
 the other four clients with the correct sender and content.
+
+For the failure-cleanup check, build the image and the container connection
+test first, then run:
+
+```bash
+bash tests/scripts/phase4_failure_cleanup_test.sh
+```
+
+This test intentionally connects to the wrong port, expects the client to
+fail, removes the temporary server container, and verifies that no container
+with the test name remains. The cleanup function is also registered with a
+shell trap so an interrupted test does not leave the container running.
 
 ### Why `seccomp-io-uring.json` is needed
 
