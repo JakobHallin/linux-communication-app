@@ -124,6 +124,11 @@ The viewer's `0` duration means it runs until interrupted. This is the first
 manual path that proves webcam capture, TCP registration, server forwarding,
 UDP reception, frame validation, and visible playback together.
 
+The automated registration integration test covers the same network path with
+a deterministic synthetic frame. It confirms both clients receive the same
+session relay port and that a registered receiver gets the sender's frame;
+the sender's webcam and `ffplay` remain manual acceptance checks.
+
 ## Build in this order (Red → Green → Refactor)
 
 | Step | Behavior / implementation | New test first |
