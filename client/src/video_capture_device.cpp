@@ -9,10 +9,15 @@
 #include <unistd.h>
 
 #include <cerrno>
+#include <array>
 #include <utility>
 
 namespace client {
     namespace {
+        constexpr std::array<std::pair<std::uint32_t, std::uint32_t>, 3> resolutions{{
+            {1280, 720}, {640, 480}, {320, 240}
+        }};
+
         int ioctlRetry(int descriptor, unsigned long request, void* argument) {
             int result = 0;
             do {
@@ -130,6 +135,12 @@ namespace client {
         const auto payload = readFrame(timeoutMilliseconds);
         if (!payload.has_value()) return std::nullopt;
 
+        if (payload->size() + media::videoFrameHeaderBytes >
+            media::maximumVideoDatagramBytes) {
+            reduceResolution();
+            return std::nullopt;
+        }
+
         return media::makeMjpegVideoFrame(
             sessionId, senderId, sequence, frameWidth, frameHeight, *payload);
     }
@@ -137,8 +148,9 @@ namespace client {
     bool VideoCaptureDevice::configure() {
         v4l2_format format{};
         format.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
-        format.fmt.pix.width = 1280;
-        format.fmt.pix.height = 720;
+        const auto [width, height] = resolutions[resolutionIndex];
+        format.fmt.pix.width = width;
+        format.fmt.pix.height = height;
         format.fmt.pix.pixelformat = V4L2_PIX_FMT_MJPEG;
         format.fmt.pix.field = V4L2_FIELD_ANY;
         if (ioctlRetry(fileDescriptor, VIDIOC_S_FMT, &format) < 0 ||
@@ -149,6 +161,13 @@ namespace client {
         frameWidth = static_cast<std::uint16_t>(format.fmt.pix.width);
         frameHeight = static_cast<std::uint16_t>(format.fmt.pix.height);
         return true;
+    }
+
+    bool VideoCaptureDevice::reduceResolution() {
+        if (resolutionIndex + 1 >= resolutions.size()) return false;
+        ++resolutionIndex;
+        stop();
+        return start();
     }
 
     void VideoCaptureDevice::releaseBuffers() {

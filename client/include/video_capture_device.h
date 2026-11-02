@@ -35,6 +35,7 @@ namespace client {
         };
 
         bool configure();
+        bool reduceResolution();
         void releaseBuffers();
 
         std::string devicePath;
@@ -42,6 +43,7 @@ namespace client {
         std::vector<Buffer> buffers;
         std::uint16_t frameWidth = 0;
         std::uint16_t frameHeight = 0;
+        std::size_t resolutionIndex = 0;
         bool isRunning = false;
     };
 }

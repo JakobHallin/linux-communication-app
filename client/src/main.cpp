@@ -14,8 +14,28 @@ int main(int argc, char** argv) {
     const std::string host = argc > 1 ? argv[1] : "127.0.0.1";
     const auto port = argc > 2 ? static_cast<std::uint16_t>(std::stoul(argv[2])) : 8080;
     const std::string name = argc > 3 ? argv[3] : "Client";
-    const bool voiceEnabled = argc > 4 && std::string(argv[4]) == "--voice";
-    const bool videoEnabled = argc > 4 && std::string(argv[4]) == "--video";
+    bool voiceEnabled = false;
+    bool videoEnabled = false;
+    std::string voiceCapture = "default";
+    std::string voicePlayback = "default";
+    std::string videoDevice = "/dev/video0";
+    for (int argument = 4; argument < argc; ++argument) {
+        const std::string option = argv[argument];
+        if (option == "--voice") {
+            voiceEnabled = true;
+            if (argument + 1 < argc && std::string(argv[argument + 1]).rfind("--", 0) != 0) {
+                voiceCapture = argv[++argument];
+            }
+            if (argument + 1 < argc && std::string(argv[argument + 1]).rfind("--", 0) != 0) {
+                voicePlayback = argv[++argument];
+            }
+        } else if (option == "--video") {
+            videoEnabled = true;
+            if (argument + 1 < argc && std::string(argv[argument + 1]).rfind("--", 0) != 0) {
+                videoDevice = argv[++argument];
+            }
+        }
+    }
 
     client::TextClient textClient(host, port);
     if (!textClient.connectToServer()) {
@@ -39,9 +59,8 @@ int main(int argc, char** argv) {
 #ifdef ENABLE_LIVE_AUDIO_CLIENT
     std::unique_ptr<client::VoiceClient> voice;
     if (voiceEnabled) {
-        const std::string capture = argc > 5 ? argv[5] : "default";
-        const std::string playback = argc > 6 ? argv[6] : "default";
-        voice = std::make_unique<client::VoiceClient>(host, 0, 0, 0, capture, playback);
+        voice = std::make_unique<client::VoiceClient>(
+            host, 0, 0, 0, voiceCapture, voicePlayback);
         if (!voice->start()) {
             std::cerr << "Failed to start voice UDP socket\n";
             textClient.close();
@@ -69,8 +88,7 @@ int main(int argc, char** argv) {
 #endif
     std::unique_ptr<client::VideoClient> video;
     if (videoEnabled) {
-        const std::string device = argc > 5 ? argv[5] : "/dev/video0";
-        video = std::make_unique<client::VideoClient>(host, device);
+        video = std::make_unique<client::VideoClient>(host, videoDevice);
         if (!video->start()) {
             std::cerr << "Failed to start video UDP socket\n";
             textClient.close();
@@ -86,7 +104,7 @@ int main(int argc, char** argv) {
         video->setMediaPort(ready->mediaPort);
         video->setIdentity(ready->sessionId, ready->senderId);
         if (!video->activate()) {
-            std::cerr << "Failed to start webcam capture: " << device << '\n';
+            std::cerr << "Failed to start webcam capture: " << videoDevice << '\n';
             video->stop();
             textClient.close();
             return 1;

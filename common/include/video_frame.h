@@ -7,6 +7,8 @@
 
 namespace media {
     constexpr std::size_t maximumVideoFrameBytes = 1U << 20;
+    constexpr std::size_t videoFrameHeaderBytes = 26;
+    constexpr std::size_t maximumVideoDatagramBytes = 65'507;
 
     struct VideoFrame {
         std::uint32_t sessionId;

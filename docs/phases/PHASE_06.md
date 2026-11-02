@@ -110,6 +110,17 @@ This sends webcam frames to the server; a display/receiver path is the next
 increment, while the manual `ffplay` smoke command remains the direct way to
 watch the local camera frames today.
 
+Voice and video can now run together in the voice-enabled build:
+
+```bash
+./build-voice/communication_client 127.0.0.1 8080 Alice \
+  --voice default default --video /dev/video0
+```
+
+The client registers separate UDP endpoints for Opus voice and video. Use
+`/mute` to control the microphone while the webcam continues streaming; use
+the viewer command below in another client to watch the video.
+
 The receiving smoke client is now available for the end-to-end visual check.
 Start one sending client, then register a second client as a viewer and pipe
 its received MJPEG frames into `ffplay`:
@@ -130,10 +141,19 @@ session relay port and that a registered receiver gets the sender's frame;
 the sender's webcam and `ffplay` remain manual acceptance checks.
 
 The current relay also enforces the IPv4 UDP datagram limit. Oversized encoded
-frames are rejected rather than partially sent or silently dropped. This is a
-deliberate safe boundary; the next resilience increment can add frame
-fragmentation or adaptive capture resolution for cameras whose MJPEG frames
-exceed one datagram.
+frames are rejected rather than partially sent or silently dropped. The V4L2
+client responds by restarting capture at 640x480 and then 320x240 when a
+captured MJPEG frame is too large for one datagram. This is a bounded fallback;
+fragmentation can be added later if lower-resolution frames are still too large.
+
+### Local live acceptance result
+
+The combined voice-and-video client was manually verified on one host with a
+webcam and headphones. Webcam video was visible through the receiving viewer,
+and voice playback worked without the earlier feedback problem. Headphones
+are part of this local acceptance setup; speakers can still create acoustic
+feedback and background noise, so that is an audio-environment limitation
+rather than a failed video transport.
 
 ## Build in this order (Red → Green → Refactor)
 
