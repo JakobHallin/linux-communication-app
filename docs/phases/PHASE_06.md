@@ -129,6 +129,12 @@ a deterministic synthetic frame. It confirms both clients receive the same
 session relay port and that a registered receiver gets the sender's frame;
 the sender's webcam and `ffplay` remain manual acceptance checks.
 
+The current relay also enforces the IPv4 UDP datagram limit. Oversized encoded
+frames are rejected rather than partially sent or silently dropped. This is a
+deliberate safe boundary; the next resilience increment can add frame
+fragmentation or adaptive capture resolution for cameras whose MJPEG frames
+exceed one datagram.
+
 ## Build in this order (Red → Green → Refactor)
 
 | Step | Behavior / implementation | New test first |

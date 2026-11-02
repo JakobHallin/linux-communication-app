@@ -10,6 +10,8 @@
 #include <unordered_set>
 
 namespace media {
+    constexpr std::size_t maximumVideoDatagramBytes = 65'507;
+
     class VideoUdpTransport {
     public:
         explicit VideoUdpTransport(std::uint16_t port = 0);

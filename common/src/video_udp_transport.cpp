@@ -10,7 +10,6 @@
 
 namespace media {
     namespace {
-        constexpr std::size_t maximumVideoDatagramBytes = 65'507;
     }
 
     VideoUdpTransport::VideoUdpTransport(std::uint16_t port)

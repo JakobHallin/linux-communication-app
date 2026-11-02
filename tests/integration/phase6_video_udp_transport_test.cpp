@@ -64,6 +64,10 @@ int main() {
     assert(hasDatagram(memberSocket));
     assert(!hasDatagram(otherSessionSocket));
 
+    auto oversized = frame;
+    oversized.payload.resize(media::maximumVideoDatagramBytes);
+    assert(transport.forward(oversized) == 0);
+
     close(senderSocket);
     close(memberSocket);
     close(otherSessionSocket);
