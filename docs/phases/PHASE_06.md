@@ -1,6 +1,6 @@
 # Phase 6 — Webcam Video
 
-**Version:** 0.6 · **Status:** In Progress · **Prerequisite:** Phase 5
+**Version:** 0.6 · **Status:** Complete · **Prerequisite:** Phase 5
 
 [Roadmap](../PLAN.md) · [Testing strategy](../TEST_PLAN.md) · [README](../../README.md)
 
@@ -174,3 +174,11 @@ rather than a failed video transport.
   use.
 - Synthetic-frame tests pass; real webcam behavior is checked manually.
 - Earlier phase tests remain green.
+
+## Completion result
+
+Phase 6 is complete. The automated video, transport, registration, client,
+resolution-fallback, and earlier-phase tests pass. The local live acceptance
+check verified webcam video alongside voice and text using headphones; the
+receiving viewer displayed the forwarded webcam stream. Speaker feedback
+remains an expected acoustic limitation of the local audio setup.

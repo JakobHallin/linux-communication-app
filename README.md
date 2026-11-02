@@ -2,7 +2,7 @@
 
 A **Linux-only C++20 communication app**. Start by connecting one client, then two; next introduce server-side `io_uring`, then build chat and grow toward the multi-client LAN app with voice, video, screen sharing, and multiple rooms.
 
-> **Current state:** Phases 1–4 are implemented and tested. The server supports concurrent local clients and five native clients connecting to a Dockerized server.
+> **Current state:** Phases 1–4 are implemented and tested. Phase 6 webcam video is implemented and locally verified alongside voice/text with headphones. The server supports concurrent local clients and five native clients connecting to a Dockerized server.
 
 ## First phases
 
@@ -136,7 +136,7 @@ different sender. Press `Ctrl-C` to cleanly stop all processes.
 - [Phase 3 — Text chat](docs/phases/PHASE_03.md)
 - [Phase 4 — LAN text chat](docs/phases/PHASE_04.md) — Docker and five clients
 - [Phase 5 — Group voice](docs/phases/PHASE_05.md)
-- [Phase 6 — Webcam video](docs/phases/PHASE_06.md)
+- [Phase 6 — Webcam video](docs/phases/PHASE_06.md) — complete
 - [Phase 7 — Screen sharing](docs/phases/PHASE_07.md)
 - [Phase 8 — Multiple rooms](docs/phases/PHASE_08.md)
 - [Phase 9 — SQLite persistence](docs/phases/PHASE_09.md) — optional
@@ -148,6 +148,7 @@ different sender. Press `Ctrl-C` to cleanly stop all processes.
 - [x] Phase 3 — Two-client text chat with framing, validation, ordering, and cleanup
 - [x] Phase 4 — Dockerized LAN text chat with five native clients
 - [ ] Phase 5 — Group voice (local two-client ALSA/Opus demo verified with mute; 3–5 client LAN acceptance pending)
+- [x] Phase 6 — Webcam video (V4L2/MJPEG capture, authorized UDP relay, live viewer, and voice/text coexistence verified locally with headphones)
 
 **Workflow:** use TDD for each behavior: write a meaningful failing test,
 implement the minimum to pass, then refactor. The roadmap describes planned
