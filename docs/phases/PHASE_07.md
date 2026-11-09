@@ -24,6 +24,20 @@ Before adding portal code, the client defines a hardware-independent
 source to prove that frames are unavailable before start and after stop, and
 that a running source can return session and sequence metadata.
 
+### Phase 7.2 prerequisite
+
+The real backend requires the development interfaces that are not currently
+installed on the development machine:
+
+```bash
+sudo apt install libpipewire-0.3-dev libportal-dev
+```
+
+The runtime `pipewire` command alone is not sufficient to compile the client;
+the headers and link libraries are needed for Portal/PipeWire stream setup.
+Until those packages are installed, only the fake capture contract is built
+and tested.
+
 ## Planned flow
 
 ```mermaid
