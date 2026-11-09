@@ -19,6 +19,10 @@ option(ENABLE_LIVE_AUDIO_CLIENT
     "Build communication_client with ALSA microphone and speaker support"
     OFF
 )
+option(ENABLE_WAYLAND_SCREEN_CAPTURE
+    "Build the Wayland XDG Portal/PipeWire screen-capture session"
+    OFF
+)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -51,6 +55,31 @@ add_executable(communication_client
     common/src/video_frame.cpp
     common/src/mjpeg_frame.cpp
 )
+
+if(ENABLE_WAYLAND_SCREEN_CAPTURE)
+    find_package(PkgConfig REQUIRED)
+    pkg_check_modules(WAYLAND_CAPTURE REQUIRED IMPORTED_TARGET
+        libportal libpipewire-0.3
+    )
+    add_library(wayland_screen_capture STATIC
+        client/src/wayland_portal_capture.cpp
+    )
+    target_include_directories(wayland_screen_capture PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/client/include
+    )
+    target_link_libraries(wayland_screen_capture PUBLIC
+        PkgConfig::WAYLAND_CAPTURE
+    )
+    add_executable(phase7_portal_capture_smoke
+        tests/manual/phase7_portal_capture_smoke.cpp
+    )
+    target_include_directories(phase7_portal_capture_smoke PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/client/include
+    )
+    target_link_libraries(phase7_portal_capture_smoke PRIVATE
+        wayland_screen_capture
+    )
+endif()
 
 add_executable(phase6_video_capture_smoke
     tests/manual/phase6_video_capture_smoke.cpp

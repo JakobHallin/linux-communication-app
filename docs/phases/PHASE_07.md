@@ -38,6 +38,26 @@ the headers and link libraries are needed for Portal/PipeWire stream setup.
 Until those packages are installed, only the fake capture contract is built
 and tested.
 
+The real session backend is now available as an opt-in build target. Configure
+it with:
+
+```bash
+cmake -S . -B build-wayland \
+  -DENABLE_WAYLAND_SCREEN_CAPTURE=ON \
+  -DBUILD_TESTING=OFF
+cmake --build build-wayland --target phase7_portal_capture_smoke
+./build-wayland/phase7_portal_capture_smoke
+```
+
+This opens the desktop/window permission dialog, starts the Portal session,
+opens its PipeWire remote, holds it for five seconds, and closes it cleanly.
+Frame extraction and transport are the next steps; this smoke target verifies
+the real permission and session lifecycle first.
+
+The Portal/PipeWire smoke test has been run successfully on the development
+Wayland session: the permission/session startup returned a live PipeWire file
+descriptor, and the session closed cleanly after the five-second check.
+
 ## Planned flow
 
 ```mermaid
