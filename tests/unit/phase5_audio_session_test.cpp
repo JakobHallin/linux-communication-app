@@ -1,6 +1,6 @@
 #include "audio_session.h"
 
-#include <cassert>
+#include "../support/check.h"
 #include <iostream>
 
 int main() {
@@ -12,10 +12,10 @@ int main() {
         .payload = {0x01, 0x02, 0x03}
     };
 
-    assert(!registry.accepts(packet));
+    TEST_CHECK(!registry.accepts(packet));
 
     registry.registerSender(packet.sessionId, packet.senderId);
-    assert(registry.accepts(packet));
+    TEST_CHECK(registry.accepts(packet));
 
     const media::AudioPacket wrongSender{
         .sessionId = packet.sessionId,
@@ -23,7 +23,7 @@ int main() {
         .sequence = packet.sequence,
         .payload = packet.payload
     };
-    assert(!registry.accepts(wrongSender));
+    TEST_CHECK(!registry.accepts(wrongSender));
 
     const media::AudioPacket wrongSession{
         .sessionId = 99,
@@ -31,10 +31,10 @@ int main() {
         .sequence = packet.sequence,
         .payload = packet.payload
     };
-    assert(!registry.accepts(wrongSession));
+    TEST_CHECK(!registry.accepts(wrongSession));
 
     registry.unregisterSender(packet.sessionId, packet.senderId);
-    assert(!registry.accepts(packet));
+    TEST_CHECK(!registry.accepts(packet));
 
     std::cout << "Phase 5 audio session authorization test passed\n";
 }

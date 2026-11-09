@@ -1,7 +1,7 @@
 #include "http_tcpServer.h"
 #include "text_client.h"
 
-#include <cassert>
+#include "../support/check.h"
 #include <chrono>
 #include <iostream>
 #include <thread>
@@ -12,19 +12,19 @@ int main() {
     for (int attempt = 0; attempt < 100 && server.port() == 0; ++attempt) {
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
-    assert(server.port() != 0);
+    TEST_CHECK(server.port() != 0);
 
     client::TextClient alice("127.0.0.1", server.port());
     client::TextClient bob("127.0.0.1", server.port());
-    assert(alice.connectToServer());
-    assert(bob.connectToServer());
-    assert(alice.sendName("Alice"));
-    assert(bob.sendName("Bob"));
-    assert(alice.receiveLine(1000) == "WELCOME Alice");
-    assert(bob.receiveLine(1000) == "WELCOME Bob");
+    TEST_CHECK(alice.connectToServer());
+    TEST_CHECK(bob.connectToServer());
+    TEST_CHECK(alice.sendName("Alice"));
+    TEST_CHECK(bob.sendName("Bob"));
+    TEST_CHECK(alice.receiveLine(1000) == "WELCOME Alice");
+    TEST_CHECK(bob.receiveLine(1000) == "WELCOME Bob");
 
-    assert(alice.sendMessage("voice client is still text compatible"));
-    assert(bob.receiveLine(1000) ==
+    TEST_CHECK(alice.sendMessage("voice client is still text compatible"));
+    TEST_CHECK(bob.receiveLine(1000) ==
            "FROM Alice voice client is still text compatible");
 
     alice.close();

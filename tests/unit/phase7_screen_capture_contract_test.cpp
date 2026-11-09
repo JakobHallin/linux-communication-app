@@ -1,6 +1,6 @@
 #include "screen_capture_source.h"
 
-#include <cassert>
+#include "../support/check.h"
 #include <iostream>
 
 namespace {
@@ -38,21 +38,21 @@ namespace {
 
 int main() {
     FakeScreenCapture capture;
-    assert(!capture.running());
-    assert(!capture.readFrame(1, 2, 3, 0).has_value());
+    TEST_CHECK(!capture.running());
+    TEST_CHECK(!capture.readFrame(1, 2, 3, 0).has_value());
 
-    assert(capture.start());
-    assert(capture.running());
+    TEST_CHECK(capture.start());
+    TEST_CHECK(capture.running());
     const auto frame = capture.readFrame(7, 4, 9, 100);
-    assert(frame.has_value());
-    assert(frame->sessionId == 7);
-    assert(frame->senderId == 4);
-    assert(frame->sequence == 9);
-    assert(frame->payload.size() == 3);
+    TEST_CHECK(frame.has_value());
+    TEST_CHECK(frame->sessionId == 7);
+    TEST_CHECK(frame->senderId == 4);
+    TEST_CHECK(frame->sequence == 9);
+    TEST_CHECK(frame->payload.size() == 3);
 
     capture.stop();
-    assert(!capture.running());
-    assert(!capture.readFrame(7, 4, 10, 100).has_value());
+    TEST_CHECK(!capture.running());
+    TEST_CHECK(!capture.readFrame(7, 4, 10, 100).has_value());
 
     std::cout << "Phase 7 screen capture contract test passed\n";
 }

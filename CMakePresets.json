@@ -1,0 +1,56 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 25,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "automated-tests",
+      "displayName": "Automated tests (Debug)",
+      "description": "Build automated tests in a dedicated directory without hardware or container requirements.",
+      "generator": "Unix Makefiles",
+      "binaryDir": "${sourceDir}/build-tests",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "BUILD_TESTING": "ON",
+        "ENABLE_PHASE4_CONTAINER_TEST": "OFF",
+        "ENABLE_LIVE_AUDIO_DEMO": "OFF",
+        "ENABLE_LIVE_AUDIO_CLIENT": "OFF",
+        "ENABLE_WAYLAND_SCREEN_CAPTURE": "OFF"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "automated-tests",
+      "configurePreset": "automated-tests"
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "automated-tests",
+      "configurePreset": "automated-tests",
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "noTestsAction": "error",
+        "jobs": 1,
+        "timeout": 30
+      }
+    }
+  ],
+  "workflowPresets": [
+    {
+      "name": "automated-tests",
+      "displayName": "Configure, build, and run automated tests",
+      "steps": [
+        { "type": "configure", "name": "automated-tests" },
+        { "type": "build", "name": "automated-tests" },
+        { "type": "test", "name": "automated-tests" }
+      ]
+    }
+  ]
+}

@@ -4,6 +4,9 @@
 
 ## Approach
 
+See the [test suite guide](../tests/README.md) for directory layout, shared
+helpers, checks, and timeout conventions.
+
 Use **Test-Driven Development (Red → Green → Refactor)** for each behavior:
 
 1. Write a focused test that expresses the expected behavior and confirm it

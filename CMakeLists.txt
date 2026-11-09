@@ -159,7 +159,7 @@ target_link_libraries(communication_server PRIVATE
 
 if(BUILD_TESTING)
     add_executable(phase1_connection_test
-        tests/integration/phase1/phase1_connection_test.cpp
+        tests/integration/phase1_connection_test.cpp
         server/src/http_tcpServer.cpp
         server/src/chat_protocol.cpp
         common/src/video_udp_transport.cpp
@@ -178,7 +178,7 @@ if(BUILD_TESTING)
     set_tests_properties(phase1_connection_test PROPERTIES LABELS "phase1;integration")
 
     add_executable(phase2_io_uring_test
-        tests/integration/phase2/phase2_io_uring_test.cpp
+        tests/integration/phase2_io_uring_test.cpp
         server/src/http_tcpServer.cpp
         server/src/chat_protocol.cpp
         common/src/video_udp_transport.cpp
@@ -425,7 +425,7 @@ if(BUILD_TESTING)
         LABELS "phase6;integration")
 
     add_executable(phase7_screen_share_integration_test
-        tests/integration/phase7/phase7_screen_share_integration_test.cpp
+        tests/integration/phase7_screen_share_integration_test.cpp
         client/src/text_client.cpp
         server/src/http_tcpServer.cpp
         server/src/chat_protocol.cpp
@@ -674,6 +674,11 @@ if(BUILD_TESTING)
             LABELS "phase4;integration;container"
             ENVIRONMENT "COMMUNICATION_SERVER_HOST=127.0.0.1;COMMUNICATION_SERVER_PORT=8080"
         )
+    endif()
+    # Bound every automated test, including blocking socket calls and shutdown.
+    get_property(communication_tests DIRECTORY PROPERTY TESTS)
+    if(communication_tests)
+        set_tests_properties(${communication_tests} PROPERTIES TIMEOUT 30)
     endif()
 endif()
 

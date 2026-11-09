@@ -3,7 +3,7 @@
 #include "video_frame.h"
 
 #include <arpa/inet.h>
-#include <cassert>
+#include "../support/check.h"
 #include <chrono>
 #include <iostream>
 #include <poll.h>
@@ -18,9 +18,9 @@ namespace {
         address.sin_family = AF_INET;
         address.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
         address.sin_port = 0;
-        assert(bind(socketFd, reinterpret_cast<sockaddr*>(&address), sizeof(address)) == 0);
+        TEST_CHECK(bind(socketFd, reinterpret_cast<sockaddr*>(&address), sizeof(address)) == 0);
         socklen_t length = sizeof(address);
-        assert(getsockname(socketFd, reinterpret_cast<sockaddr*>(&address), &length) == 0);
+        TEST_CHECK(getsockname(socketFd, reinterpret_cast<sockaddr*>(&address), &length) == 0);
         return address;
     }
 }
@@ -31,28 +31,28 @@ int main() {
     for (int attempt = 0; attempt < 100 && server.port() == 0; ++attempt) {
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
-    assert(server.port() != 0);
+    TEST_CHECK(server.port() != 0);
 
     client::TextClient sender("127.0.0.1", server.port());
     client::TextClient receiver("127.0.0.1", server.port());
-    assert(sender.connectToServer());
-    assert(receiver.connectToServer());
-    assert(sender.sendName("Alice"));
-    assert(receiver.sendName("Bob"));
-    assert(sender.receiveLine(1000) == "WELCOME Alice");
-    assert(receiver.receiveLine(1000) == "WELCOME Bob");
+    TEST_CHECK(sender.connectToServer());
+    TEST_CHECK(receiver.connectToServer());
+    TEST_CHECK(sender.sendName("Alice"));
+    TEST_CHECK(receiver.sendName("Bob"));
+    TEST_CHECK(sender.receiveLine(1000) == "WELCOME Alice");
+    TEST_CHECK(receiver.receiveLine(1000) == "WELCOME Bob");
 
     const int senderSocket = socket(AF_INET, SOCK_DGRAM, 0);
     const int receiverSocket = socket(AF_INET, SOCK_DGRAM, 0);
-    assert(senderSocket >= 0 && receiverSocket >= 0);
+    TEST_CHECK(senderSocket >= 0 && receiverSocket >= 0);
     const auto senderEndpoint = bindUdpSocket(senderSocket);
     const auto receiverEndpoint = bindUdpSocket(receiverSocket);
     const auto senderReady = sender.registerVideo(ntohs(senderEndpoint.sin_port), 1000);
     const auto receiverReady = receiver.registerVideo(ntohs(receiverEndpoint.sin_port), 1000);
-    assert(senderReady.has_value() && receiverReady.has_value());
-    assert(senderReady->sessionId == receiverReady->sessionId);
-    assert(senderReady->mediaPort == server.videoMediaPort());
-    assert(receiverReady->mediaPort == server.videoMediaPort());
+    TEST_CHECK(senderReady.has_value() && receiverReady.has_value());
+    TEST_CHECK(senderReady->sessionId == receiverReady->sessionId);
+    TEST_CHECK(senderReady->mediaPort == server.videoMediaPort());
+    TEST_CHECK(receiverReady->mediaPort == server.videoMediaPort());
 
     const media::VideoFrame frame{
         .sessionId = senderReady->sessionId,
@@ -67,22 +67,22 @@ int main() {
     serverAddress.sin_family = AF_INET;
     serverAddress.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
     serverAddress.sin_port = htons(server.videoMediaPort());
-    assert(sendto(senderSocket, encoded.data(), encoded.size(), 0,
+    TEST_CHECK(sendto(senderSocket, encoded.data(), encoded.size(), 0,
                   reinterpret_cast<sockaddr*>(&serverAddress), sizeof(serverAddress)) > 0);
 
     pollfd descriptor{receiverSocket, POLLIN, 0};
-    assert(poll(&descriptor, 1, 1000) > 0);
+    TEST_CHECK(poll(&descriptor, 1, 1000) > 0);
     std::vector<std::uint8_t> received(media::maximumVideoFrameBytes + 26);
     const auto receivedBytes = recvfrom(receiverSocket, received.data(), received.size(), 0,
                                         nullptr, nullptr);
-    assert(receivedBytes > 0);
+    TEST_CHECK(receivedBytes > 0);
     received.resize(static_cast<std::size_t>(receivedBytes));
     const auto forwarded = media::deserializeVideoFrame(received);
-    assert(forwarded.has_value());
-    assert(forwarded->sessionId == frame.sessionId);
-    assert(forwarded->senderId == frame.senderId);
-    assert(forwarded->sequence == frame.sequence);
-    assert(forwarded->payload == frame.payload);
+    TEST_CHECK(forwarded.has_value());
+    TEST_CHECK(forwarded->sessionId == frame.sessionId);
+    TEST_CHECK(forwarded->senderId == frame.senderId);
+    TEST_CHECK(forwarded->sequence == frame.sequence);
+    TEST_CHECK(forwarded->payload == frame.payload);
 
     sender.close();
     receiver.close();

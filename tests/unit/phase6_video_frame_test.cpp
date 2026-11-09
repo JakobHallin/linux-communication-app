@@ -1,6 +1,6 @@
 #include "video_frame.h"
 
-#include <cassert>
+#include "../support/check.h"
 #include <iostream>
 #include <vector>
 
@@ -15,27 +15,27 @@ int main() {
     };
 
     const auto encoded = media::serializeVideoFrame(original);
-    assert(!encoded.empty());
+    TEST_CHECK(!encoded.empty());
     const auto decoded = media::deserializeVideoFrame(encoded);
-    assert(decoded.has_value());
-    assert(decoded->sessionId == original.sessionId);
-    assert(decoded->senderId == original.senderId);
-    assert(decoded->sequence == original.sequence);
-    assert(decoded->width == original.width);
-    assert(decoded->height == original.height);
-    assert(decoded->payload == original.payload);
+    TEST_CHECK(decoded.has_value());
+    TEST_CHECK(decoded->sessionId == original.sessionId);
+    TEST_CHECK(decoded->senderId == original.senderId);
+    TEST_CHECK(decoded->sequence == original.sequence);
+    TEST_CHECK(decoded->width == original.width);
+    TEST_CHECK(decoded->height == original.height);
+    TEST_CHECK(decoded->payload == original.payload);
 
     auto invalidMagic = encoded;
     invalidMagic[0] = 'X';
-    assert(!media::deserializeVideoFrame(invalidMagic).has_value());
+    TEST_CHECK(!media::deserializeVideoFrame(invalidMagic).has_value());
 
     auto truncated = encoded;
     truncated.pop_back();
-    assert(!media::deserializeVideoFrame(truncated).has_value());
+    TEST_CHECK(!media::deserializeVideoFrame(truncated).has_value());
 
     auto oversized = original;
     oversized.payload.resize(media::maximumVideoFrameBytes + 1);
-    assert(media::serializeVideoFrame(oversized).empty());
+    TEST_CHECK(media::serializeVideoFrame(oversized).empty());
 
     std::cout << "Phase 6 video frame test passed\n";
 }

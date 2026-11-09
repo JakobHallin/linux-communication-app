@@ -4,7 +4,7 @@
 #include "audio_udp_transport.h"
 
 #include <arpa/inet.h>
-#include <cassert>
+#include "../support/check.h"
 #include <cmath>
 #include <cstdint>
 #include <iostream>
@@ -19,18 +19,18 @@ sockaddr_in bindUdpSocket(int socketFd) {
     address.sin_family = AF_INET;
     address.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
     address.sin_port = 0;
-    assert(bind(socketFd, reinterpret_cast<sockaddr*>(&address), sizeof(address)) == 0);
+    TEST_CHECK(bind(socketFd, reinterpret_cast<sockaddr*>(&address), sizeof(address)) == 0);
     socklen_t length = sizeof(address);
-    assert(getsockname(socketFd, reinterpret_cast<sockaddr*>(&address), &length) == 0);
+    TEST_CHECK(getsockname(socketFd, reinterpret_cast<sockaddr*>(&address), &length) == 0);
     return address;
 }
 
 std::vector<std::uint8_t> receiveDatagram(int socketFd) {
     pollfd descriptor{socketFd, POLLIN, 0};
-    assert(poll(&descriptor, 1, 500) > 0);
+    TEST_CHECK(poll(&descriptor, 1, 500) > 0);
     std::vector<std::uint8_t> bytes(media::maximumAudioPacketBytes);
     const auto received = recvfrom(socketFd, bytes.data(), bytes.size(), 0, nullptr, nullptr);
-    assert(received > 0);
+    TEST_CHECK(received > 0);
     bytes.resize(static_cast<std::size_t>(received));
     return bytes;
 }
@@ -38,11 +38,11 @@ std::vector<std::uint8_t> receiveDatagram(int socketFd) {
 
 int main() {
     media::AudioUdpTransport server;
-    assert(server.start());
+    TEST_CHECK(server.start());
 
     const int senderSocket = socket(AF_INET, SOCK_DGRAM, 0);
     const int receiverSocket = socket(AF_INET, SOCK_DGRAM, 0);
-    assert(senderSocket >= 0 && receiverSocket >= 0);
+    TEST_CHECK(senderSocket >= 0 && receiverSocket >= 0);
     const auto senderEndpoint = bindUdpSocket(senderSocket);
     const auto receiverEndpoint = bindUdpSocket(receiverSocket);
 
@@ -60,7 +60,7 @@ int main() {
                                media::OpusCodec::sampleRate));
     }
     const auto encoded = codec.encode(samples);
-    assert(!encoded.empty());
+    TEST_CHECK(!encoded.empty());
 
     const media::AudioPacket outgoing{
         .sessionId = sessionId,
@@ -73,26 +73,26 @@ int main() {
     serverAddress.sin_family = AF_INET;
     serverAddress.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
     serverAddress.sin_port = htons(server.port());
-    assert(sendto(senderSocket, bytes.data(), bytes.size(), 0,
+    TEST_CHECK(sendto(senderSocket, bytes.data(), bytes.size(), 0,
                   reinterpret_cast<sockaddr*>(&serverAddress), sizeof(serverAddress)) > 0);
 
     const auto received = server.receive(500);
-    assert(received.has_value());
-    assert(server.forward(*received) == 1);
+    TEST_CHECK(received.has_value());
+    TEST_CHECK(server.forward(*received) == 1);
 
     const auto forwardedBytes = receiveDatagram(receiverSocket);
     const auto forwarded = media::deserializeAudioPacket(forwardedBytes);
-    assert(forwarded.has_value());
-    assert(forwarded->sessionId == sessionId);
-    assert(forwarded->senderId == senderId);
-    assert(forwarded->sequence == 1);
+    TEST_CHECK(forwarded.has_value());
+    TEST_CHECK(forwarded->sessionId == sessionId);
+    TEST_CHECK(forwarded->senderId == senderId);
+    TEST_CHECK(forwarded->sequence == 1);
 
     const auto decoded = codec.decode(forwarded->payload);
-    assert(decoded.has_value());
-    assert(decoded->size() == media::OpusCodec::frameSamples);
+    TEST_CHECK(decoded.has_value());
+    TEST_CHECK(decoded->size() == media::OpusCodec::frameSamples);
     media::AudioStreamMixer mixer;
-    assert(mixer.submit(senderId, *decoded));
-    assert(!mixer.mix().empty());
+    TEST_CHECK(mixer.submit(senderId, *decoded));
+    TEST_CHECK(!mixer.mix().empty());
 
     close(senderSocket);
     close(receiverSocket);

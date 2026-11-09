@@ -1,7 +1,7 @@
 #include "screen_frame_encoder.h"
 #include "mjpeg_frame.h"
 
-#include <cassert>
+#include "../support/check.h"
 #include <iostream>
 
 int main() {
@@ -16,17 +16,17 @@ int main() {
     };
 
     const auto frame = media::makeMjpegVideoFrameFromBgra(7, 3, 11, source);
-    assert(frame.has_value());
-    assert(frame->sessionId == 7);
-    assert(frame->senderId == 3);
-    assert(frame->sequence == 11);
-    assert(frame->width == 2);
-    assert(frame->height == 2);
-    assert(media::isValidMjpeg(frame->payload));
+    TEST_CHECK(frame.has_value());
+    TEST_CHECK(frame->sessionId == 7);
+    TEST_CHECK(frame->senderId == 3);
+    TEST_CHECK(frame->sequence == 11);
+    TEST_CHECK(frame->width == 2);
+    TEST_CHECK(frame->height == 2);
+    TEST_CHECK(media::isValidMjpeg(frame->payload));
 
     auto invalid = source;
     invalid.stride = 4;
-    assert(!media::makeMjpegVideoFrameFromBgra(7, 3, 12, invalid).has_value());
+    TEST_CHECK(!media::makeMjpegVideoFrameFromBgra(7, 3, 12, invalid).has_value());
 
     std::cout << "Phase 7 screen frame encoder test passed\n";
 }

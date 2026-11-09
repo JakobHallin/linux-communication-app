@@ -103,7 +103,7 @@ flowchart LR
 | 7.2 | Implement start/stop and capture lifecycle | Fake capture state tests |
 | 7.3 | Encode captured BGRA frames as MJPEG | `tests/unit/phase7_screen_frame_encoder_test.cpp` |
 | 7.4 | Forward screen stream to authorized members | Screen-video client lifecycle and existing video relay |
-| 7.5 | View shared content alongside voice | `tests/integration/phase7/phase7_screen_share_integration_test.cpp` |
+| 7.5 | View shared content alongside voice | `tests/integration/phase7_screen_share_integration_test.cpp` |
 | 7.6 | Validate on a real Linux desktop | Manual permission/capture and stability tests |
 
 ## File ownership

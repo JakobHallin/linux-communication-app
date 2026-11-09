@@ -1,6 +1,6 @@
 #include "video_frame.h"
 
-#include <cassert>
+#include "../support/check.h"
 #include <cstdint>
 #include <iostream>
 #include <utility>
@@ -17,9 +17,9 @@ int main() {
     };
 
     const auto datagrams = media::serializeVideoFrameDatagrams(original);
-    assert(datagrams.size() > 1);
+    TEST_CHECK(datagrams.size() > 1);
     for (const auto& datagram : datagrams) {
-        assert(datagram.size() <= media::maximumVideoDatagramBytes);
+        TEST_CHECK(datagram.size() <= media::maximumVideoDatagramBytes);
     }
 
     media::VideoFrameReassembler reassembler;
@@ -27,13 +27,13 @@ int main() {
     for (auto it = datagrams.rbegin(); it != datagrams.rend(); ++it) {
         rebuilt = reassembler.accept(*it);
     }
-    assert(rebuilt.has_value());
-    assert(rebuilt->sessionId == original.sessionId);
-    assert(rebuilt->senderId == original.senderId);
-    assert(rebuilt->sequence == original.sequence);
-    assert(rebuilt->width == original.width);
-    assert(rebuilt->height == original.height);
-    assert(rebuilt->payload == original.payload);
+    TEST_CHECK(rebuilt.has_value());
+    TEST_CHECK(rebuilt->sessionId == original.sessionId);
+    TEST_CHECK(rebuilt->senderId == original.senderId);
+    TEST_CHECK(rebuilt->sequence == original.sequence);
+    TEST_CHECK(rebuilt->width == original.width);
+    TEST_CHECK(rebuilt->height == original.height);
+    TEST_CHECK(rebuilt->payload == original.payload);
 
     std::cout << "Phase 7 video fragmentation test passed\n";
 }

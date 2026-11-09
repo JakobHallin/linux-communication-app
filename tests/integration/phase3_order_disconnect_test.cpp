@@ -1,92 +1,30 @@
-#include "http_tcpServer.h"
-
-#include <arpa/inet.h>
-#include <chrono>
-#include <iostream>
-#include <poll.h>
-#include <string>
-#include <sys/socket.h>
-#include <thread>
-#include <unistd.h>
-
-namespace {
-    int connectClient(std::uint16_t port) {
-        int socketFd = socket(AF_INET, SOCK_STREAM, 0);
-        if (socketFd < 0) return -1;
-        sockaddr_in address{};
-        address.sin_family = AF_INET;
-        address.sin_port = htons(port);
-        inet_pton(AF_INET, "127.0.0.1", &address.sin_addr);
-        if (connect(socketFd, reinterpret_cast<sockaddr*>(&address),
-                    sizeof(address)) < 0) {
-            close(socketFd);
-            return -1;
-        }
-        return socketFd;
-    }
-
-    bool sendAll(int socketFd, const std::string& message) {
-        std::size_t sent = 0;
-        while (sent < message.size()) {
-            ssize_t result = send(socketFd, message.data() + sent,
-                                  message.size() - sent, 0);
-            if (result <= 0) return false;
-            sent += static_cast<std::size_t>(result);
-        }
-        return true;
-    }
-
-    bool receiveLine(int socketFd, std::string& line) {
-        line.clear();
-        while (true) {
-            pollfd descriptor{socketFd, POLLIN, 0};
-            if (poll(&descriptor, 1, 1000) <= 0) return false;
-            char character = 0;
-            if (recv(socketFd, &character, 1, 0) <= 0) return false;
-            if (character == '\n') return true;
-            line.push_back(character);
-        }
-    }
-
-    bool waitFor(const auto& condition) {
-        for (int attempt = 0; attempt < 100; ++attempt) {
-            if (condition()) return true;
-            std::this_thread::sleep_for(std::chrono::milliseconds(10));
-        }
-        return false;
-    }
-}
+#include "../support/tcp_test_support.h"
 
 int main() {
-    http::TcpServer server(0);
-    std::thread serverThread([&server] { server.start(); });
-    if (!waitFor([&server] { return server.port() != 0; })) return 1;
+    return test::run("Phase 3 order/disconnect", [] {
+        test::RunningServer fixture;
+        test::require(test::waitFor([&] { return fixture.server.port() != 0; }),
+                      "Server did not start");
+        test::ClientSocket alice(test::connectClient(fixture.server.port()));
+        const test::ClientSocket bob(test::connectClient(fixture.server.port()));
+        test::require(alice.get() >= 0 && bob.get() >= 0,
+                      "Alice and Bob must both connect");
+        test::require(test::sendAll(alice.get(), "NAME Alice\n") &&
+                      test::sendAll(bob.get(), "NAME Bob\n"),
+                      "Clients could not send their names");
+        test::expectLine(alice.get(), "WELCOME Alice", "Alice handshake");
+        test::expectLine(bob.get(), "WELCOME Bob", "Bob handshake");
 
-    int alice = connectClient(server.port());
-    int bob = connectClient(server.port());
-    std::string line;
-    bool connected = alice >= 0 && bob >= 0 &&
-        waitFor([&server] { return server.activeConnectionCount() == 2; });
-    bool handshaken = connected && sendAll(alice, "NAME Alice\n") &&
-        sendAll(bob, "NAME Bob\n") && receiveLine(alice, line) &&
-        line == "WELCOME Alice" && receiveLine(bob, line) &&
-        line == "WELCOME Bob";
-    bool ordered = handshaken && sendAll(alice, "MSG first\nMSG second\n") &&
-        receiveLine(bob, line) && line == "FROM Alice first" &&
-        receiveLine(bob, line) && line == "FROM Alice second";
+        test::require(test::sendAll(alice.get(), "MSG first\nMSG second\n"),
+                      "Alice could not send ordered messages");
+        test::expectLine(bob.get(), "FROM Alice first", "First message");
+        test::expectLine(bob.get(), "FROM Alice second", "Second message");
 
-    close(alice);
-    bool recipientSurvived = ordered &&
-        waitFor([&server] { return server.activeConnectionCount() == 1; });
-
-    close(bob);
-    server.closeServer();
-    serverThread.join();
-
-    if (!recipientSurvived) {
-        std::cerr << "Ordered delivery or disconnect handling failed\n";
-        return 1;
-    }
-    std::cout << "Phase 3 order/disconnect test passed\n";
-    return 0;
+        alice.reset();
+        test::require(test::waitFor([&] {
+            return fixture.server.activeConnectionCount() == 1;
+        }), "Alice disconnect was not reported");
+        test::require(test::sendAll(bob.get(), "MSG still here\n"),
+                      "Bob could not send after Alice disconnected");
+    });
 }
