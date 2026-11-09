@@ -97,7 +97,7 @@ flowchart LR
 | 7.2 | Implement start/stop and capture lifecycle | Fake capture state tests |
 | 7.3 | Encode captured BGRA frames as MJPEG | `tests/unit/phase7_screen_frame_encoder_test.cpp` |
 | 7.4 | Forward screen stream to authorized members | Screen-video client lifecycle and existing video relay |
-| 7.5 | View shared content alongside voice | Multi-viewer integration and stream stop tests |
+| 7.5 | View shared content alongside voice | `tests/integration/phase7/phase7_screen_share_integration_test.cpp` |
 | 7.6 | Validate on a real Linux desktop | Manual permission/capture and stability tests |
 
 ## File ownership
@@ -131,6 +131,16 @@ The client registers as a normal `VIDEO_PORT` participant. The server’s
 existing authorized-member relay forwards the encoded screen frames to video
 viewers, so screen sharing and webcam video use the same transport and access
 rules.
+
+For a receiving client, use the existing video viewer:
+
+```bash
+./build-wayland/phase6_video_receive_smoke 127.0.0.1 8080 Bob 10
+```
+
+The Phase 7 integration test verifies that an encoded screen frame reaches an
+authorized viewer and that frames stop being forwarded after the sender’s TCP
+connection closes.
 
 ## Completion criteria
 

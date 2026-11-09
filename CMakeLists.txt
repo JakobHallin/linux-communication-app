@@ -424,6 +424,31 @@ if(BUILD_TESTING)
     set_tests_properties(phase6_video_registration_integration_test PROPERTIES
         LABELS "phase6;integration")
 
+    add_executable(phase7_screen_share_integration_test
+        tests/integration/phase7/phase7_screen_share_integration_test.cpp
+        client/src/text_client.cpp
+        server/src/http_tcpServer.cpp
+        server/src/chat_protocol.cpp
+        common/src/video_udp_transport.cpp
+        common/src/video_frame.cpp
+    )
+    target_include_directories(phase7_screen_share_integration_test PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/client/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/server/src
+        ${CMAKE_CURRENT_SOURCE_DIR}/common/include
+        ${LIBURING_INCLUDE_DIR}
+    )
+    target_link_libraries(phase7_screen_share_integration_test PRIVATE
+        Threads::Threads
+        ${LIBURING_LIBRARY}
+        audio_transport
+        screen_frame_encoder
+    )
+    add_test(NAME phase7_screen_share_integration_test
+        COMMAND phase7_screen_share_integration_test)
+    set_tests_properties(phase7_screen_share_integration_test PROPERTIES
+        LABELS "phase7;integration")
+
     add_executable(phase6_video_control_test
         tests/unit/phase6_video_control_test.cpp
         server/src/chat_protocol.cpp
