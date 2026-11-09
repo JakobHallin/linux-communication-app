@@ -407,6 +407,18 @@ if(BUILD_TESTING)
     add_test(NAME phase6_mjpeg_frame_test COMMAND phase6_mjpeg_frame_test)
     set_tests_properties(phase6_mjpeg_frame_test PROPERTIES LABELS "phase6;unit")
 
+    add_executable(phase7_screen_capture_contract_test
+        tests/unit/phase7_screen_capture_contract_test.cpp
+    )
+    target_include_directories(phase7_screen_capture_contract_test PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/client/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/common/include
+    )
+    add_test(NAME phase7_screen_capture_contract_test
+        COMMAND phase7_screen_capture_contract_test)
+    set_tests_properties(phase7_screen_capture_contract_test PROPERTIES
+        LABELS "phase7;unit")
+
 
     add_executable(phase3_handshake_test
         tests/integration/phase3_handshake_test.cpp

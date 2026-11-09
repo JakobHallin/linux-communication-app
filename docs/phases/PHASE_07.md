@@ -1,6 +1,6 @@
 # Phase 7 — Screen Sharing
 
-**Version:** 0.7 · **Status:** Planned · **Prerequisite:** Phase 6
+**Version:** 0.7 · **Status:** In Progress · **Prerequisite:** Phase 6
 
 [Roadmap](../PLAN.md) · [Testing strategy](../TEST_PLAN.md) · [README](../../README.md)
 
@@ -9,6 +9,20 @@
 A user shares their desktop or a supported application window with others while voice/text remain usable.
 
 Linux desktop capture APIs differ by display system. Choose the actual supported environment (for example, Wayland with portal/PipeWire support or X11) when entering this phase.
+
+### Phase 7.1 decision
+
+The development environment is Ubuntu GNOME on Wayland. The supported target
+for this phase is therefore Wayland through the XDG Desktop Portal and
+PipeWire. Portal capture provides the user permission dialog and supports both
+full-desktop and application-window selection; direct X11 capture is not the
+primary path for this session.
+
+Before adding portal code, the client defines a hardware-independent
+`ScreenCaptureSource` contract. It owns start/stop state and returns the same
+`VideoFrame` metadata shape used by webcam capture. The unit test uses a fake
+source to prove that frames are unavailable before start and after stop, and
+that a running source can return session and sequence metadata.
 
 ## Planned flow
 
