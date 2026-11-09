@@ -143,6 +143,19 @@ video_protocol/fast:
 .PHONY : video_protocol/fast
 
 #=============================================================================
+# Target rules for targets named screen_frame_encoder
+
+# Build rule for target.
+screen_frame_encoder: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 screen_frame_encoder
+.PHONY : screen_frame_encoder
+
+# fast build rule for target.
+screen_frame_encoder/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/screen_frame_encoder.dir/build.make CMakeFiles/screen_frame_encoder.dir/build
+.PHONY : screen_frame_encoder/fast
+
+#=============================================================================
 # Target rules for targets named communication_server
 
 # Build rule for target.
@@ -423,6 +436,7 @@ common/src/mjpeg_frame.o: common/src/mjpeg_frame.cpp.o
 
 # target to build an object file
 common/src/mjpeg_frame.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/screen_frame_encoder.dir/build.make CMakeFiles/screen_frame_encoder.dir/common/src/mjpeg_frame.cpp.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/communication_client.dir/build.make CMakeFiles/communication_client.dir/common/src/mjpeg_frame.cpp.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_capture_smoke.dir/build.make CMakeFiles/phase6_video_capture_smoke.dir/common/src/mjpeg_frame.cpp.o
 .PHONY : common/src/mjpeg_frame.cpp.o
@@ -432,6 +446,7 @@ common/src/mjpeg_frame.i: common/src/mjpeg_frame.cpp.i
 
 # target to preprocess a source file
 common/src/mjpeg_frame.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/screen_frame_encoder.dir/build.make CMakeFiles/screen_frame_encoder.dir/common/src/mjpeg_frame.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/communication_client.dir/build.make CMakeFiles/communication_client.dir/common/src/mjpeg_frame.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_capture_smoke.dir/build.make CMakeFiles/phase6_video_capture_smoke.dir/common/src/mjpeg_frame.cpp.i
 .PHONY : common/src/mjpeg_frame.cpp.i
@@ -441,9 +456,34 @@ common/src/mjpeg_frame.s: common/src/mjpeg_frame.cpp.s
 
 # target to generate assembly for a file
 common/src/mjpeg_frame.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/screen_frame_encoder.dir/build.make CMakeFiles/screen_frame_encoder.dir/common/src/mjpeg_frame.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/communication_client.dir/build.make CMakeFiles/communication_client.dir/common/src/mjpeg_frame.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_capture_smoke.dir/build.make CMakeFiles/phase6_video_capture_smoke.dir/common/src/mjpeg_frame.cpp.s
 .PHONY : common/src/mjpeg_frame.cpp.s
+
+common/src/screen_frame_encoder.o: common/src/screen_frame_encoder.cpp.o
+.PHONY : common/src/screen_frame_encoder.o
+
+# target to build an object file
+common/src/screen_frame_encoder.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/screen_frame_encoder.dir/build.make CMakeFiles/screen_frame_encoder.dir/common/src/screen_frame_encoder.cpp.o
+.PHONY : common/src/screen_frame_encoder.cpp.o
+
+common/src/screen_frame_encoder.i: common/src/screen_frame_encoder.cpp.i
+.PHONY : common/src/screen_frame_encoder.i
+
+# target to preprocess a source file
+common/src/screen_frame_encoder.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/screen_frame_encoder.dir/build.make CMakeFiles/screen_frame_encoder.dir/common/src/screen_frame_encoder.cpp.i
+.PHONY : common/src/screen_frame_encoder.cpp.i
+
+common/src/screen_frame_encoder.s: common/src/screen_frame_encoder.cpp.s
+.PHONY : common/src/screen_frame_encoder.s
+
+# target to generate assembly for a file
+common/src/screen_frame_encoder.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/screen_frame_encoder.dir/build.make CMakeFiles/screen_frame_encoder.dir/common/src/screen_frame_encoder.cpp.s
+.PHONY : common/src/screen_frame_encoder.cpp.s
 
 common/src/video_frame.o: common/src/video_frame.cpp.o
 .PHONY : common/src/video_frame.o
@@ -663,6 +703,7 @@ help:
 	@echo "... phase6_video_capture_smoke"
 	@echo "... phase6_video_receive_smoke"
 	@echo "... phase7_portal_capture_smoke"
+	@echo "... screen_frame_encoder"
 	@echo "... video_protocol"
 	@echo "... wayland_screen_capture"
 	@echo "... client/src/main.o"
@@ -692,6 +733,9 @@ help:
 	@echo "... common/src/mjpeg_frame.o"
 	@echo "... common/src/mjpeg_frame.i"
 	@echo "... common/src/mjpeg_frame.s"
+	@echo "... common/src/screen_frame_encoder.o"
+	@echo "... common/src/screen_frame_encoder.i"
+	@echo "... common/src/screen_frame_encoder.s"
 	@echo "... common/src/video_frame.o"
 	@echo "... common/src/video_frame.i"
 	@echo "... common/src/video_frame.s"

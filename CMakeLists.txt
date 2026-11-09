@@ -6,6 +6,7 @@ find_path(LIBURING_INCLUDE_DIR liburing.h REQUIRED)
 find_library(LIBURING_LIBRARY uring REQUIRED)
 find_path(OPUS_INCLUDE_DIR opus/opus.h REQUIRED)
 find_library(OPUS_LIBRARY opus REQUIRED)
+find_package(JPEG REQUIRED)
 include(CTest)
 option(ENABLE_PHASE4_CONTAINER_TEST
     "Register the Phase 4 test that requires an externally running container"
@@ -39,6 +40,15 @@ add_library(audio_transport STATIC
 add_library(video_protocol STATIC
     common/src/video_frame.cpp
 )
+
+add_library(screen_frame_encoder STATIC
+    common/src/screen_frame_encoder.cpp
+    common/src/mjpeg_frame.cpp
+)
+target_include_directories(screen_frame_encoder PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/common/include
+)
+target_link_libraries(screen_frame_encoder PUBLIC JPEG::JPEG)
 
 add_executable(communication_server
     server/src/main.cpp
@@ -78,6 +88,7 @@ if(ENABLE_WAYLAND_SCREEN_CAPTURE)
     )
     target_link_libraries(phase7_portal_capture_smoke PRIVATE
         wayland_screen_capture
+        screen_frame_encoder
     )
 endif()
 
@@ -446,6 +457,20 @@ if(BUILD_TESTING)
     add_test(NAME phase7_screen_capture_contract_test
         COMMAND phase7_screen_capture_contract_test)
     set_tests_properties(phase7_screen_capture_contract_test PROPERTIES
+        LABELS "phase7;unit")
+
+    add_executable(phase7_screen_frame_encoder_test
+        tests/unit/phase7_screen_frame_encoder_test.cpp
+    )
+    target_include_directories(phase7_screen_frame_encoder_test PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/common/include
+    )
+    target_link_libraries(phase7_screen_frame_encoder_test PRIVATE
+        screen_frame_encoder
+    )
+    add_test(NAME phase7_screen_frame_encoder_test
+        COMMAND phase7_screen_frame_encoder_test)
+    set_tests_properties(phase7_screen_frame_encoder_test PROPERTIES
         LABELS "phase7;unit")
 
 

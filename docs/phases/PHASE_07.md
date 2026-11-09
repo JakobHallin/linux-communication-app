@@ -41,6 +41,21 @@ The installed versions can be checked with:
 pkg-config --modversion libpipewire-0.3 libportal libspa-0.2
 ```
 
+### Phase 7.3 — raw screen frames to MJPEG
+
+PipeWire supplies raw BGRA screen frames, while the existing video transport
+uses MJPEG. Install the JPEG development package before implementing the
+encoder and its tests:
+
+```bash
+sudo apt install libjpeg-dev
+```
+
+The encoder is implemented in `common/src/screen_frame_encoder.cpp` and is
+covered by `phase7_screen_frame_encoder_test`. It validates dimensions, stride,
+pixel-buffer size, and quality, converts BGRA rows to RGB, and produces a
+payload accepted by the existing MJPEG/video-frame protocol.
+
 The real session backend is now available as an opt-in build target. Configure
 it with:
 
@@ -54,8 +69,9 @@ cmake --build build-wayland --target phase7_portal_capture_smoke
 
 This opens the desktop/window permission dialog, starts the Portal session,
 opens its PipeWire remote, negotiates a raw video stream, waits for one real
-frame, and closes it cleanly. The test must be run from an active graphical
-Wayland session and the permission dialog must be accepted.
+frame, encodes it as MJPEG, and closes it cleanly. The test must be run from
+an active graphical Wayland session and the permission dialog must be
+accepted.
 
 The Portal/PipeWire session lifecycle has been verified on the development
 Wayland session. The frame-delivery check is intentionally manual because it
@@ -79,7 +95,7 @@ flowchart LR
 | --- | --- | --- |
 | 7.1 | Select capture API and supported Linux session types | Document target environment and fake-capture contract |
 | 7.2 | Implement start/stop and capture lifecycle | Fake capture state tests |
-| 7.3 | Encode and transmit captured frames | Synthetic image/frame round-trip tests |
+| 7.3 | Encode captured BGRA frames as MJPEG | `tests/unit/phase7_screen_frame_encoder_test.cpp` |
 | 7.4 | Forward screen stream to authorized members | Mock routing and isolation tests |
 | 7.5 | View shared content alongside voice | Multi-viewer integration and stream stop tests |
 | 7.6 | Validate on a real Linux desktop | Manual permission/capture and stability tests |
