@@ -90,6 +90,17 @@ if(ENABLE_WAYLAND_SCREEN_CAPTURE)
         wayland_screen_capture
         screen_frame_encoder
     )
+    target_sources(communication_client PRIVATE
+        client/src/screen_video_client.cpp
+    )
+    target_compile_definitions(communication_client PRIVATE
+        ENABLE_WAYLAND_SCREEN_CAPTURE
+    )
+    target_link_libraries(communication_client PRIVATE
+        wayland_screen_capture
+        screen_frame_encoder
+        video_protocol
+    )
 endif()
 
 add_executable(phase6_video_capture_smoke
@@ -472,6 +483,25 @@ if(BUILD_TESTING)
         COMMAND phase7_screen_frame_encoder_test)
     set_tests_properties(phase7_screen_frame_encoder_test PROPERTIES
         LABELS "phase7;unit")
+
+    if(ENABLE_WAYLAND_SCREEN_CAPTURE)
+        add_executable(phase7_screen_video_client_test
+            tests/unit/phase7_screen_video_client_test.cpp
+            client/src/screen_video_client.cpp
+        )
+        target_include_directories(phase7_screen_video_client_test PRIVATE
+            ${CMAKE_CURRENT_SOURCE_DIR}/client/include
+        )
+        target_link_libraries(phase7_screen_video_client_test PRIVATE
+            wayland_screen_capture
+            screen_frame_encoder
+            video_protocol
+        )
+        add_test(NAME phase7_screen_video_client_test
+            COMMAND phase7_screen_video_client_test)
+        set_tests_properties(phase7_screen_video_client_test PROPERTIES
+            LABELS "phase7;unit")
+    endif()
 
 
     add_executable(phase3_handshake_test

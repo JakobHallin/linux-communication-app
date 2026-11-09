@@ -96,7 +96,7 @@ flowchart LR
 | 7.1 | Select capture API and supported Linux session types | Document target environment and fake-capture contract |
 | 7.2 | Implement start/stop and capture lifecycle | Fake capture state tests |
 | 7.3 | Encode captured BGRA frames as MJPEG | `tests/unit/phase7_screen_frame_encoder_test.cpp` |
-| 7.4 | Forward screen stream to authorized members | Mock routing and isolation tests |
+| 7.4 | Forward screen stream to authorized members | Screen-video client lifecycle and existing video relay |
 | 7.5 | View shared content alongside voice | Multi-viewer integration and stream stop tests |
 | 7.6 | Validate on a real Linux desktop | Manual permission/capture and stability tests |
 
@@ -109,6 +109,28 @@ flowchart LR
 | Linux capture and viewing | `client/` |
 | Synthetic frames/fake capture | `tests/mocks/`, `tests/unit/` |
 | Real multi-viewer integration | `tests/integration/` |
+
+## Run the screen-share client
+
+Build the optional Wayland client and server support:
+
+```bash
+cmake -S . -B build-wayland \
+  -DENABLE_WAYLAND_SCREEN_CAPTURE=ON \
+  -DBUILD_TESTING=OFF
+cmake --build build-wayland --target communication_server communication_client
+```
+
+Start the server, then start a client with:
+
+```bash
+./build-wayland/communication_client 127.0.0.1 8080 Alice --screen-share
+```
+
+The client registers as a normal `VIDEO_PORT` participant. The server’s
+existing authorized-member relay forwards the encoded screen frames to video
+viewers, so screen sharing and webcam video use the same transport and access
+rules.
 
 ## Completion criteria
 

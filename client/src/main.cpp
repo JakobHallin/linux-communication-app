@@ -1,5 +1,8 @@
 #include "text_client.h"
 #include "video_client.h"
+#ifdef ENABLE_WAYLAND_SCREEN_CAPTURE
+#include "screen_video_client.h"
+#endif
 #ifdef ENABLE_LIVE_AUDIO_CLIENT
 #include "voice_client.h"
 #endif
@@ -16,6 +19,7 @@ int main(int argc, char** argv) {
     const std::string name = argc > 3 ? argv[3] : "Client";
     bool voiceEnabled = false;
     bool videoEnabled = false;
+    bool screenShareEnabled = false;
     std::string voiceCapture = "default";
     std::string voicePlayback = "default";
     std::string videoDevice = "/dev/video0";
@@ -34,7 +38,14 @@ int main(int argc, char** argv) {
             if (argument + 1 < argc && std::string(argv[argument + 1]).rfind("--", 0) != 0) {
                 videoDevice = argv[++argument];
             }
+        } else if (option == "--screen-share") {
+            screenShareEnabled = true;
         }
+    }
+
+    if (videoEnabled && screenShareEnabled) {
+        std::cerr << "Choose either --video or --screen-share, not both\n";
+        return 1;
     }
 
     client::TextClient textClient(host, port);
@@ -112,6 +123,41 @@ int main(int argc, char** argv) {
         std::cout << "Video enabled (session " << ready->sessionId
                   << ", sender " << ready->senderId << ")\n";
     }
+#ifdef ENABLE_WAYLAND_SCREEN_CAPTURE
+    std::unique_ptr<client::ScreenVideoClient> screenVideo;
+    if (screenShareEnabled) {
+        screenVideo = std::make_unique<client::ScreenVideoClient>(host);
+        if (!screenVideo->start()) {
+            std::cerr << "Failed to start screen-share UDP socket\n";
+            textClient.close();
+            return 1;
+        }
+        const auto ready = textClient.registerVideo(screenVideo->localPort(), 1000);
+        if (!ready.has_value()) {
+            std::cerr << "Server did not acknowledge screen-share registration\n";
+            screenVideo->stop();
+            textClient.close();
+            return 1;
+        }
+        screenVideo->setMediaPort(ready->mediaPort);
+        screenVideo->setIdentity(ready->sessionId, ready->senderId);
+        if (!screenVideo->activate()) {
+            std::cerr << "Failed to start Wayland screen capture\n";
+            screenVideo->stop();
+            textClient.close();
+            return 1;
+        }
+        std::cout << "Screen sharing enabled (session " << ready->sessionId
+                  << ", sender " << ready->senderId << ")\n";
+    }
+#else
+    if (screenShareEnabled) {
+        std::cerr << "Screen sharing is disabled; rebuild with "
+                     "ENABLE_WAYLAND_SCREEN_CAPTURE=ON\n";
+        textClient.close();
+        return 1;
+    }
+#endif
     std::atomic_bool running{true};
     std::thread receiver([&] {
         while (running) {
@@ -145,6 +191,9 @@ int main(int argc, char** argv) {
     if (voice) voice->stop();
 #endif
     if (video) video->stop();
+#ifdef ENABLE_WAYLAND_SCREEN_CAPTURE
+    if (screenVideo) screenVideo->stop();
+#endif
     textClient.close();
     receiver.join();
     std::cout << "Disconnected.\n";
