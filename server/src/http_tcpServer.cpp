@@ -326,16 +326,6 @@ namespace http {
             const auto frames = connection.parser.push(
                 std::string_view(connection.buffer, size));
 
-            // Preserve the Phase 2 raw-echo contract while the Phase 3
-            // newline-framed protocol is introduced.
-            if (frames.empty() && size < sizeof(connection.buffer) &&
-                !connection.identified &&
-                std::string_view(connection.buffer, size).rfind("NAME ", 0) != 0) {
-                enqueueMessage(connection,
-                               std::string(connection.buffer, size));
-                return true;
-            }
-
             for (const std::string& frame : frames) {
                 if (!processFrame(connection, frame)) {
                     return false;

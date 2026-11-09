@@ -20,8 +20,13 @@ int main() {
         {
             const test::ClientSocket invalid(test::connectClient(fixture.server.port()));
             test::require(invalid.get() >= 0, "Malformed-frame client could not connect");
-            test::require(test::sendAll(invalid.get(), "BAD frame\n"),
-                          "Could not send malformed frame");
+            test::require(test::sendAll(invalid.get(), "BAD frame"),
+                          "Could not send malformed frame fragment");
+            pollfd descriptor{invalid.get(), POLLIN, 0};
+            test::require(poll(&descriptor, 1, 200) == 0,
+                          "Server echoed or closed an incomplete malformed frame");
+            test::require(test::sendAll(invalid.get(), "\n"),
+                          "Could not finish malformed frame");
             expectClosed(invalid.get(), "Malformed frame");
         }
         {

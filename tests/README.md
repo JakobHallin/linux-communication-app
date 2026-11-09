@@ -48,6 +48,18 @@ audio, camera, screen-capture, and container acceptance checks remain separate.
 Tests are grouped by how they run. Phase prefixes connect each scenario to
 the project roadmap; executable names and CTest labels retain those prefixes.
 
+Phase numbers record where a behavior was introduced; they do not freeze old
+protocols. When a feature deliberately replaces an earlier contract, update or
+retire the superseded assertions and retain the guarantees that still apply.
+For example, the Phase 2 asynchronous round-trip test now uses the current
+`NAME`/`WELCOME` handshake. Raw echo was a stepping stone and is no longer part
+of the server protocol. Connection, ordering, and cleanup regressions remain.
+
+The server buffers incomplete newline-delimited frames without replying. A
+complete valid `NAME` frame receives `WELCOME`; a complete invalid first frame
+closes the connection. Handshake tests cover splits inside the command prefix
+as well as the display name, without relying on TCP preserving write boundaries.
+
 | Directory | Purpose |
 | --- | --- |
 | `unit/` | Protocol, codec, and component behavior without a running server |
