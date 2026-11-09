@@ -26,8 +26,8 @@ that a running source can return session and sequence metadata.
 
 ### Phase 7.2 prerequisite
 
-The real backend requires the development interfaces that are not currently
-installed on the development machine:
+The real backend requires the PipeWire and Portal development interfaces. They
+are installed on the development machine with:
 
 ```bash
 sudo apt install libpipewire-0.3-dev libportal-dev
@@ -35,8 +35,11 @@ sudo apt install libpipewire-0.3-dev libportal-dev
 
 The runtime `pipewire` command alone is not sufficient to compile the client;
 the headers and link libraries are needed for Portal/PipeWire stream setup.
-Until those packages are installed, only the fake capture contract is built
-and tested.
+The installed versions can be checked with:
+
+```bash
+pkg-config --modversion libpipewire-0.3 libportal libspa-0.2
+```
 
 The real session backend is now available as an opt-in build target. Configure
 it with:
@@ -50,13 +53,15 @@ cmake --build build-wayland --target phase7_portal_capture_smoke
 ```
 
 This opens the desktop/window permission dialog, starts the Portal session,
-opens its PipeWire remote, holds it for five seconds, and closes it cleanly.
-Frame extraction and transport are the next steps; this smoke target verifies
-the real permission and session lifecycle first.
+opens its PipeWire remote, negotiates a raw video stream, waits for one real
+frame, and closes it cleanly. The test must be run from an active graphical
+Wayland session and the permission dialog must be accepted.
 
-The Portal/PipeWire smoke test has been run successfully on the development
-Wayland session: the permission/session startup returned a live PipeWire file
-descriptor, and the session closed cleanly after the five-second check.
+The Portal/PipeWire session lifecycle has been verified on the development
+Wayland session. The frame-delivery check is intentionally manual because it
+depends on the active desktop permission dialog; if that dialog is denied or
+unavailable, the smoke test reports failure rather than claiming that screen
+frames work.
 
 ## Planned flow
 

@@ -1,6 +1,10 @@
 #ifndef INCLUDE_WAYLAND_PORTAL_CAPTURE_H
 #define INCLUDE_WAYLAND_PORTAL_CAPTURE_H
 
+#include <chrono>
+#include <cstdint>
+#include <vector>
+
 namespace client {
     class WaylandPortalCapture {
     public:
@@ -14,8 +18,18 @@ namespace client {
         bool running() const;
         int pipeWireRemoteFd() const;
 
-    private:
+        struct Frame {
+            std::vector<std::uint8_t> pixels;
+            std::uint32_t width = 0;
+            std::uint32_t height = 0;
+            std::int32_t stride = 0;
+        };
+
+        bool readFrame(Frame& frame, std::chrono::milliseconds timeout);
+
         struct Impl;
+
+    private:
         Impl* impl;
     };
 }

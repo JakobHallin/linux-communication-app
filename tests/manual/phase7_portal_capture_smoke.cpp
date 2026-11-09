@@ -1,8 +1,7 @@
 #include "wayland_portal_capture.h"
 
-#include <chrono>
 #include <iostream>
-#include <thread>
+#include <chrono>
 
 int main() {
     client::WaylandPortalCapture capture;
@@ -14,7 +13,13 @@ int main() {
 
     std::cout << "Portal session active; PipeWire fd="
               << capture.pipeWireRemoteFd() << "\n";
-    std::this_thread::sleep_for(std::chrono::seconds(5));
+    client::WaylandPortalCapture::Frame frame;
+    if (!capture.readFrame(frame, std::chrono::seconds(10))) {
+        std::cerr << "Portal session started, but no PipeWire video frame arrived\n";
+        return 1;
+    }
+    std::cout << "Received screen frame: " << frame.width << 'x' << frame.height
+              << ", " << frame.pixels.size() << " bytes\n";
     capture.stop();
     std::cout << "Portal session stopped cleanly\n";
 }
