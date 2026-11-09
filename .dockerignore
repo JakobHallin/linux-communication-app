@@ -1,6 +1,9 @@
 .git
 build
+build-*
 cmake-build-*
+communication_server
+communication_client
 tests
 docs
 *.log

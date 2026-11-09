@@ -42,9 +42,40 @@ flowchart TB
 | Deployment | Local processes first; Docker planned after the local flow works |
 | Development / testing | TDD with focused tests for real behavior |
 
-## Build and run Phase 1
+## Build, test, and run from a clean checkout
 
-Requires Linux, CMake, and a C++20 compiler.
+Requires Linux, CMake, Make, a C++20 compiler, and the liburing, Opus, and
+JPEG development libraries. On Ubuntu/Debian, install the base dependencies:
+
+```bash
+sudo apt install build-essential cmake liburing-dev libopus-dev libjpeg-dev
+```
+
+Build from the source checkout on each destination machine. Generated build
+directories and executables are local artifacts and should not be copied to
+another machine. No VS Code installation or editor settings are required.
+The automated-test workflow is defined in [CMakePresets.json](CMakePresets.json)
+and requires CMake 3.25 or newer; see [Tests](tests/README.md).
+
+This application currently targets Linux: the server requires a kernel and
+execution environment permitting `io_uring`. Voice, webcam, and screen capture
+use Linux-specific APIs and optional dependencies; Windows and macOS would
+require platform implementations.
+
+Run the following steps from the project root, in order:
+
+1. **Configure:** generate the build files. This step does not compile programs.
+2. **Build:** compile the server, client, and test executables. Tests are included
+   in the default build when `BUILD_TESTING` is enabled (the default for a new
+   build directory). No separate build of individual tests is needed.
+3. **Test:** run the compiled test executables. CTest does not compile them.
+4. **Launch:** start the server and clients in separate terminals after the
+   build and automated tests succeed.
+
+Stop if any step fails. In particular, do not run tests after a failed or
+interrupted build. An existing build cache with `BUILD_TESTING` disabled must
+have it enabled before building the tests. Building only the server or client
+target does not build the test executables.
 
 ```bash
 cmake -S . -B build
@@ -59,8 +90,12 @@ ctest --test-dir build --output-on-failure
 ./build/communication_client
 ```
 
-Press Enter in either client terminal to disconnect it. The server remains
-running and reports the active connection count.
+If CTest reports **Unable to find executable**, a required test binary has not
+been built in that build directory. Check the preceding build output for the
+first error; this is a test that could not run, not a failed assertion.
+
+Use `/quit` in a client terminal to disconnect it. The server remains running
+and reports the active connection count.
 
 ## Run the live voice client
 

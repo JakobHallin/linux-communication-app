@@ -1,12 +1,13 @@
 # syntax=docker/dockerfile:1
 FROM ubuntu:24.04 AS builder
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    cmake g++ make ca-certificates liburing-dev libopus-dev \
+    cmake g++ make ca-certificates liburing-dev libopus-dev libjpeg-dev \
     && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
 COPY CMakeLists.txt ./
 COPY server/ server/
 COPY client/ client/
+COPY common/ common/
 RUN cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF \
     && cmake --build build --target communication_server -j2
 
