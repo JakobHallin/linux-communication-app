@@ -77,7 +77,10 @@ The Portal/PipeWire session lifecycle has been verified on the development
 Wayland session. The frame-delivery check is intentionally manual because it
 depends on the active desktop permission dialog; if that dialog is denied or
 unavailable, the smoke test reports failure rather than claiming that screen
-frames work.
+frames work. The latest acceptance run opened the session successfully, but
+the PipeWire stream stayed paused and delivered no frame, so Phase 7 is not
+complete yet. The next debugging task is PipeWire stream negotiation/activation
+on this desktop session.
 
 ## Planned flow
 

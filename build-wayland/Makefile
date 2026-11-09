@@ -65,16 +65,6 @@ CMAKE_BINARY_DIR = "/home/jakob/Downloads/Cplusplus_Linux_Communication_Project 
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target test
-test:
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Running tests..."
-	/usr/bin/ctest --force-new-ctest-process $(ARGS)
-.PHONY : test
-
-# Special rule for the target test
-test/fast: test
-.PHONY : test/fast
-
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "No interactive CMake dialog available..."
@@ -125,370 +115,6 @@ preinstall/fast:
 depend:
 	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
-
-#=============================================================================
-# Target rules for targets named Experimental
-
-# Build rule for target.
-Experimental: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Experimental
-.PHONY : Experimental
-
-# fast build rule for target.
-Experimental/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Experimental.dir/build.make CMakeFiles/Experimental.dir/build
-.PHONY : Experimental/fast
-
-#=============================================================================
-# Target rules for targets named Nightly
-
-# Build rule for target.
-Nightly: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Nightly
-.PHONY : Nightly
-
-# fast build rule for target.
-Nightly/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Nightly.dir/build.make CMakeFiles/Nightly.dir/build
-.PHONY : Nightly/fast
-
-#=============================================================================
-# Target rules for targets named Continuous
-
-# Build rule for target.
-Continuous: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Continuous
-.PHONY : Continuous
-
-# fast build rule for target.
-Continuous/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Continuous.dir/build.make CMakeFiles/Continuous.dir/build
-.PHONY : Continuous/fast
-
-#=============================================================================
-# Target rules for targets named NightlyMemoryCheck
-
-# Build rule for target.
-NightlyMemoryCheck: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 NightlyMemoryCheck
-.PHONY : NightlyMemoryCheck
-
-# fast build rule for target.
-NightlyMemoryCheck/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NightlyMemoryCheck.dir/build.make CMakeFiles/NightlyMemoryCheck.dir/build
-.PHONY : NightlyMemoryCheck/fast
-
-#=============================================================================
-# Target rules for targets named NightlyStart
-
-# Build rule for target.
-NightlyStart: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 NightlyStart
-.PHONY : NightlyStart
-
-# fast build rule for target.
-NightlyStart/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NightlyStart.dir/build.make CMakeFiles/NightlyStart.dir/build
-.PHONY : NightlyStart/fast
-
-#=============================================================================
-# Target rules for targets named NightlyUpdate
-
-# Build rule for target.
-NightlyUpdate: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 NightlyUpdate
-.PHONY : NightlyUpdate
-
-# fast build rule for target.
-NightlyUpdate/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NightlyUpdate.dir/build.make CMakeFiles/NightlyUpdate.dir/build
-.PHONY : NightlyUpdate/fast
-
-#=============================================================================
-# Target rules for targets named NightlyConfigure
-
-# Build rule for target.
-NightlyConfigure: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 NightlyConfigure
-.PHONY : NightlyConfigure
-
-# fast build rule for target.
-NightlyConfigure/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NightlyConfigure.dir/build.make CMakeFiles/NightlyConfigure.dir/build
-.PHONY : NightlyConfigure/fast
-
-#=============================================================================
-# Target rules for targets named NightlyBuild
-
-# Build rule for target.
-NightlyBuild: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 NightlyBuild
-.PHONY : NightlyBuild
-
-# fast build rule for target.
-NightlyBuild/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NightlyBuild.dir/build.make CMakeFiles/NightlyBuild.dir/build
-.PHONY : NightlyBuild/fast
-
-#=============================================================================
-# Target rules for targets named NightlyTest
-
-# Build rule for target.
-NightlyTest: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 NightlyTest
-.PHONY : NightlyTest
-
-# fast build rule for target.
-NightlyTest/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NightlyTest.dir/build.make CMakeFiles/NightlyTest.dir/build
-.PHONY : NightlyTest/fast
-
-#=============================================================================
-# Target rules for targets named NightlyCoverage
-
-# Build rule for target.
-NightlyCoverage: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 NightlyCoverage
-.PHONY : NightlyCoverage
-
-# fast build rule for target.
-NightlyCoverage/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NightlyCoverage.dir/build.make CMakeFiles/NightlyCoverage.dir/build
-.PHONY : NightlyCoverage/fast
-
-#=============================================================================
-# Target rules for targets named NightlyMemCheck
-
-# Build rule for target.
-NightlyMemCheck: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 NightlyMemCheck
-.PHONY : NightlyMemCheck
-
-# fast build rule for target.
-NightlyMemCheck/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NightlyMemCheck.dir/build.make CMakeFiles/NightlyMemCheck.dir/build
-.PHONY : NightlyMemCheck/fast
-
-#=============================================================================
-# Target rules for targets named NightlySubmit
-
-# Build rule for target.
-NightlySubmit: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 NightlySubmit
-.PHONY : NightlySubmit
-
-# fast build rule for target.
-NightlySubmit/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NightlySubmit.dir/build.make CMakeFiles/NightlySubmit.dir/build
-.PHONY : NightlySubmit/fast
-
-#=============================================================================
-# Target rules for targets named ExperimentalStart
-
-# Build rule for target.
-ExperimentalStart: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ExperimentalStart
-.PHONY : ExperimentalStart
-
-# fast build rule for target.
-ExperimentalStart/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ExperimentalStart.dir/build.make CMakeFiles/ExperimentalStart.dir/build
-.PHONY : ExperimentalStart/fast
-
-#=============================================================================
-# Target rules for targets named ExperimentalUpdate
-
-# Build rule for target.
-ExperimentalUpdate: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ExperimentalUpdate
-.PHONY : ExperimentalUpdate
-
-# fast build rule for target.
-ExperimentalUpdate/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ExperimentalUpdate.dir/build.make CMakeFiles/ExperimentalUpdate.dir/build
-.PHONY : ExperimentalUpdate/fast
-
-#=============================================================================
-# Target rules for targets named ExperimentalConfigure
-
-# Build rule for target.
-ExperimentalConfigure: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ExperimentalConfigure
-.PHONY : ExperimentalConfigure
-
-# fast build rule for target.
-ExperimentalConfigure/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ExperimentalConfigure.dir/build.make CMakeFiles/ExperimentalConfigure.dir/build
-.PHONY : ExperimentalConfigure/fast
-
-#=============================================================================
-# Target rules for targets named ExperimentalBuild
-
-# Build rule for target.
-ExperimentalBuild: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ExperimentalBuild
-.PHONY : ExperimentalBuild
-
-# fast build rule for target.
-ExperimentalBuild/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ExperimentalBuild.dir/build.make CMakeFiles/ExperimentalBuild.dir/build
-.PHONY : ExperimentalBuild/fast
-
-#=============================================================================
-# Target rules for targets named ExperimentalTest
-
-# Build rule for target.
-ExperimentalTest: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ExperimentalTest
-.PHONY : ExperimentalTest
-
-# fast build rule for target.
-ExperimentalTest/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ExperimentalTest.dir/build.make CMakeFiles/ExperimentalTest.dir/build
-.PHONY : ExperimentalTest/fast
-
-#=============================================================================
-# Target rules for targets named ExperimentalCoverage
-
-# Build rule for target.
-ExperimentalCoverage: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ExperimentalCoverage
-.PHONY : ExperimentalCoverage
-
-# fast build rule for target.
-ExperimentalCoverage/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ExperimentalCoverage.dir/build.make CMakeFiles/ExperimentalCoverage.dir/build
-.PHONY : ExperimentalCoverage/fast
-
-#=============================================================================
-# Target rules for targets named ExperimentalMemCheck
-
-# Build rule for target.
-ExperimentalMemCheck: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ExperimentalMemCheck
-.PHONY : ExperimentalMemCheck
-
-# fast build rule for target.
-ExperimentalMemCheck/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ExperimentalMemCheck.dir/build.make CMakeFiles/ExperimentalMemCheck.dir/build
-.PHONY : ExperimentalMemCheck/fast
-
-#=============================================================================
-# Target rules for targets named ExperimentalSubmit
-
-# Build rule for target.
-ExperimentalSubmit: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ExperimentalSubmit
-.PHONY : ExperimentalSubmit
-
-# fast build rule for target.
-ExperimentalSubmit/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ExperimentalSubmit.dir/build.make CMakeFiles/ExperimentalSubmit.dir/build
-.PHONY : ExperimentalSubmit/fast
-
-#=============================================================================
-# Target rules for targets named ContinuousStart
-
-# Build rule for target.
-ContinuousStart: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ContinuousStart
-.PHONY : ContinuousStart
-
-# fast build rule for target.
-ContinuousStart/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ContinuousStart.dir/build.make CMakeFiles/ContinuousStart.dir/build
-.PHONY : ContinuousStart/fast
-
-#=============================================================================
-# Target rules for targets named ContinuousUpdate
-
-# Build rule for target.
-ContinuousUpdate: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ContinuousUpdate
-.PHONY : ContinuousUpdate
-
-# fast build rule for target.
-ContinuousUpdate/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ContinuousUpdate.dir/build.make CMakeFiles/ContinuousUpdate.dir/build
-.PHONY : ContinuousUpdate/fast
-
-#=============================================================================
-# Target rules for targets named ContinuousConfigure
-
-# Build rule for target.
-ContinuousConfigure: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ContinuousConfigure
-.PHONY : ContinuousConfigure
-
-# fast build rule for target.
-ContinuousConfigure/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ContinuousConfigure.dir/build.make CMakeFiles/ContinuousConfigure.dir/build
-.PHONY : ContinuousConfigure/fast
-
-#=============================================================================
-# Target rules for targets named ContinuousBuild
-
-# Build rule for target.
-ContinuousBuild: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ContinuousBuild
-.PHONY : ContinuousBuild
-
-# fast build rule for target.
-ContinuousBuild/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ContinuousBuild.dir/build.make CMakeFiles/ContinuousBuild.dir/build
-.PHONY : ContinuousBuild/fast
-
-#=============================================================================
-# Target rules for targets named ContinuousTest
-
-# Build rule for target.
-ContinuousTest: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ContinuousTest
-.PHONY : ContinuousTest
-
-# fast build rule for target.
-ContinuousTest/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ContinuousTest.dir/build.make CMakeFiles/ContinuousTest.dir/build
-.PHONY : ContinuousTest/fast
-
-#=============================================================================
-# Target rules for targets named ContinuousCoverage
-
-# Build rule for target.
-ContinuousCoverage: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ContinuousCoverage
-.PHONY : ContinuousCoverage
-
-# fast build rule for target.
-ContinuousCoverage/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ContinuousCoverage.dir/build.make CMakeFiles/ContinuousCoverage.dir/build
-.PHONY : ContinuousCoverage/fast
-
-#=============================================================================
-# Target rules for targets named ContinuousMemCheck
-
-# Build rule for target.
-ContinuousMemCheck: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ContinuousMemCheck
-.PHONY : ContinuousMemCheck
-
-# fast build rule for target.
-ContinuousMemCheck/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ContinuousMemCheck.dir/build.make CMakeFiles/ContinuousMemCheck.dir/build
-.PHONY : ContinuousMemCheck/fast
-
-#=============================================================================
-# Target rules for targets named ContinuousSubmit
-
-# Build rule for target.
-ContinuousSubmit: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ContinuousSubmit
-.PHONY : ContinuousSubmit
-
-# fast build rule for target.
-ContinuousSubmit/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ContinuousSubmit.dir/build.make CMakeFiles/ContinuousSubmit.dir/build
-.PHONY : ContinuousSubmit/fast
 
 #=============================================================================
 # Target rules for targets named audio_transport
@@ -607,459 +233,6 @@ phase6_video_receive_smoke/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_receive_smoke.dir/build.make CMakeFiles/phase6_video_receive_smoke.dir/build
 .PHONY : phase6_video_receive_smoke/fast
 
-#=============================================================================
-# Target rules for targets named phase1_connection_test
-
-# Build rule for target.
-phase1_connection_test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase1_connection_test
-.PHONY : phase1_connection_test
-
-# fast build rule for target.
-phase1_connection_test/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase1_connection_test.dir/build.make CMakeFiles/phase1_connection_test.dir/build
-.PHONY : phase1_connection_test/fast
-
-#=============================================================================
-# Target rules for targets named phase2_io_uring_test
-
-# Build rule for target.
-phase2_io_uring_test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase2_io_uring_test
-.PHONY : phase2_io_uring_test
-
-# fast build rule for target.
-phase2_io_uring_test/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase2_io_uring_test.dir/build.make CMakeFiles/phase2_io_uring_test.dir/build
-.PHONY : phase2_io_uring_test/fast
-
-#=============================================================================
-# Target rules for targets named phase3_chat_frame_test
-
-# Build rule for target.
-phase3_chat_frame_test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase3_chat_frame_test
-.PHONY : phase3_chat_frame_test
-
-# fast build rule for target.
-phase3_chat_frame_test/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_chat_frame_test.dir/build.make CMakeFiles/phase3_chat_frame_test.dir/build
-.PHONY : phase3_chat_frame_test/fast
-
-#=============================================================================
-# Target rules for targets named phase3_display_name_test
-
-# Build rule for target.
-phase3_display_name_test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase3_display_name_test
-.PHONY : phase3_display_name_test
-
-# fast build rule for target.
-phase3_display_name_test/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_display_name_test.dir/build.make CMakeFiles/phase3_display_name_test.dir/build
-.PHONY : phase3_display_name_test/fast
-
-#=============================================================================
-# Target rules for targets named phase5_audio_packet_test
-
-# Build rule for target.
-phase5_audio_packet_test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase5_audio_packet_test
-.PHONY : phase5_audio_packet_test
-
-# fast build rule for target.
-phase5_audio_packet_test/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_audio_packet_test.dir/build.make CMakeFiles/phase5_audio_packet_test.dir/build
-.PHONY : phase5_audio_packet_test/fast
-
-#=============================================================================
-# Target rules for targets named phase5_audio_session_test
-
-# Build rule for target.
-phase5_audio_session_test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase5_audio_session_test
-.PHONY : phase5_audio_session_test
-
-# fast build rule for target.
-phase5_audio_session_test/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_audio_session_test.dir/build.make CMakeFiles/phase5_audio_session_test.dir/build
-.PHONY : phase5_audio_session_test/fast
-
-#=============================================================================
-# Target rules for targets named phase5_multi_stream_mixer_test
-
-# Build rule for target.
-phase5_multi_stream_mixer_test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase5_multi_stream_mixer_test
-.PHONY : phase5_multi_stream_mixer_test
-
-# fast build rule for target.
-phase5_multi_stream_mixer_test/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_multi_stream_mixer_test.dir/build.make CMakeFiles/phase5_multi_stream_mixer_test.dir/build
-.PHONY : phase5_multi_stream_mixer_test/fast
-
-#=============================================================================
-# Target rules for targets named phase5_audio_resilience_test
-
-# Build rule for target.
-phase5_audio_resilience_test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase5_audio_resilience_test
-.PHONY : phase5_audio_resilience_test
-
-# fast build rule for target.
-phase5_audio_resilience_test/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_audio_resilience_test.dir/build.make CMakeFiles/phase5_audio_resilience_test.dir/build
-.PHONY : phase5_audio_resilience_test/fast
-
-#=============================================================================
-# Target rules for targets named phase5_audio_client_session_test
-
-# Build rule for target.
-phase5_audio_client_session_test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase5_audio_client_session_test
-.PHONY : phase5_audio_client_session_test
-
-# fast build rule for target.
-phase5_audio_client_session_test/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_audio_client_session_test.dir/build.make CMakeFiles/phase5_audio_client_session_test.dir/build
-.PHONY : phase5_audio_client_session_test/fast
-
-#=============================================================================
-# Target rules for targets named phase5_voice_registration_test
-
-# Build rule for target.
-phase5_voice_registration_test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase5_voice_registration_test
-.PHONY : phase5_voice_registration_test
-
-# fast build rule for target.
-phase5_voice_registration_test/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_registration_test.dir/build.make CMakeFiles/phase5_voice_registration_test.dir/build
-.PHONY : phase5_voice_registration_test/fast
-
-#=============================================================================
-# Target rules for targets named phase5_voice_registration_integration_test
-
-# Build rule for target.
-phase5_voice_registration_integration_test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase5_voice_registration_integration_test
-.PHONY : phase5_voice_registration_integration_test
-
-# fast build rule for target.
-phase5_voice_registration_integration_test/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_registration_integration_test.dir/build.make CMakeFiles/phase5_voice_registration_integration_test.dir/build
-.PHONY : phase5_voice_registration_integration_test/fast
-
-#=============================================================================
-# Target rules for targets named phase5_unified_text_client_test
-
-# Build rule for target.
-phase5_unified_text_client_test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase5_unified_text_client_test
-.PHONY : phase5_unified_text_client_test
-
-# fast build rule for target.
-phase5_unified_text_client_test/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_unified_text_client_test.dir/build.make CMakeFiles/phase5_unified_text_client_test.dir/build
-.PHONY : phase5_unified_text_client_test/fast
-
-#=============================================================================
-# Target rules for targets named phase5_udp_transport_test
-
-# Build rule for target.
-phase5_udp_transport_test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase5_udp_transport_test
-.PHONY : phase5_udp_transport_test
-
-# fast build rule for target.
-phase5_udp_transport_test/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_udp_transport_test.dir/build.make CMakeFiles/phase5_udp_transport_test.dir/build
-.PHONY : phase5_udp_transport_test/fast
-
-#=============================================================================
-# Target rules for targets named phase5_voice_e2e_test
-
-# Build rule for target.
-phase5_voice_e2e_test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase5_voice_e2e_test
-.PHONY : phase5_voice_e2e_test
-
-# fast build rule for target.
-phase5_voice_e2e_test/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_e2e_test.dir/build.make CMakeFiles/phase5_voice_e2e_test.dir/build
-.PHONY : phase5_voice_e2e_test/fast
-
-#=============================================================================
-# Target rules for targets named phase5_opus_codec_test
-
-# Build rule for target.
-phase5_opus_codec_test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase5_opus_codec_test
-.PHONY : phase5_opus_codec_test
-
-# fast build rule for target.
-phase5_opus_codec_test/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_opus_codec_test.dir/build.make CMakeFiles/phase5_opus_codec_test.dir/build
-.PHONY : phase5_opus_codec_test/fast
-
-#=============================================================================
-# Target rules for targets named phase6_video_frame_test
-
-# Build rule for target.
-phase6_video_frame_test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase6_video_frame_test
-.PHONY : phase6_video_frame_test
-
-# fast build rule for target.
-phase6_video_frame_test/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_frame_test.dir/build.make CMakeFiles/phase6_video_frame_test.dir/build
-.PHONY : phase6_video_frame_test/fast
-
-#=============================================================================
-# Target rules for targets named phase6_video_capture_test
-
-# Build rule for target.
-phase6_video_capture_test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase6_video_capture_test
-.PHONY : phase6_video_capture_test
-
-# fast build rule for target.
-phase6_video_capture_test/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_capture_test.dir/build.make CMakeFiles/phase6_video_capture_test.dir/build
-.PHONY : phase6_video_capture_test/fast
-
-#=============================================================================
-# Target rules for targets named phase6_video_udp_transport_test
-
-# Build rule for target.
-phase6_video_udp_transport_test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase6_video_udp_transport_test
-.PHONY : phase6_video_udp_transport_test
-
-# fast build rule for target.
-phase6_video_udp_transport_test/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_udp_transport_test.dir/build.make CMakeFiles/phase6_video_udp_transport_test.dir/build
-.PHONY : phase6_video_udp_transport_test/fast
-
-#=============================================================================
-# Target rules for targets named phase6_video_registration_integration_test
-
-# Build rule for target.
-phase6_video_registration_integration_test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase6_video_registration_integration_test
-.PHONY : phase6_video_registration_integration_test
-
-# fast build rule for target.
-phase6_video_registration_integration_test/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_registration_integration_test.dir/build.make CMakeFiles/phase6_video_registration_integration_test.dir/build
-.PHONY : phase6_video_registration_integration_test/fast
-
-#=============================================================================
-# Target rules for targets named phase6_video_control_test
-
-# Build rule for target.
-phase6_video_control_test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase6_video_control_test
-.PHONY : phase6_video_control_test
-
-# fast build rule for target.
-phase6_video_control_test/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_control_test.dir/build.make CMakeFiles/phase6_video_control_test.dir/build
-.PHONY : phase6_video_control_test/fast
-
-#=============================================================================
-# Target rules for targets named phase6_video_client_test
-
-# Build rule for target.
-phase6_video_client_test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase6_video_client_test
-.PHONY : phase6_video_client_test
-
-# fast build rule for target.
-phase6_video_client_test/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_client_test.dir/build.make CMakeFiles/phase6_video_client_test.dir/build
-.PHONY : phase6_video_client_test/fast
-
-#=============================================================================
-# Target rules for targets named phase6_mjpeg_frame_test
-
-# Build rule for target.
-phase6_mjpeg_frame_test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase6_mjpeg_frame_test
-.PHONY : phase6_mjpeg_frame_test
-
-# fast build rule for target.
-phase6_mjpeg_frame_test/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_mjpeg_frame_test.dir/build.make CMakeFiles/phase6_mjpeg_frame_test.dir/build
-.PHONY : phase6_mjpeg_frame_test/fast
-
-#=============================================================================
-# Target rules for targets named phase7_screen_capture_contract_test
-
-# Build rule for target.
-phase7_screen_capture_contract_test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase7_screen_capture_contract_test
-.PHONY : phase7_screen_capture_contract_test
-
-# fast build rule for target.
-phase7_screen_capture_contract_test/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase7_screen_capture_contract_test.dir/build.make CMakeFiles/phase7_screen_capture_contract_test.dir/build
-.PHONY : phase7_screen_capture_contract_test/fast
-
-#=============================================================================
-# Target rules for targets named phase7_screen_frame_encoder_test
-
-# Build rule for target.
-phase7_screen_frame_encoder_test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase7_screen_frame_encoder_test
-.PHONY : phase7_screen_frame_encoder_test
-
-# fast build rule for target.
-phase7_screen_frame_encoder_test/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase7_screen_frame_encoder_test.dir/build.make CMakeFiles/phase7_screen_frame_encoder_test.dir/build
-.PHONY : phase7_screen_frame_encoder_test/fast
-
-#=============================================================================
-# Target rules for targets named phase7_screen_video_client_test
-
-# Build rule for target.
-phase7_screen_video_client_test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase7_screen_video_client_test
-.PHONY : phase7_screen_video_client_test
-
-# fast build rule for target.
-phase7_screen_video_client_test/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase7_screen_video_client_test.dir/build.make CMakeFiles/phase7_screen_video_client_test.dir/build
-.PHONY : phase7_screen_video_client_test/fast
-
-#=============================================================================
-# Target rules for targets named phase3_handshake_test
-
-# Build rule for target.
-phase3_handshake_test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase3_handshake_test
-.PHONY : phase3_handshake_test
-
-# fast build rule for target.
-phase3_handshake_test/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_handshake_test.dir/build.make CMakeFiles/phase3_handshake_test.dir/build
-.PHONY : phase3_handshake_test/fast
-
-#=============================================================================
-# Target rules for targets named phase3_message_relay_test
-
-# Build rule for target.
-phase3_message_relay_test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase3_message_relay_test
-.PHONY : phase3_message_relay_test
-
-# fast build rule for target.
-phase3_message_relay_test/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_message_relay_test.dir/build.make CMakeFiles/phase3_message_relay_test.dir/build
-.PHONY : phase3_message_relay_test/fast
-
-#=============================================================================
-# Target rules for targets named phase3_order_disconnect_test
-
-# Build rule for target.
-phase3_order_disconnect_test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase3_order_disconnect_test
-.PHONY : phase3_order_disconnect_test
-
-# fast build rule for target.
-phase3_order_disconnect_test/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_order_disconnect_test.dir/build.make CMakeFiles/phase3_order_disconnect_test.dir/build
-.PHONY : phase3_order_disconnect_test/fast
-
-#=============================================================================
-# Target rules for targets named phase3_invalid_input_test
-
-# Build rule for target.
-phase3_invalid_input_test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase3_invalid_input_test
-.PHONY : phase3_invalid_input_test
-
-# fast build rule for target.
-phase3_invalid_input_test/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_invalid_input_test.dir/build.make CMakeFiles/phase3_invalid_input_test.dir/build
-.PHONY : phase3_invalid_input_test/fast
-
-#=============================================================================
-# Target rules for targets named phase3_slow_client_test
-
-# Build rule for target.
-phase3_slow_client_test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase3_slow_client_test
-.PHONY : phase3_slow_client_test
-
-# fast build rule for target.
-phase3_slow_client_test/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_slow_client_test.dir/build.make CMakeFiles/phase3_slow_client_test.dir/build
-.PHONY : phase3_slow_client_test/fast
-
-#=============================================================================
-# Target rules for targets named phase4_multi_client_test
-
-# Build rule for target.
-phase4_multi_client_test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase4_multi_client_test
-.PHONY : phase4_multi_client_test
-
-# fast build rule for target.
-phase4_multi_client_test/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase4_multi_client_test.dir/build.make CMakeFiles/phase4_multi_client_test.dir/build
-.PHONY : phase4_multi_client_test/fast
-
-#=============================================================================
-# Target rules for targets named phase4_container_connection_test
-
-# Build rule for target.
-phase4_container_connection_test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase4_container_connection_test
-.PHONY : phase4_container_connection_test
-
-# fast build rule for target.
-phase4_container_connection_test/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase4_container_connection_test.dir/build.make CMakeFiles/phase4_container_connection_test.dir/build
-.PHONY : phase4_container_connection_test/fast
-
-#=============================================================================
-# Target rules for targets named phase4_five_client_test
-
-# Build rule for target.
-phase4_five_client_test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 phase4_five_client_test
-.PHONY : phase4_five_client_test
-
-# fast build rule for target.
-phase4_five_client_test/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase4_five_client_test.dir/build.make CMakeFiles/phase4_five_client_test.dir/build
-.PHONY : phase4_five_client_test/fast
-
-client/src/audio_client_session.o: client/src/audio_client_session.cpp.o
-.PHONY : client/src/audio_client_session.o
-
-# target to build an object file
-client/src/audio_client_session.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_audio_client_session_test.dir/build.make CMakeFiles/phase5_audio_client_session_test.dir/client/src/audio_client_session.cpp.o
-.PHONY : client/src/audio_client_session.cpp.o
-
-client/src/audio_client_session.i: client/src/audio_client_session.cpp.i
-.PHONY : client/src/audio_client_session.i
-
-# target to preprocess a source file
-client/src/audio_client_session.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_audio_client_session_test.dir/build.make CMakeFiles/phase5_audio_client_session_test.dir/client/src/audio_client_session.cpp.i
-.PHONY : client/src/audio_client_session.cpp.i
-
-client/src/audio_client_session.s: client/src/audio_client_session.cpp.s
-.PHONY : client/src/audio_client_session.s
-
-# target to generate assembly for a file
-client/src/audio_client_session.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_audio_client_session_test.dir/build.make CMakeFiles/phase5_audio_client_session_test.dir/client/src/audio_client_session.cpp.s
-.PHONY : client/src/audio_client_session.cpp.s
-
 client/src/main.o: client/src/main.cpp.o
 .PHONY : client/src/main.o
 
@@ -1090,7 +263,6 @@ client/src/screen_video_client.o: client/src/screen_video_client.cpp.o
 # target to build an object file
 client/src/screen_video_client.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/communication_client.dir/build.make CMakeFiles/communication_client.dir/client/src/screen_video_client.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase7_screen_video_client_test.dir/build.make CMakeFiles/phase7_screen_video_client_test.dir/client/src/screen_video_client.cpp.o
 .PHONY : client/src/screen_video_client.cpp.o
 
 client/src/screen_video_client.i: client/src/screen_video_client.cpp.i
@@ -1099,7 +271,6 @@ client/src/screen_video_client.i: client/src/screen_video_client.cpp.i
 # target to preprocess a source file
 client/src/screen_video_client.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/communication_client.dir/build.make CMakeFiles/communication_client.dir/client/src/screen_video_client.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase7_screen_video_client_test.dir/build.make CMakeFiles/phase7_screen_video_client_test.dir/client/src/screen_video_client.cpp.i
 .PHONY : client/src/screen_video_client.cpp.i
 
 client/src/screen_video_client.s: client/src/screen_video_client.cpp.s
@@ -1108,7 +279,6 @@ client/src/screen_video_client.s: client/src/screen_video_client.cpp.s
 # target to generate assembly for a file
 client/src/screen_video_client.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/communication_client.dir/build.make CMakeFiles/communication_client.dir/client/src/screen_video_client.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase7_screen_video_client_test.dir/build.make CMakeFiles/phase7_screen_video_client_test.dir/client/src/screen_video_client.cpp.s
 .PHONY : client/src/screen_video_client.cpp.s
 
 client/src/text_client.o: client/src/text_client.cpp.o
@@ -1118,9 +288,6 @@ client/src/text_client.o: client/src/text_client.cpp.o
 client/src/text_client.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/communication_client.dir/build.make CMakeFiles/communication_client.dir/client/src/text_client.cpp.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_receive_smoke.dir/build.make CMakeFiles/phase6_video_receive_smoke.dir/client/src/text_client.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_registration_integration_test.dir/build.make CMakeFiles/phase5_voice_registration_integration_test.dir/client/src/text_client.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_unified_text_client_test.dir/build.make CMakeFiles/phase5_unified_text_client_test.dir/client/src/text_client.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_registration_integration_test.dir/build.make CMakeFiles/phase6_video_registration_integration_test.dir/client/src/text_client.cpp.o
 .PHONY : client/src/text_client.cpp.o
 
 client/src/text_client.i: client/src/text_client.cpp.i
@@ -1130,9 +297,6 @@ client/src/text_client.i: client/src/text_client.cpp.i
 client/src/text_client.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/communication_client.dir/build.make CMakeFiles/communication_client.dir/client/src/text_client.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_receive_smoke.dir/build.make CMakeFiles/phase6_video_receive_smoke.dir/client/src/text_client.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_registration_integration_test.dir/build.make CMakeFiles/phase5_voice_registration_integration_test.dir/client/src/text_client.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_unified_text_client_test.dir/build.make CMakeFiles/phase5_unified_text_client_test.dir/client/src/text_client.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_registration_integration_test.dir/build.make CMakeFiles/phase6_video_registration_integration_test.dir/client/src/text_client.cpp.i
 .PHONY : client/src/text_client.cpp.i
 
 client/src/text_client.s: client/src/text_client.cpp.s
@@ -1142,9 +306,6 @@ client/src/text_client.s: client/src/text_client.cpp.s
 client/src/text_client.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/communication_client.dir/build.make CMakeFiles/communication_client.dir/client/src/text_client.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_receive_smoke.dir/build.make CMakeFiles/phase6_video_receive_smoke.dir/client/src/text_client.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_registration_integration_test.dir/build.make CMakeFiles/phase5_voice_registration_integration_test.dir/client/src/text_client.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_unified_text_client_test.dir/build.make CMakeFiles/phase5_unified_text_client_test.dir/client/src/text_client.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_registration_integration_test.dir/build.make CMakeFiles/phase6_video_registration_integration_test.dir/client/src/text_client.cpp.s
 .PHONY : client/src/text_client.cpp.s
 
 client/src/video_capture_device.o: client/src/video_capture_device.cpp.o
@@ -1154,8 +315,6 @@ client/src/video_capture_device.o: client/src/video_capture_device.cpp.o
 client/src/video_capture_device.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/communication_client.dir/build.make CMakeFiles/communication_client.dir/client/src/video_capture_device.cpp.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_capture_smoke.dir/build.make CMakeFiles/phase6_video_capture_smoke.dir/client/src/video_capture_device.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_capture_test.dir/build.make CMakeFiles/phase6_video_capture_test.dir/client/src/video_capture_device.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_client_test.dir/build.make CMakeFiles/phase6_video_client_test.dir/client/src/video_capture_device.cpp.o
 .PHONY : client/src/video_capture_device.cpp.o
 
 client/src/video_capture_device.i: client/src/video_capture_device.cpp.i
@@ -1165,8 +324,6 @@ client/src/video_capture_device.i: client/src/video_capture_device.cpp.i
 client/src/video_capture_device.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/communication_client.dir/build.make CMakeFiles/communication_client.dir/client/src/video_capture_device.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_capture_smoke.dir/build.make CMakeFiles/phase6_video_capture_smoke.dir/client/src/video_capture_device.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_capture_test.dir/build.make CMakeFiles/phase6_video_capture_test.dir/client/src/video_capture_device.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_client_test.dir/build.make CMakeFiles/phase6_video_client_test.dir/client/src/video_capture_device.cpp.i
 .PHONY : client/src/video_capture_device.cpp.i
 
 client/src/video_capture_device.s: client/src/video_capture_device.cpp.s
@@ -1176,8 +333,6 @@ client/src/video_capture_device.s: client/src/video_capture_device.cpp.s
 client/src/video_capture_device.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/communication_client.dir/build.make CMakeFiles/communication_client.dir/client/src/video_capture_device.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_capture_smoke.dir/build.make CMakeFiles/phase6_video_capture_smoke.dir/client/src/video_capture_device.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_capture_test.dir/build.make CMakeFiles/phase6_video_capture_test.dir/client/src/video_capture_device.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_client_test.dir/build.make CMakeFiles/phase6_video_client_test.dir/client/src/video_capture_device.cpp.s
 .PHONY : client/src/video_capture_device.cpp.s
 
 client/src/video_client.o: client/src/video_client.cpp.o
@@ -1186,7 +341,6 @@ client/src/video_client.o: client/src/video_client.cpp.o
 # target to build an object file
 client/src/video_client.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/communication_client.dir/build.make CMakeFiles/communication_client.dir/client/src/video_client.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_client_test.dir/build.make CMakeFiles/phase6_video_client_test.dir/client/src/video_client.cpp.o
 .PHONY : client/src/video_client.cpp.o
 
 client/src/video_client.i: client/src/video_client.cpp.i
@@ -1195,7 +349,6 @@ client/src/video_client.i: client/src/video_client.cpp.i
 # target to preprocess a source file
 client/src/video_client.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/communication_client.dir/build.make CMakeFiles/communication_client.dir/client/src/video_client.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_client_test.dir/build.make CMakeFiles/phase6_video_client_test.dir/client/src/video_client.cpp.i
 .PHONY : client/src/video_client.cpp.i
 
 client/src/video_client.s: client/src/video_client.cpp.s
@@ -1204,7 +357,6 @@ client/src/video_client.s: client/src/video_client.cpp.s
 # target to generate assembly for a file
 client/src/video_client.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/communication_client.dir/build.make CMakeFiles/communication_client.dir/client/src/video_client.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_client_test.dir/build.make CMakeFiles/phase6_video_client_test.dir/client/src/video_client.cpp.s
 .PHONY : client/src/video_client.cpp.s
 
 client/src/wayland_portal_capture.o: client/src/wayland_portal_capture.cpp.o
@@ -1231,67 +383,12 @@ client/src/wayland_portal_capture.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/wayland_screen_capture.dir/build.make CMakeFiles/wayland_screen_capture.dir/client/src/wayland_portal_capture.cpp.s
 .PHONY : client/src/wayland_portal_capture.cpp.s
 
-common/src/audio_codec.o: common/src/audio_codec.cpp.o
-.PHONY : common/src/audio_codec.o
-
-# target to build an object file
-common/src/audio_codec.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_e2e_test.dir/build.make CMakeFiles/phase5_voice_e2e_test.dir/common/src/audio_codec.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_opus_codec_test.dir/build.make CMakeFiles/phase5_opus_codec_test.dir/common/src/audio_codec.cpp.o
-.PHONY : common/src/audio_codec.cpp.o
-
-common/src/audio_codec.i: common/src/audio_codec.cpp.i
-.PHONY : common/src/audio_codec.i
-
-# target to preprocess a source file
-common/src/audio_codec.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_e2e_test.dir/build.make CMakeFiles/phase5_voice_e2e_test.dir/common/src/audio_codec.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_opus_codec_test.dir/build.make CMakeFiles/phase5_opus_codec_test.dir/common/src/audio_codec.cpp.i
-.PHONY : common/src/audio_codec.cpp.i
-
-common/src/audio_codec.s: common/src/audio_codec.cpp.s
-.PHONY : common/src/audio_codec.s
-
-# target to generate assembly for a file
-common/src/audio_codec.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_e2e_test.dir/build.make CMakeFiles/phase5_voice_e2e_test.dir/common/src/audio_codec.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_opus_codec_test.dir/build.make CMakeFiles/phase5_opus_codec_test.dir/common/src/audio_codec.cpp.s
-.PHONY : common/src/audio_codec.cpp.s
-
-common/src/audio_jitter_buffer.o: common/src/audio_jitter_buffer.cpp.o
-.PHONY : common/src/audio_jitter_buffer.o
-
-# target to build an object file
-common/src/audio_jitter_buffer.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_audio_resilience_test.dir/build.make CMakeFiles/phase5_audio_resilience_test.dir/common/src/audio_jitter_buffer.cpp.o
-.PHONY : common/src/audio_jitter_buffer.cpp.o
-
-common/src/audio_jitter_buffer.i: common/src/audio_jitter_buffer.cpp.i
-.PHONY : common/src/audio_jitter_buffer.i
-
-# target to preprocess a source file
-common/src/audio_jitter_buffer.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_audio_resilience_test.dir/build.make CMakeFiles/phase5_audio_resilience_test.dir/common/src/audio_jitter_buffer.cpp.i
-.PHONY : common/src/audio_jitter_buffer.cpp.i
-
-common/src/audio_jitter_buffer.s: common/src/audio_jitter_buffer.cpp.s
-.PHONY : common/src/audio_jitter_buffer.s
-
-# target to generate assembly for a file
-common/src/audio_jitter_buffer.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_audio_resilience_test.dir/build.make CMakeFiles/phase5_audio_resilience_test.dir/common/src/audio_jitter_buffer.cpp.s
-.PHONY : common/src/audio_jitter_buffer.cpp.s
-
 common/src/audio_packet.o: common/src/audio_packet.cpp.o
 .PHONY : common/src/audio_packet.o
 
 # target to build an object file
 common/src/audio_packet.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/audio_transport.dir/build.make CMakeFiles/audio_transport.dir/common/src/audio_packet.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_audio_packet_test.dir/build.make CMakeFiles/phase5_audio_packet_test.dir/common/src/audio_packet.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_audio_client_session_test.dir/build.make CMakeFiles/phase5_audio_client_session_test.dir/common/src/audio_packet.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_udp_transport_test.dir/build.make CMakeFiles/phase5_udp_transport_test.dir/common/src/audio_packet.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_e2e_test.dir/build.make CMakeFiles/phase5_voice_e2e_test.dir/common/src/audio_packet.cpp.o
 .PHONY : common/src/audio_packet.cpp.o
 
 common/src/audio_packet.i: common/src/audio_packet.cpp.i
@@ -1300,10 +397,6 @@ common/src/audio_packet.i: common/src/audio_packet.cpp.i
 # target to preprocess a source file
 common/src/audio_packet.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/audio_transport.dir/build.make CMakeFiles/audio_transport.dir/common/src/audio_packet.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_audio_packet_test.dir/build.make CMakeFiles/phase5_audio_packet_test.dir/common/src/audio_packet.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_audio_client_session_test.dir/build.make CMakeFiles/phase5_audio_client_session_test.dir/common/src/audio_packet.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_udp_transport_test.dir/build.make CMakeFiles/phase5_udp_transport_test.dir/common/src/audio_packet.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_e2e_test.dir/build.make CMakeFiles/phase5_voice_e2e_test.dir/common/src/audio_packet.cpp.i
 .PHONY : common/src/audio_packet.cpp.i
 
 common/src/audio_packet.s: common/src/audio_packet.cpp.s
@@ -1312,10 +405,6 @@ common/src/audio_packet.s: common/src/audio_packet.cpp.s
 # target to generate assembly for a file
 common/src/audio_packet.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/audio_transport.dir/build.make CMakeFiles/audio_transport.dir/common/src/audio_packet.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_audio_packet_test.dir/build.make CMakeFiles/phase5_audio_packet_test.dir/common/src/audio_packet.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_audio_client_session_test.dir/build.make CMakeFiles/phase5_audio_client_session_test.dir/common/src/audio_packet.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_udp_transport_test.dir/build.make CMakeFiles/phase5_udp_transport_test.dir/common/src/audio_packet.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_e2e_test.dir/build.make CMakeFiles/phase5_voice_e2e_test.dir/common/src/audio_packet.cpp.s
 .PHONY : common/src/audio_packet.cpp.s
 
 common/src/audio_session.o: common/src/audio_session.cpp.o
@@ -1324,9 +413,6 @@ common/src/audio_session.o: common/src/audio_session.cpp.o
 # target to build an object file
 common/src/audio_session.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/audio_transport.dir/build.make CMakeFiles/audio_transport.dir/common/src/audio_session.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_audio_session_test.dir/build.make CMakeFiles/phase5_audio_session_test.dir/common/src/audio_session.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_udp_transport_test.dir/build.make CMakeFiles/phase5_udp_transport_test.dir/common/src/audio_session.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_e2e_test.dir/build.make CMakeFiles/phase5_voice_e2e_test.dir/common/src/audio_session.cpp.o
 .PHONY : common/src/audio_session.cpp.o
 
 common/src/audio_session.i: common/src/audio_session.cpp.i
@@ -1335,9 +421,6 @@ common/src/audio_session.i: common/src/audio_session.cpp.i
 # target to preprocess a source file
 common/src/audio_session.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/audio_transport.dir/build.make CMakeFiles/audio_transport.dir/common/src/audio_session.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_audio_session_test.dir/build.make CMakeFiles/phase5_audio_session_test.dir/common/src/audio_session.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_udp_transport_test.dir/build.make CMakeFiles/phase5_udp_transport_test.dir/common/src/audio_session.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_e2e_test.dir/build.make CMakeFiles/phase5_voice_e2e_test.dir/common/src/audio_session.cpp.i
 .PHONY : common/src/audio_session.cpp.i
 
 common/src/audio_session.s: common/src/audio_session.cpp.s
@@ -1346,40 +429,7 @@ common/src/audio_session.s: common/src/audio_session.cpp.s
 # target to generate assembly for a file
 common/src/audio_session.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/audio_transport.dir/build.make CMakeFiles/audio_transport.dir/common/src/audio_session.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_audio_session_test.dir/build.make CMakeFiles/phase5_audio_session_test.dir/common/src/audio_session.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_udp_transport_test.dir/build.make CMakeFiles/phase5_udp_transport_test.dir/common/src/audio_session.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_e2e_test.dir/build.make CMakeFiles/phase5_voice_e2e_test.dir/common/src/audio_session.cpp.s
 .PHONY : common/src/audio_session.cpp.s
-
-common/src/audio_stream_mixer.o: common/src/audio_stream_mixer.cpp.o
-.PHONY : common/src/audio_stream_mixer.o
-
-# target to build an object file
-common/src/audio_stream_mixer.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_multi_stream_mixer_test.dir/build.make CMakeFiles/phase5_multi_stream_mixer_test.dir/common/src/audio_stream_mixer.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_audio_resilience_test.dir/build.make CMakeFiles/phase5_audio_resilience_test.dir/common/src/audio_stream_mixer.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_e2e_test.dir/build.make CMakeFiles/phase5_voice_e2e_test.dir/common/src/audio_stream_mixer.cpp.o
-.PHONY : common/src/audio_stream_mixer.cpp.o
-
-common/src/audio_stream_mixer.i: common/src/audio_stream_mixer.cpp.i
-.PHONY : common/src/audio_stream_mixer.i
-
-# target to preprocess a source file
-common/src/audio_stream_mixer.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_multi_stream_mixer_test.dir/build.make CMakeFiles/phase5_multi_stream_mixer_test.dir/common/src/audio_stream_mixer.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_audio_resilience_test.dir/build.make CMakeFiles/phase5_audio_resilience_test.dir/common/src/audio_stream_mixer.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_e2e_test.dir/build.make CMakeFiles/phase5_voice_e2e_test.dir/common/src/audio_stream_mixer.cpp.i
-.PHONY : common/src/audio_stream_mixer.cpp.i
-
-common/src/audio_stream_mixer.s: common/src/audio_stream_mixer.cpp.s
-.PHONY : common/src/audio_stream_mixer.s
-
-# target to generate assembly for a file
-common/src/audio_stream_mixer.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_multi_stream_mixer_test.dir/build.make CMakeFiles/phase5_multi_stream_mixer_test.dir/common/src/audio_stream_mixer.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_audio_resilience_test.dir/build.make CMakeFiles/phase5_audio_resilience_test.dir/common/src/audio_stream_mixer.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_e2e_test.dir/build.make CMakeFiles/phase5_voice_e2e_test.dir/common/src/audio_stream_mixer.cpp.s
-.PHONY : common/src/audio_stream_mixer.cpp.s
 
 common/src/audio_udp_transport.o: common/src/audio_udp_transport.cpp.o
 .PHONY : common/src/audio_udp_transport.o
@@ -1387,8 +437,6 @@ common/src/audio_udp_transport.o: common/src/audio_udp_transport.cpp.o
 # target to build an object file
 common/src/audio_udp_transport.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/audio_transport.dir/build.make CMakeFiles/audio_transport.dir/common/src/audio_udp_transport.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_udp_transport_test.dir/build.make CMakeFiles/phase5_udp_transport_test.dir/common/src/audio_udp_transport.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_e2e_test.dir/build.make CMakeFiles/phase5_voice_e2e_test.dir/common/src/audio_udp_transport.cpp.o
 .PHONY : common/src/audio_udp_transport.cpp.o
 
 common/src/audio_udp_transport.i: common/src/audio_udp_transport.cpp.i
@@ -1397,8 +445,6 @@ common/src/audio_udp_transport.i: common/src/audio_udp_transport.cpp.i
 # target to preprocess a source file
 common/src/audio_udp_transport.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/audio_transport.dir/build.make CMakeFiles/audio_transport.dir/common/src/audio_udp_transport.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_udp_transport_test.dir/build.make CMakeFiles/phase5_udp_transport_test.dir/common/src/audio_udp_transport.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_e2e_test.dir/build.make CMakeFiles/phase5_voice_e2e_test.dir/common/src/audio_udp_transport.cpp.i
 .PHONY : common/src/audio_udp_transport.cpp.i
 
 common/src/audio_udp_transport.s: common/src/audio_udp_transport.cpp.s
@@ -1407,8 +453,6 @@ common/src/audio_udp_transport.s: common/src/audio_udp_transport.cpp.s
 # target to generate assembly for a file
 common/src/audio_udp_transport.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/audio_transport.dir/build.make CMakeFiles/audio_transport.dir/common/src/audio_udp_transport.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_udp_transport_test.dir/build.make CMakeFiles/phase5_udp_transport_test.dir/common/src/audio_udp_transport.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_e2e_test.dir/build.make CMakeFiles/phase5_voice_e2e_test.dir/common/src/audio_udp_transport.cpp.s
 .PHONY : common/src/audio_udp_transport.cpp.s
 
 common/src/mjpeg_frame.o: common/src/mjpeg_frame.cpp.o
@@ -1419,9 +463,6 @@ common/src/mjpeg_frame.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/screen_frame_encoder.dir/build.make CMakeFiles/screen_frame_encoder.dir/common/src/mjpeg_frame.cpp.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/communication_client.dir/build.make CMakeFiles/communication_client.dir/common/src/mjpeg_frame.cpp.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_capture_smoke.dir/build.make CMakeFiles/phase6_video_capture_smoke.dir/common/src/mjpeg_frame.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_capture_test.dir/build.make CMakeFiles/phase6_video_capture_test.dir/common/src/mjpeg_frame.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_client_test.dir/build.make CMakeFiles/phase6_video_client_test.dir/common/src/mjpeg_frame.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_mjpeg_frame_test.dir/build.make CMakeFiles/phase6_mjpeg_frame_test.dir/common/src/mjpeg_frame.cpp.o
 .PHONY : common/src/mjpeg_frame.cpp.o
 
 common/src/mjpeg_frame.i: common/src/mjpeg_frame.cpp.i
@@ -1432,9 +473,6 @@ common/src/mjpeg_frame.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/screen_frame_encoder.dir/build.make CMakeFiles/screen_frame_encoder.dir/common/src/mjpeg_frame.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/communication_client.dir/build.make CMakeFiles/communication_client.dir/common/src/mjpeg_frame.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_capture_smoke.dir/build.make CMakeFiles/phase6_video_capture_smoke.dir/common/src/mjpeg_frame.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_capture_test.dir/build.make CMakeFiles/phase6_video_capture_test.dir/common/src/mjpeg_frame.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_client_test.dir/build.make CMakeFiles/phase6_video_client_test.dir/common/src/mjpeg_frame.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_mjpeg_frame_test.dir/build.make CMakeFiles/phase6_mjpeg_frame_test.dir/common/src/mjpeg_frame.cpp.i
 .PHONY : common/src/mjpeg_frame.cpp.i
 
 common/src/mjpeg_frame.s: common/src/mjpeg_frame.cpp.s
@@ -1445,9 +483,6 @@ common/src/mjpeg_frame.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/screen_frame_encoder.dir/build.make CMakeFiles/screen_frame_encoder.dir/common/src/mjpeg_frame.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/communication_client.dir/build.make CMakeFiles/communication_client.dir/common/src/mjpeg_frame.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_capture_smoke.dir/build.make CMakeFiles/phase6_video_capture_smoke.dir/common/src/mjpeg_frame.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_capture_test.dir/build.make CMakeFiles/phase6_video_capture_test.dir/common/src/mjpeg_frame.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_client_test.dir/build.make CMakeFiles/phase6_video_client_test.dir/common/src/mjpeg_frame.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_mjpeg_frame_test.dir/build.make CMakeFiles/phase6_mjpeg_frame_test.dir/common/src/mjpeg_frame.cpp.s
 .PHONY : common/src/mjpeg_frame.cpp.s
 
 common/src/screen_frame_encoder.o: common/src/screen_frame_encoder.cpp.o
@@ -1484,20 +519,6 @@ common/src/video_frame.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/communication_client.dir/build.make CMakeFiles/communication_client.dir/common/src/video_frame.cpp.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_capture_smoke.dir/build.make CMakeFiles/phase6_video_capture_smoke.dir/common/src/video_frame.cpp.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_receive_smoke.dir/build.make CMakeFiles/phase6_video_receive_smoke.dir/common/src/video_frame.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase1_connection_test.dir/build.make CMakeFiles/phase1_connection_test.dir/common/src/video_frame.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase2_io_uring_test.dir/build.make CMakeFiles/phase2_io_uring_test.dir/common/src/video_frame.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_registration_integration_test.dir/build.make CMakeFiles/phase5_voice_registration_integration_test.dir/common/src/video_frame.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_unified_text_client_test.dir/build.make CMakeFiles/phase5_unified_text_client_test.dir/common/src/video_frame.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_frame_test.dir/build.make CMakeFiles/phase6_video_frame_test.dir/common/src/video_frame.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_udp_transport_test.dir/build.make CMakeFiles/phase6_video_udp_transport_test.dir/common/src/video_frame.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_registration_integration_test.dir/build.make CMakeFiles/phase6_video_registration_integration_test.dir/common/src/video_frame.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_client_test.dir/build.make CMakeFiles/phase6_video_client_test.dir/common/src/video_frame.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_handshake_test.dir/build.make CMakeFiles/phase3_handshake_test.dir/common/src/video_frame.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_message_relay_test.dir/build.make CMakeFiles/phase3_message_relay_test.dir/common/src/video_frame.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_order_disconnect_test.dir/build.make CMakeFiles/phase3_order_disconnect_test.dir/common/src/video_frame.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_invalid_input_test.dir/build.make CMakeFiles/phase3_invalid_input_test.dir/common/src/video_frame.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_slow_client_test.dir/build.make CMakeFiles/phase3_slow_client_test.dir/common/src/video_frame.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase4_multi_client_test.dir/build.make CMakeFiles/phase4_multi_client_test.dir/common/src/video_frame.cpp.o
 .PHONY : common/src/video_frame.cpp.o
 
 common/src/video_frame.i: common/src/video_frame.cpp.i
@@ -1510,20 +531,6 @@ common/src/video_frame.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/communication_client.dir/build.make CMakeFiles/communication_client.dir/common/src/video_frame.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_capture_smoke.dir/build.make CMakeFiles/phase6_video_capture_smoke.dir/common/src/video_frame.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_receive_smoke.dir/build.make CMakeFiles/phase6_video_receive_smoke.dir/common/src/video_frame.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase1_connection_test.dir/build.make CMakeFiles/phase1_connection_test.dir/common/src/video_frame.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase2_io_uring_test.dir/build.make CMakeFiles/phase2_io_uring_test.dir/common/src/video_frame.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_registration_integration_test.dir/build.make CMakeFiles/phase5_voice_registration_integration_test.dir/common/src/video_frame.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_unified_text_client_test.dir/build.make CMakeFiles/phase5_unified_text_client_test.dir/common/src/video_frame.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_frame_test.dir/build.make CMakeFiles/phase6_video_frame_test.dir/common/src/video_frame.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_udp_transport_test.dir/build.make CMakeFiles/phase6_video_udp_transport_test.dir/common/src/video_frame.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_registration_integration_test.dir/build.make CMakeFiles/phase6_video_registration_integration_test.dir/common/src/video_frame.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_client_test.dir/build.make CMakeFiles/phase6_video_client_test.dir/common/src/video_frame.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_handshake_test.dir/build.make CMakeFiles/phase3_handshake_test.dir/common/src/video_frame.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_message_relay_test.dir/build.make CMakeFiles/phase3_message_relay_test.dir/common/src/video_frame.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_order_disconnect_test.dir/build.make CMakeFiles/phase3_order_disconnect_test.dir/common/src/video_frame.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_invalid_input_test.dir/build.make CMakeFiles/phase3_invalid_input_test.dir/common/src/video_frame.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_slow_client_test.dir/build.make CMakeFiles/phase3_slow_client_test.dir/common/src/video_frame.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase4_multi_client_test.dir/build.make CMakeFiles/phase4_multi_client_test.dir/common/src/video_frame.cpp.i
 .PHONY : common/src/video_frame.cpp.i
 
 common/src/video_frame.s: common/src/video_frame.cpp.s
@@ -1536,20 +543,6 @@ common/src/video_frame.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/communication_client.dir/build.make CMakeFiles/communication_client.dir/common/src/video_frame.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_capture_smoke.dir/build.make CMakeFiles/phase6_video_capture_smoke.dir/common/src/video_frame.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_receive_smoke.dir/build.make CMakeFiles/phase6_video_receive_smoke.dir/common/src/video_frame.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase1_connection_test.dir/build.make CMakeFiles/phase1_connection_test.dir/common/src/video_frame.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase2_io_uring_test.dir/build.make CMakeFiles/phase2_io_uring_test.dir/common/src/video_frame.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_registration_integration_test.dir/build.make CMakeFiles/phase5_voice_registration_integration_test.dir/common/src/video_frame.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_unified_text_client_test.dir/build.make CMakeFiles/phase5_unified_text_client_test.dir/common/src/video_frame.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_frame_test.dir/build.make CMakeFiles/phase6_video_frame_test.dir/common/src/video_frame.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_udp_transport_test.dir/build.make CMakeFiles/phase6_video_udp_transport_test.dir/common/src/video_frame.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_registration_integration_test.dir/build.make CMakeFiles/phase6_video_registration_integration_test.dir/common/src/video_frame.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_client_test.dir/build.make CMakeFiles/phase6_video_client_test.dir/common/src/video_frame.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_handshake_test.dir/build.make CMakeFiles/phase3_handshake_test.dir/common/src/video_frame.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_message_relay_test.dir/build.make CMakeFiles/phase3_message_relay_test.dir/common/src/video_frame.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_order_disconnect_test.dir/build.make CMakeFiles/phase3_order_disconnect_test.dir/common/src/video_frame.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_invalid_input_test.dir/build.make CMakeFiles/phase3_invalid_input_test.dir/common/src/video_frame.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_slow_client_test.dir/build.make CMakeFiles/phase3_slow_client_test.dir/common/src/video_frame.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase4_multi_client_test.dir/build.make CMakeFiles/phase4_multi_client_test.dir/common/src/video_frame.cpp.s
 .PHONY : common/src/video_frame.cpp.s
 
 common/src/video_udp_transport.o: common/src/video_udp_transport.cpp.o
@@ -1558,18 +551,6 @@ common/src/video_udp_transport.o: common/src/video_udp_transport.cpp.o
 # target to build an object file
 common/src/video_udp_transport.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/communication_server.dir/build.make CMakeFiles/communication_server.dir/common/src/video_udp_transport.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase1_connection_test.dir/build.make CMakeFiles/phase1_connection_test.dir/common/src/video_udp_transport.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase2_io_uring_test.dir/build.make CMakeFiles/phase2_io_uring_test.dir/common/src/video_udp_transport.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_registration_integration_test.dir/build.make CMakeFiles/phase5_voice_registration_integration_test.dir/common/src/video_udp_transport.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_unified_text_client_test.dir/build.make CMakeFiles/phase5_unified_text_client_test.dir/common/src/video_udp_transport.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_udp_transport_test.dir/build.make CMakeFiles/phase6_video_udp_transport_test.dir/common/src/video_udp_transport.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_registration_integration_test.dir/build.make CMakeFiles/phase6_video_registration_integration_test.dir/common/src/video_udp_transport.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_handshake_test.dir/build.make CMakeFiles/phase3_handshake_test.dir/common/src/video_udp_transport.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_message_relay_test.dir/build.make CMakeFiles/phase3_message_relay_test.dir/common/src/video_udp_transport.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_order_disconnect_test.dir/build.make CMakeFiles/phase3_order_disconnect_test.dir/common/src/video_udp_transport.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_invalid_input_test.dir/build.make CMakeFiles/phase3_invalid_input_test.dir/common/src/video_udp_transport.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_slow_client_test.dir/build.make CMakeFiles/phase3_slow_client_test.dir/common/src/video_udp_transport.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase4_multi_client_test.dir/build.make CMakeFiles/phase4_multi_client_test.dir/common/src/video_udp_transport.cpp.o
 .PHONY : common/src/video_udp_transport.cpp.o
 
 common/src/video_udp_transport.i: common/src/video_udp_transport.cpp.i
@@ -1578,18 +559,6 @@ common/src/video_udp_transport.i: common/src/video_udp_transport.cpp.i
 # target to preprocess a source file
 common/src/video_udp_transport.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/communication_server.dir/build.make CMakeFiles/communication_server.dir/common/src/video_udp_transport.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase1_connection_test.dir/build.make CMakeFiles/phase1_connection_test.dir/common/src/video_udp_transport.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase2_io_uring_test.dir/build.make CMakeFiles/phase2_io_uring_test.dir/common/src/video_udp_transport.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_registration_integration_test.dir/build.make CMakeFiles/phase5_voice_registration_integration_test.dir/common/src/video_udp_transport.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_unified_text_client_test.dir/build.make CMakeFiles/phase5_unified_text_client_test.dir/common/src/video_udp_transport.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_udp_transport_test.dir/build.make CMakeFiles/phase6_video_udp_transport_test.dir/common/src/video_udp_transport.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_registration_integration_test.dir/build.make CMakeFiles/phase6_video_registration_integration_test.dir/common/src/video_udp_transport.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_handshake_test.dir/build.make CMakeFiles/phase3_handshake_test.dir/common/src/video_udp_transport.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_message_relay_test.dir/build.make CMakeFiles/phase3_message_relay_test.dir/common/src/video_udp_transport.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_order_disconnect_test.dir/build.make CMakeFiles/phase3_order_disconnect_test.dir/common/src/video_udp_transport.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_invalid_input_test.dir/build.make CMakeFiles/phase3_invalid_input_test.dir/common/src/video_udp_transport.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_slow_client_test.dir/build.make CMakeFiles/phase3_slow_client_test.dir/common/src/video_udp_transport.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase4_multi_client_test.dir/build.make CMakeFiles/phase4_multi_client_test.dir/common/src/video_udp_transport.cpp.i
 .PHONY : common/src/video_udp_transport.cpp.i
 
 common/src/video_udp_transport.s: common/src/video_udp_transport.cpp.s
@@ -1598,18 +567,6 @@ common/src/video_udp_transport.s: common/src/video_udp_transport.cpp.s
 # target to generate assembly for a file
 common/src/video_udp_transport.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/communication_server.dir/build.make CMakeFiles/communication_server.dir/common/src/video_udp_transport.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase1_connection_test.dir/build.make CMakeFiles/phase1_connection_test.dir/common/src/video_udp_transport.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase2_io_uring_test.dir/build.make CMakeFiles/phase2_io_uring_test.dir/common/src/video_udp_transport.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_registration_integration_test.dir/build.make CMakeFiles/phase5_voice_registration_integration_test.dir/common/src/video_udp_transport.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_unified_text_client_test.dir/build.make CMakeFiles/phase5_unified_text_client_test.dir/common/src/video_udp_transport.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_udp_transport_test.dir/build.make CMakeFiles/phase6_video_udp_transport_test.dir/common/src/video_udp_transport.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_registration_integration_test.dir/build.make CMakeFiles/phase6_video_registration_integration_test.dir/common/src/video_udp_transport.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_handshake_test.dir/build.make CMakeFiles/phase3_handshake_test.dir/common/src/video_udp_transport.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_message_relay_test.dir/build.make CMakeFiles/phase3_message_relay_test.dir/common/src/video_udp_transport.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_order_disconnect_test.dir/build.make CMakeFiles/phase3_order_disconnect_test.dir/common/src/video_udp_transport.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_invalid_input_test.dir/build.make CMakeFiles/phase3_invalid_input_test.dir/common/src/video_udp_transport.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_slow_client_test.dir/build.make CMakeFiles/phase3_slow_client_test.dir/common/src/video_udp_transport.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase4_multi_client_test.dir/build.make CMakeFiles/phase4_multi_client_test.dir/common/src/video_udp_transport.cpp.s
 .PHONY : common/src/video_udp_transport.cpp.s
 
 server/src/chat_protocol.o: server/src/chat_protocol.cpp.o
@@ -1618,21 +575,6 @@ server/src/chat_protocol.o: server/src/chat_protocol.cpp.o
 # target to build an object file
 server/src/chat_protocol.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/communication_server.dir/build.make CMakeFiles/communication_server.dir/server/src/chat_protocol.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase1_connection_test.dir/build.make CMakeFiles/phase1_connection_test.dir/server/src/chat_protocol.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase2_io_uring_test.dir/build.make CMakeFiles/phase2_io_uring_test.dir/server/src/chat_protocol.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_chat_frame_test.dir/build.make CMakeFiles/phase3_chat_frame_test.dir/server/src/chat_protocol.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_display_name_test.dir/build.make CMakeFiles/phase3_display_name_test.dir/server/src/chat_protocol.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_registration_test.dir/build.make CMakeFiles/phase5_voice_registration_test.dir/server/src/chat_protocol.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_registration_integration_test.dir/build.make CMakeFiles/phase5_voice_registration_integration_test.dir/server/src/chat_protocol.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_unified_text_client_test.dir/build.make CMakeFiles/phase5_unified_text_client_test.dir/server/src/chat_protocol.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_registration_integration_test.dir/build.make CMakeFiles/phase6_video_registration_integration_test.dir/server/src/chat_protocol.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_control_test.dir/build.make CMakeFiles/phase6_video_control_test.dir/server/src/chat_protocol.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_handshake_test.dir/build.make CMakeFiles/phase3_handshake_test.dir/server/src/chat_protocol.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_message_relay_test.dir/build.make CMakeFiles/phase3_message_relay_test.dir/server/src/chat_protocol.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_order_disconnect_test.dir/build.make CMakeFiles/phase3_order_disconnect_test.dir/server/src/chat_protocol.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_invalid_input_test.dir/build.make CMakeFiles/phase3_invalid_input_test.dir/server/src/chat_protocol.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_slow_client_test.dir/build.make CMakeFiles/phase3_slow_client_test.dir/server/src/chat_protocol.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase4_multi_client_test.dir/build.make CMakeFiles/phase4_multi_client_test.dir/server/src/chat_protocol.cpp.o
 .PHONY : server/src/chat_protocol.cpp.o
 
 server/src/chat_protocol.i: server/src/chat_protocol.cpp.i
@@ -1641,21 +583,6 @@ server/src/chat_protocol.i: server/src/chat_protocol.cpp.i
 # target to preprocess a source file
 server/src/chat_protocol.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/communication_server.dir/build.make CMakeFiles/communication_server.dir/server/src/chat_protocol.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase1_connection_test.dir/build.make CMakeFiles/phase1_connection_test.dir/server/src/chat_protocol.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase2_io_uring_test.dir/build.make CMakeFiles/phase2_io_uring_test.dir/server/src/chat_protocol.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_chat_frame_test.dir/build.make CMakeFiles/phase3_chat_frame_test.dir/server/src/chat_protocol.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_display_name_test.dir/build.make CMakeFiles/phase3_display_name_test.dir/server/src/chat_protocol.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_registration_test.dir/build.make CMakeFiles/phase5_voice_registration_test.dir/server/src/chat_protocol.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_registration_integration_test.dir/build.make CMakeFiles/phase5_voice_registration_integration_test.dir/server/src/chat_protocol.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_unified_text_client_test.dir/build.make CMakeFiles/phase5_unified_text_client_test.dir/server/src/chat_protocol.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_registration_integration_test.dir/build.make CMakeFiles/phase6_video_registration_integration_test.dir/server/src/chat_protocol.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_control_test.dir/build.make CMakeFiles/phase6_video_control_test.dir/server/src/chat_protocol.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_handshake_test.dir/build.make CMakeFiles/phase3_handshake_test.dir/server/src/chat_protocol.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_message_relay_test.dir/build.make CMakeFiles/phase3_message_relay_test.dir/server/src/chat_protocol.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_order_disconnect_test.dir/build.make CMakeFiles/phase3_order_disconnect_test.dir/server/src/chat_protocol.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_invalid_input_test.dir/build.make CMakeFiles/phase3_invalid_input_test.dir/server/src/chat_protocol.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_slow_client_test.dir/build.make CMakeFiles/phase3_slow_client_test.dir/server/src/chat_protocol.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase4_multi_client_test.dir/build.make CMakeFiles/phase4_multi_client_test.dir/server/src/chat_protocol.cpp.i
 .PHONY : server/src/chat_protocol.cpp.i
 
 server/src/chat_protocol.s: server/src/chat_protocol.cpp.s
@@ -1664,21 +591,6 @@ server/src/chat_protocol.s: server/src/chat_protocol.cpp.s
 # target to generate assembly for a file
 server/src/chat_protocol.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/communication_server.dir/build.make CMakeFiles/communication_server.dir/server/src/chat_protocol.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase1_connection_test.dir/build.make CMakeFiles/phase1_connection_test.dir/server/src/chat_protocol.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase2_io_uring_test.dir/build.make CMakeFiles/phase2_io_uring_test.dir/server/src/chat_protocol.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_chat_frame_test.dir/build.make CMakeFiles/phase3_chat_frame_test.dir/server/src/chat_protocol.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_display_name_test.dir/build.make CMakeFiles/phase3_display_name_test.dir/server/src/chat_protocol.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_registration_test.dir/build.make CMakeFiles/phase5_voice_registration_test.dir/server/src/chat_protocol.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_registration_integration_test.dir/build.make CMakeFiles/phase5_voice_registration_integration_test.dir/server/src/chat_protocol.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_unified_text_client_test.dir/build.make CMakeFiles/phase5_unified_text_client_test.dir/server/src/chat_protocol.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_registration_integration_test.dir/build.make CMakeFiles/phase6_video_registration_integration_test.dir/server/src/chat_protocol.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_control_test.dir/build.make CMakeFiles/phase6_video_control_test.dir/server/src/chat_protocol.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_handshake_test.dir/build.make CMakeFiles/phase3_handshake_test.dir/server/src/chat_protocol.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_message_relay_test.dir/build.make CMakeFiles/phase3_message_relay_test.dir/server/src/chat_protocol.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_order_disconnect_test.dir/build.make CMakeFiles/phase3_order_disconnect_test.dir/server/src/chat_protocol.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_invalid_input_test.dir/build.make CMakeFiles/phase3_invalid_input_test.dir/server/src/chat_protocol.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_slow_client_test.dir/build.make CMakeFiles/phase3_slow_client_test.dir/server/src/chat_protocol.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase4_multi_client_test.dir/build.make CMakeFiles/phase4_multi_client_test.dir/server/src/chat_protocol.cpp.s
 .PHONY : server/src/chat_protocol.cpp.s
 
 server/src/http_tcpServer.o: server/src/http_tcpServer.cpp.o
@@ -1687,17 +599,6 @@ server/src/http_tcpServer.o: server/src/http_tcpServer.cpp.o
 # target to build an object file
 server/src/http_tcpServer.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/communication_server.dir/build.make CMakeFiles/communication_server.dir/server/src/http_tcpServer.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase1_connection_test.dir/build.make CMakeFiles/phase1_connection_test.dir/server/src/http_tcpServer.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase2_io_uring_test.dir/build.make CMakeFiles/phase2_io_uring_test.dir/server/src/http_tcpServer.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_registration_integration_test.dir/build.make CMakeFiles/phase5_voice_registration_integration_test.dir/server/src/http_tcpServer.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_unified_text_client_test.dir/build.make CMakeFiles/phase5_unified_text_client_test.dir/server/src/http_tcpServer.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_registration_integration_test.dir/build.make CMakeFiles/phase6_video_registration_integration_test.dir/server/src/http_tcpServer.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_handshake_test.dir/build.make CMakeFiles/phase3_handshake_test.dir/server/src/http_tcpServer.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_message_relay_test.dir/build.make CMakeFiles/phase3_message_relay_test.dir/server/src/http_tcpServer.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_order_disconnect_test.dir/build.make CMakeFiles/phase3_order_disconnect_test.dir/server/src/http_tcpServer.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_invalid_input_test.dir/build.make CMakeFiles/phase3_invalid_input_test.dir/server/src/http_tcpServer.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_slow_client_test.dir/build.make CMakeFiles/phase3_slow_client_test.dir/server/src/http_tcpServer.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase4_multi_client_test.dir/build.make CMakeFiles/phase4_multi_client_test.dir/server/src/http_tcpServer.cpp.o
 .PHONY : server/src/http_tcpServer.cpp.o
 
 server/src/http_tcpServer.i: server/src/http_tcpServer.cpp.i
@@ -1706,17 +607,6 @@ server/src/http_tcpServer.i: server/src/http_tcpServer.cpp.i
 # target to preprocess a source file
 server/src/http_tcpServer.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/communication_server.dir/build.make CMakeFiles/communication_server.dir/server/src/http_tcpServer.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase1_connection_test.dir/build.make CMakeFiles/phase1_connection_test.dir/server/src/http_tcpServer.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase2_io_uring_test.dir/build.make CMakeFiles/phase2_io_uring_test.dir/server/src/http_tcpServer.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_registration_integration_test.dir/build.make CMakeFiles/phase5_voice_registration_integration_test.dir/server/src/http_tcpServer.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_unified_text_client_test.dir/build.make CMakeFiles/phase5_unified_text_client_test.dir/server/src/http_tcpServer.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_registration_integration_test.dir/build.make CMakeFiles/phase6_video_registration_integration_test.dir/server/src/http_tcpServer.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_handshake_test.dir/build.make CMakeFiles/phase3_handshake_test.dir/server/src/http_tcpServer.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_message_relay_test.dir/build.make CMakeFiles/phase3_message_relay_test.dir/server/src/http_tcpServer.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_order_disconnect_test.dir/build.make CMakeFiles/phase3_order_disconnect_test.dir/server/src/http_tcpServer.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_invalid_input_test.dir/build.make CMakeFiles/phase3_invalid_input_test.dir/server/src/http_tcpServer.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_slow_client_test.dir/build.make CMakeFiles/phase3_slow_client_test.dir/server/src/http_tcpServer.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase4_multi_client_test.dir/build.make CMakeFiles/phase4_multi_client_test.dir/server/src/http_tcpServer.cpp.i
 .PHONY : server/src/http_tcpServer.cpp.i
 
 server/src/http_tcpServer.s: server/src/http_tcpServer.cpp.s
@@ -1725,17 +615,6 @@ server/src/http_tcpServer.s: server/src/http_tcpServer.cpp.s
 # target to generate assembly for a file
 server/src/http_tcpServer.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/communication_server.dir/build.make CMakeFiles/communication_server.dir/server/src/http_tcpServer.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase1_connection_test.dir/build.make CMakeFiles/phase1_connection_test.dir/server/src/http_tcpServer.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase2_io_uring_test.dir/build.make CMakeFiles/phase2_io_uring_test.dir/server/src/http_tcpServer.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_registration_integration_test.dir/build.make CMakeFiles/phase5_voice_registration_integration_test.dir/server/src/http_tcpServer.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_unified_text_client_test.dir/build.make CMakeFiles/phase5_unified_text_client_test.dir/server/src/http_tcpServer.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_registration_integration_test.dir/build.make CMakeFiles/phase6_video_registration_integration_test.dir/server/src/http_tcpServer.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_handshake_test.dir/build.make CMakeFiles/phase3_handshake_test.dir/server/src/http_tcpServer.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_message_relay_test.dir/build.make CMakeFiles/phase3_message_relay_test.dir/server/src/http_tcpServer.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_order_disconnect_test.dir/build.make CMakeFiles/phase3_order_disconnect_test.dir/server/src/http_tcpServer.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_invalid_input_test.dir/build.make CMakeFiles/phase3_invalid_input_test.dir/server/src/http_tcpServer.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_slow_client_test.dir/build.make CMakeFiles/phase3_slow_client_test.dir/server/src/http_tcpServer.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase4_multi_client_test.dir/build.make CMakeFiles/phase4_multi_client_test.dir/server/src/http_tcpServer.cpp.s
 .PHONY : server/src/http_tcpServer.cpp.s
 
 server/src/main.o: server/src/main.cpp.o
@@ -1761,390 +640,6 @@ server/src/main.s: server/src/main.cpp.s
 server/src/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/communication_server.dir/build.make CMakeFiles/communication_server.dir/server/src/main.cpp.s
 .PHONY : server/src/main.cpp.s
-
-tests/integration/phase1/phase1_connection_test.o: tests/integration/phase1/phase1_connection_test.cpp.o
-.PHONY : tests/integration/phase1/phase1_connection_test.o
-
-# target to build an object file
-tests/integration/phase1/phase1_connection_test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase1_connection_test.dir/build.make CMakeFiles/phase1_connection_test.dir/tests/integration/phase1/phase1_connection_test.cpp.o
-.PHONY : tests/integration/phase1/phase1_connection_test.cpp.o
-
-tests/integration/phase1/phase1_connection_test.i: tests/integration/phase1/phase1_connection_test.cpp.i
-.PHONY : tests/integration/phase1/phase1_connection_test.i
-
-# target to preprocess a source file
-tests/integration/phase1/phase1_connection_test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase1_connection_test.dir/build.make CMakeFiles/phase1_connection_test.dir/tests/integration/phase1/phase1_connection_test.cpp.i
-.PHONY : tests/integration/phase1/phase1_connection_test.cpp.i
-
-tests/integration/phase1/phase1_connection_test.s: tests/integration/phase1/phase1_connection_test.cpp.s
-.PHONY : tests/integration/phase1/phase1_connection_test.s
-
-# target to generate assembly for a file
-tests/integration/phase1/phase1_connection_test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase1_connection_test.dir/build.make CMakeFiles/phase1_connection_test.dir/tests/integration/phase1/phase1_connection_test.cpp.s
-.PHONY : tests/integration/phase1/phase1_connection_test.cpp.s
-
-tests/integration/phase2/phase2_io_uring_test.o: tests/integration/phase2/phase2_io_uring_test.cpp.o
-.PHONY : tests/integration/phase2/phase2_io_uring_test.o
-
-# target to build an object file
-tests/integration/phase2/phase2_io_uring_test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase2_io_uring_test.dir/build.make CMakeFiles/phase2_io_uring_test.dir/tests/integration/phase2/phase2_io_uring_test.cpp.o
-.PHONY : tests/integration/phase2/phase2_io_uring_test.cpp.o
-
-tests/integration/phase2/phase2_io_uring_test.i: tests/integration/phase2/phase2_io_uring_test.cpp.i
-.PHONY : tests/integration/phase2/phase2_io_uring_test.i
-
-# target to preprocess a source file
-tests/integration/phase2/phase2_io_uring_test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase2_io_uring_test.dir/build.make CMakeFiles/phase2_io_uring_test.dir/tests/integration/phase2/phase2_io_uring_test.cpp.i
-.PHONY : tests/integration/phase2/phase2_io_uring_test.cpp.i
-
-tests/integration/phase2/phase2_io_uring_test.s: tests/integration/phase2/phase2_io_uring_test.cpp.s
-.PHONY : tests/integration/phase2/phase2_io_uring_test.s
-
-# target to generate assembly for a file
-tests/integration/phase2/phase2_io_uring_test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase2_io_uring_test.dir/build.make CMakeFiles/phase2_io_uring_test.dir/tests/integration/phase2/phase2_io_uring_test.cpp.s
-.PHONY : tests/integration/phase2/phase2_io_uring_test.cpp.s
-
-tests/integration/phase3_handshake_test.o: tests/integration/phase3_handshake_test.cpp.o
-.PHONY : tests/integration/phase3_handshake_test.o
-
-# target to build an object file
-tests/integration/phase3_handshake_test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_handshake_test.dir/build.make CMakeFiles/phase3_handshake_test.dir/tests/integration/phase3_handshake_test.cpp.o
-.PHONY : tests/integration/phase3_handshake_test.cpp.o
-
-tests/integration/phase3_handshake_test.i: tests/integration/phase3_handshake_test.cpp.i
-.PHONY : tests/integration/phase3_handshake_test.i
-
-# target to preprocess a source file
-tests/integration/phase3_handshake_test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_handshake_test.dir/build.make CMakeFiles/phase3_handshake_test.dir/tests/integration/phase3_handshake_test.cpp.i
-.PHONY : tests/integration/phase3_handshake_test.cpp.i
-
-tests/integration/phase3_handshake_test.s: tests/integration/phase3_handshake_test.cpp.s
-.PHONY : tests/integration/phase3_handshake_test.s
-
-# target to generate assembly for a file
-tests/integration/phase3_handshake_test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_handshake_test.dir/build.make CMakeFiles/phase3_handshake_test.dir/tests/integration/phase3_handshake_test.cpp.s
-.PHONY : tests/integration/phase3_handshake_test.cpp.s
-
-tests/integration/phase3_invalid_input_test.o: tests/integration/phase3_invalid_input_test.cpp.o
-.PHONY : tests/integration/phase3_invalid_input_test.o
-
-# target to build an object file
-tests/integration/phase3_invalid_input_test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_invalid_input_test.dir/build.make CMakeFiles/phase3_invalid_input_test.dir/tests/integration/phase3_invalid_input_test.cpp.o
-.PHONY : tests/integration/phase3_invalid_input_test.cpp.o
-
-tests/integration/phase3_invalid_input_test.i: tests/integration/phase3_invalid_input_test.cpp.i
-.PHONY : tests/integration/phase3_invalid_input_test.i
-
-# target to preprocess a source file
-tests/integration/phase3_invalid_input_test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_invalid_input_test.dir/build.make CMakeFiles/phase3_invalid_input_test.dir/tests/integration/phase3_invalid_input_test.cpp.i
-.PHONY : tests/integration/phase3_invalid_input_test.cpp.i
-
-tests/integration/phase3_invalid_input_test.s: tests/integration/phase3_invalid_input_test.cpp.s
-.PHONY : tests/integration/phase3_invalid_input_test.s
-
-# target to generate assembly for a file
-tests/integration/phase3_invalid_input_test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_invalid_input_test.dir/build.make CMakeFiles/phase3_invalid_input_test.dir/tests/integration/phase3_invalid_input_test.cpp.s
-.PHONY : tests/integration/phase3_invalid_input_test.cpp.s
-
-tests/integration/phase3_message_relay_test.o: tests/integration/phase3_message_relay_test.cpp.o
-.PHONY : tests/integration/phase3_message_relay_test.o
-
-# target to build an object file
-tests/integration/phase3_message_relay_test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_message_relay_test.dir/build.make CMakeFiles/phase3_message_relay_test.dir/tests/integration/phase3_message_relay_test.cpp.o
-.PHONY : tests/integration/phase3_message_relay_test.cpp.o
-
-tests/integration/phase3_message_relay_test.i: tests/integration/phase3_message_relay_test.cpp.i
-.PHONY : tests/integration/phase3_message_relay_test.i
-
-# target to preprocess a source file
-tests/integration/phase3_message_relay_test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_message_relay_test.dir/build.make CMakeFiles/phase3_message_relay_test.dir/tests/integration/phase3_message_relay_test.cpp.i
-.PHONY : tests/integration/phase3_message_relay_test.cpp.i
-
-tests/integration/phase3_message_relay_test.s: tests/integration/phase3_message_relay_test.cpp.s
-.PHONY : tests/integration/phase3_message_relay_test.s
-
-# target to generate assembly for a file
-tests/integration/phase3_message_relay_test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_message_relay_test.dir/build.make CMakeFiles/phase3_message_relay_test.dir/tests/integration/phase3_message_relay_test.cpp.s
-.PHONY : tests/integration/phase3_message_relay_test.cpp.s
-
-tests/integration/phase3_order_disconnect_test.o: tests/integration/phase3_order_disconnect_test.cpp.o
-.PHONY : tests/integration/phase3_order_disconnect_test.o
-
-# target to build an object file
-tests/integration/phase3_order_disconnect_test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_order_disconnect_test.dir/build.make CMakeFiles/phase3_order_disconnect_test.dir/tests/integration/phase3_order_disconnect_test.cpp.o
-.PHONY : tests/integration/phase3_order_disconnect_test.cpp.o
-
-tests/integration/phase3_order_disconnect_test.i: tests/integration/phase3_order_disconnect_test.cpp.i
-.PHONY : tests/integration/phase3_order_disconnect_test.i
-
-# target to preprocess a source file
-tests/integration/phase3_order_disconnect_test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_order_disconnect_test.dir/build.make CMakeFiles/phase3_order_disconnect_test.dir/tests/integration/phase3_order_disconnect_test.cpp.i
-.PHONY : tests/integration/phase3_order_disconnect_test.cpp.i
-
-tests/integration/phase3_order_disconnect_test.s: tests/integration/phase3_order_disconnect_test.cpp.s
-.PHONY : tests/integration/phase3_order_disconnect_test.s
-
-# target to generate assembly for a file
-tests/integration/phase3_order_disconnect_test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_order_disconnect_test.dir/build.make CMakeFiles/phase3_order_disconnect_test.dir/tests/integration/phase3_order_disconnect_test.cpp.s
-.PHONY : tests/integration/phase3_order_disconnect_test.cpp.s
-
-tests/integration/phase3_slow_client_test.o: tests/integration/phase3_slow_client_test.cpp.o
-.PHONY : tests/integration/phase3_slow_client_test.o
-
-# target to build an object file
-tests/integration/phase3_slow_client_test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_slow_client_test.dir/build.make CMakeFiles/phase3_slow_client_test.dir/tests/integration/phase3_slow_client_test.cpp.o
-.PHONY : tests/integration/phase3_slow_client_test.cpp.o
-
-tests/integration/phase3_slow_client_test.i: tests/integration/phase3_slow_client_test.cpp.i
-.PHONY : tests/integration/phase3_slow_client_test.i
-
-# target to preprocess a source file
-tests/integration/phase3_slow_client_test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_slow_client_test.dir/build.make CMakeFiles/phase3_slow_client_test.dir/tests/integration/phase3_slow_client_test.cpp.i
-.PHONY : tests/integration/phase3_slow_client_test.cpp.i
-
-tests/integration/phase3_slow_client_test.s: tests/integration/phase3_slow_client_test.cpp.s
-.PHONY : tests/integration/phase3_slow_client_test.s
-
-# target to generate assembly for a file
-tests/integration/phase3_slow_client_test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_slow_client_test.dir/build.make CMakeFiles/phase3_slow_client_test.dir/tests/integration/phase3_slow_client_test.cpp.s
-.PHONY : tests/integration/phase3_slow_client_test.cpp.s
-
-tests/integration/phase4_container_connection_test.o: tests/integration/phase4_container_connection_test.cpp.o
-.PHONY : tests/integration/phase4_container_connection_test.o
-
-# target to build an object file
-tests/integration/phase4_container_connection_test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase4_container_connection_test.dir/build.make CMakeFiles/phase4_container_connection_test.dir/tests/integration/phase4_container_connection_test.cpp.o
-.PHONY : tests/integration/phase4_container_connection_test.cpp.o
-
-tests/integration/phase4_container_connection_test.i: tests/integration/phase4_container_connection_test.cpp.i
-.PHONY : tests/integration/phase4_container_connection_test.i
-
-# target to preprocess a source file
-tests/integration/phase4_container_connection_test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase4_container_connection_test.dir/build.make CMakeFiles/phase4_container_connection_test.dir/tests/integration/phase4_container_connection_test.cpp.i
-.PHONY : tests/integration/phase4_container_connection_test.cpp.i
-
-tests/integration/phase4_container_connection_test.s: tests/integration/phase4_container_connection_test.cpp.s
-.PHONY : tests/integration/phase4_container_connection_test.s
-
-# target to generate assembly for a file
-tests/integration/phase4_container_connection_test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase4_container_connection_test.dir/build.make CMakeFiles/phase4_container_connection_test.dir/tests/integration/phase4_container_connection_test.cpp.s
-.PHONY : tests/integration/phase4_container_connection_test.cpp.s
-
-tests/integration/phase4_five_client_test.o: tests/integration/phase4_five_client_test.cpp.o
-.PHONY : tests/integration/phase4_five_client_test.o
-
-# target to build an object file
-tests/integration/phase4_five_client_test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase4_five_client_test.dir/build.make CMakeFiles/phase4_five_client_test.dir/tests/integration/phase4_five_client_test.cpp.o
-.PHONY : tests/integration/phase4_five_client_test.cpp.o
-
-tests/integration/phase4_five_client_test.i: tests/integration/phase4_five_client_test.cpp.i
-.PHONY : tests/integration/phase4_five_client_test.i
-
-# target to preprocess a source file
-tests/integration/phase4_five_client_test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase4_five_client_test.dir/build.make CMakeFiles/phase4_five_client_test.dir/tests/integration/phase4_five_client_test.cpp.i
-.PHONY : tests/integration/phase4_five_client_test.cpp.i
-
-tests/integration/phase4_five_client_test.s: tests/integration/phase4_five_client_test.cpp.s
-.PHONY : tests/integration/phase4_five_client_test.s
-
-# target to generate assembly for a file
-tests/integration/phase4_five_client_test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase4_five_client_test.dir/build.make CMakeFiles/phase4_five_client_test.dir/tests/integration/phase4_five_client_test.cpp.s
-.PHONY : tests/integration/phase4_five_client_test.cpp.s
-
-tests/integration/phase4_multi_client_test.o: tests/integration/phase4_multi_client_test.cpp.o
-.PHONY : tests/integration/phase4_multi_client_test.o
-
-# target to build an object file
-tests/integration/phase4_multi_client_test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase4_multi_client_test.dir/build.make CMakeFiles/phase4_multi_client_test.dir/tests/integration/phase4_multi_client_test.cpp.o
-.PHONY : tests/integration/phase4_multi_client_test.cpp.o
-
-tests/integration/phase4_multi_client_test.i: tests/integration/phase4_multi_client_test.cpp.i
-.PHONY : tests/integration/phase4_multi_client_test.i
-
-# target to preprocess a source file
-tests/integration/phase4_multi_client_test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase4_multi_client_test.dir/build.make CMakeFiles/phase4_multi_client_test.dir/tests/integration/phase4_multi_client_test.cpp.i
-.PHONY : tests/integration/phase4_multi_client_test.cpp.i
-
-tests/integration/phase4_multi_client_test.s: tests/integration/phase4_multi_client_test.cpp.s
-.PHONY : tests/integration/phase4_multi_client_test.s
-
-# target to generate assembly for a file
-tests/integration/phase4_multi_client_test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase4_multi_client_test.dir/build.make CMakeFiles/phase4_multi_client_test.dir/tests/integration/phase4_multi_client_test.cpp.s
-.PHONY : tests/integration/phase4_multi_client_test.cpp.s
-
-tests/integration/phase5_udp_transport_test.o: tests/integration/phase5_udp_transport_test.cpp.o
-.PHONY : tests/integration/phase5_udp_transport_test.o
-
-# target to build an object file
-tests/integration/phase5_udp_transport_test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_udp_transport_test.dir/build.make CMakeFiles/phase5_udp_transport_test.dir/tests/integration/phase5_udp_transport_test.cpp.o
-.PHONY : tests/integration/phase5_udp_transport_test.cpp.o
-
-tests/integration/phase5_udp_transport_test.i: tests/integration/phase5_udp_transport_test.cpp.i
-.PHONY : tests/integration/phase5_udp_transport_test.i
-
-# target to preprocess a source file
-tests/integration/phase5_udp_transport_test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_udp_transport_test.dir/build.make CMakeFiles/phase5_udp_transport_test.dir/tests/integration/phase5_udp_transport_test.cpp.i
-.PHONY : tests/integration/phase5_udp_transport_test.cpp.i
-
-tests/integration/phase5_udp_transport_test.s: tests/integration/phase5_udp_transport_test.cpp.s
-.PHONY : tests/integration/phase5_udp_transport_test.s
-
-# target to generate assembly for a file
-tests/integration/phase5_udp_transport_test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_udp_transport_test.dir/build.make CMakeFiles/phase5_udp_transport_test.dir/tests/integration/phase5_udp_transport_test.cpp.s
-.PHONY : tests/integration/phase5_udp_transport_test.cpp.s
-
-tests/integration/phase5_unified_text_client_test.o: tests/integration/phase5_unified_text_client_test.cpp.o
-.PHONY : tests/integration/phase5_unified_text_client_test.o
-
-# target to build an object file
-tests/integration/phase5_unified_text_client_test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_unified_text_client_test.dir/build.make CMakeFiles/phase5_unified_text_client_test.dir/tests/integration/phase5_unified_text_client_test.cpp.o
-.PHONY : tests/integration/phase5_unified_text_client_test.cpp.o
-
-tests/integration/phase5_unified_text_client_test.i: tests/integration/phase5_unified_text_client_test.cpp.i
-.PHONY : tests/integration/phase5_unified_text_client_test.i
-
-# target to preprocess a source file
-tests/integration/phase5_unified_text_client_test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_unified_text_client_test.dir/build.make CMakeFiles/phase5_unified_text_client_test.dir/tests/integration/phase5_unified_text_client_test.cpp.i
-.PHONY : tests/integration/phase5_unified_text_client_test.cpp.i
-
-tests/integration/phase5_unified_text_client_test.s: tests/integration/phase5_unified_text_client_test.cpp.s
-.PHONY : tests/integration/phase5_unified_text_client_test.s
-
-# target to generate assembly for a file
-tests/integration/phase5_unified_text_client_test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_unified_text_client_test.dir/build.make CMakeFiles/phase5_unified_text_client_test.dir/tests/integration/phase5_unified_text_client_test.cpp.s
-.PHONY : tests/integration/phase5_unified_text_client_test.cpp.s
-
-tests/integration/phase5_voice_e2e_test.o: tests/integration/phase5_voice_e2e_test.cpp.o
-.PHONY : tests/integration/phase5_voice_e2e_test.o
-
-# target to build an object file
-tests/integration/phase5_voice_e2e_test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_e2e_test.dir/build.make CMakeFiles/phase5_voice_e2e_test.dir/tests/integration/phase5_voice_e2e_test.cpp.o
-.PHONY : tests/integration/phase5_voice_e2e_test.cpp.o
-
-tests/integration/phase5_voice_e2e_test.i: tests/integration/phase5_voice_e2e_test.cpp.i
-.PHONY : tests/integration/phase5_voice_e2e_test.i
-
-# target to preprocess a source file
-tests/integration/phase5_voice_e2e_test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_e2e_test.dir/build.make CMakeFiles/phase5_voice_e2e_test.dir/tests/integration/phase5_voice_e2e_test.cpp.i
-.PHONY : tests/integration/phase5_voice_e2e_test.cpp.i
-
-tests/integration/phase5_voice_e2e_test.s: tests/integration/phase5_voice_e2e_test.cpp.s
-.PHONY : tests/integration/phase5_voice_e2e_test.s
-
-# target to generate assembly for a file
-tests/integration/phase5_voice_e2e_test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_e2e_test.dir/build.make CMakeFiles/phase5_voice_e2e_test.dir/tests/integration/phase5_voice_e2e_test.cpp.s
-.PHONY : tests/integration/phase5_voice_e2e_test.cpp.s
-
-tests/integration/phase5_voice_registration_integration_test.o: tests/integration/phase5_voice_registration_integration_test.cpp.o
-.PHONY : tests/integration/phase5_voice_registration_integration_test.o
-
-# target to build an object file
-tests/integration/phase5_voice_registration_integration_test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_registration_integration_test.dir/build.make CMakeFiles/phase5_voice_registration_integration_test.dir/tests/integration/phase5_voice_registration_integration_test.cpp.o
-.PHONY : tests/integration/phase5_voice_registration_integration_test.cpp.o
-
-tests/integration/phase5_voice_registration_integration_test.i: tests/integration/phase5_voice_registration_integration_test.cpp.i
-.PHONY : tests/integration/phase5_voice_registration_integration_test.i
-
-# target to preprocess a source file
-tests/integration/phase5_voice_registration_integration_test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_registration_integration_test.dir/build.make CMakeFiles/phase5_voice_registration_integration_test.dir/tests/integration/phase5_voice_registration_integration_test.cpp.i
-.PHONY : tests/integration/phase5_voice_registration_integration_test.cpp.i
-
-tests/integration/phase5_voice_registration_integration_test.s: tests/integration/phase5_voice_registration_integration_test.cpp.s
-.PHONY : tests/integration/phase5_voice_registration_integration_test.s
-
-# target to generate assembly for a file
-tests/integration/phase5_voice_registration_integration_test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_registration_integration_test.dir/build.make CMakeFiles/phase5_voice_registration_integration_test.dir/tests/integration/phase5_voice_registration_integration_test.cpp.s
-.PHONY : tests/integration/phase5_voice_registration_integration_test.cpp.s
-
-tests/integration/phase6_video_registration_integration_test.o: tests/integration/phase6_video_registration_integration_test.cpp.o
-.PHONY : tests/integration/phase6_video_registration_integration_test.o
-
-# target to build an object file
-tests/integration/phase6_video_registration_integration_test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_registration_integration_test.dir/build.make CMakeFiles/phase6_video_registration_integration_test.dir/tests/integration/phase6_video_registration_integration_test.cpp.o
-.PHONY : tests/integration/phase6_video_registration_integration_test.cpp.o
-
-tests/integration/phase6_video_registration_integration_test.i: tests/integration/phase6_video_registration_integration_test.cpp.i
-.PHONY : tests/integration/phase6_video_registration_integration_test.i
-
-# target to preprocess a source file
-tests/integration/phase6_video_registration_integration_test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_registration_integration_test.dir/build.make CMakeFiles/phase6_video_registration_integration_test.dir/tests/integration/phase6_video_registration_integration_test.cpp.i
-.PHONY : tests/integration/phase6_video_registration_integration_test.cpp.i
-
-tests/integration/phase6_video_registration_integration_test.s: tests/integration/phase6_video_registration_integration_test.cpp.s
-.PHONY : tests/integration/phase6_video_registration_integration_test.s
-
-# target to generate assembly for a file
-tests/integration/phase6_video_registration_integration_test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_registration_integration_test.dir/build.make CMakeFiles/phase6_video_registration_integration_test.dir/tests/integration/phase6_video_registration_integration_test.cpp.s
-.PHONY : tests/integration/phase6_video_registration_integration_test.cpp.s
-
-tests/integration/phase6_video_udp_transport_test.o: tests/integration/phase6_video_udp_transport_test.cpp.o
-.PHONY : tests/integration/phase6_video_udp_transport_test.o
-
-# target to build an object file
-tests/integration/phase6_video_udp_transport_test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_udp_transport_test.dir/build.make CMakeFiles/phase6_video_udp_transport_test.dir/tests/integration/phase6_video_udp_transport_test.cpp.o
-.PHONY : tests/integration/phase6_video_udp_transport_test.cpp.o
-
-tests/integration/phase6_video_udp_transport_test.i: tests/integration/phase6_video_udp_transport_test.cpp.i
-.PHONY : tests/integration/phase6_video_udp_transport_test.i
-
-# target to preprocess a source file
-tests/integration/phase6_video_udp_transport_test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_udp_transport_test.dir/build.make CMakeFiles/phase6_video_udp_transport_test.dir/tests/integration/phase6_video_udp_transport_test.cpp.i
-.PHONY : tests/integration/phase6_video_udp_transport_test.cpp.i
-
-tests/integration/phase6_video_udp_transport_test.s: tests/integration/phase6_video_udp_transport_test.cpp.s
-.PHONY : tests/integration/phase6_video_udp_transport_test.s
-
-# target to generate assembly for a file
-tests/integration/phase6_video_udp_transport_test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_udp_transport_test.dir/build.make CMakeFiles/phase6_video_udp_transport_test.dir/tests/integration/phase6_video_udp_transport_test.cpp.s
-.PHONY : tests/integration/phase6_video_udp_transport_test.cpp.s
 
 tests/manual/phase6_video_capture_smoke.o: tests/manual/phase6_video_capture_smoke.cpp.o
 .PHONY : tests/manual/phase6_video_capture_smoke.o
@@ -2218,414 +713,6 @@ tests/manual/phase7_portal_capture_smoke.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase7_portal_capture_smoke.dir/build.make CMakeFiles/phase7_portal_capture_smoke.dir/tests/manual/phase7_portal_capture_smoke.cpp.s
 .PHONY : tests/manual/phase7_portal_capture_smoke.cpp.s
 
-tests/unit/phase3_chat_frame_test.o: tests/unit/phase3_chat_frame_test.cpp.o
-.PHONY : tests/unit/phase3_chat_frame_test.o
-
-# target to build an object file
-tests/unit/phase3_chat_frame_test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_chat_frame_test.dir/build.make CMakeFiles/phase3_chat_frame_test.dir/tests/unit/phase3_chat_frame_test.cpp.o
-.PHONY : tests/unit/phase3_chat_frame_test.cpp.o
-
-tests/unit/phase3_chat_frame_test.i: tests/unit/phase3_chat_frame_test.cpp.i
-.PHONY : tests/unit/phase3_chat_frame_test.i
-
-# target to preprocess a source file
-tests/unit/phase3_chat_frame_test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_chat_frame_test.dir/build.make CMakeFiles/phase3_chat_frame_test.dir/tests/unit/phase3_chat_frame_test.cpp.i
-.PHONY : tests/unit/phase3_chat_frame_test.cpp.i
-
-tests/unit/phase3_chat_frame_test.s: tests/unit/phase3_chat_frame_test.cpp.s
-.PHONY : tests/unit/phase3_chat_frame_test.s
-
-# target to generate assembly for a file
-tests/unit/phase3_chat_frame_test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_chat_frame_test.dir/build.make CMakeFiles/phase3_chat_frame_test.dir/tests/unit/phase3_chat_frame_test.cpp.s
-.PHONY : tests/unit/phase3_chat_frame_test.cpp.s
-
-tests/unit/phase3_display_name_test.o: tests/unit/phase3_display_name_test.cpp.o
-.PHONY : tests/unit/phase3_display_name_test.o
-
-# target to build an object file
-tests/unit/phase3_display_name_test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_display_name_test.dir/build.make CMakeFiles/phase3_display_name_test.dir/tests/unit/phase3_display_name_test.cpp.o
-.PHONY : tests/unit/phase3_display_name_test.cpp.o
-
-tests/unit/phase3_display_name_test.i: tests/unit/phase3_display_name_test.cpp.i
-.PHONY : tests/unit/phase3_display_name_test.i
-
-# target to preprocess a source file
-tests/unit/phase3_display_name_test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_display_name_test.dir/build.make CMakeFiles/phase3_display_name_test.dir/tests/unit/phase3_display_name_test.cpp.i
-.PHONY : tests/unit/phase3_display_name_test.cpp.i
-
-tests/unit/phase3_display_name_test.s: tests/unit/phase3_display_name_test.cpp.s
-.PHONY : tests/unit/phase3_display_name_test.s
-
-# target to generate assembly for a file
-tests/unit/phase3_display_name_test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase3_display_name_test.dir/build.make CMakeFiles/phase3_display_name_test.dir/tests/unit/phase3_display_name_test.cpp.s
-.PHONY : tests/unit/phase3_display_name_test.cpp.s
-
-tests/unit/phase5_audio_client_session_test.o: tests/unit/phase5_audio_client_session_test.cpp.o
-.PHONY : tests/unit/phase5_audio_client_session_test.o
-
-# target to build an object file
-tests/unit/phase5_audio_client_session_test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_audio_client_session_test.dir/build.make CMakeFiles/phase5_audio_client_session_test.dir/tests/unit/phase5_audio_client_session_test.cpp.o
-.PHONY : tests/unit/phase5_audio_client_session_test.cpp.o
-
-tests/unit/phase5_audio_client_session_test.i: tests/unit/phase5_audio_client_session_test.cpp.i
-.PHONY : tests/unit/phase5_audio_client_session_test.i
-
-# target to preprocess a source file
-tests/unit/phase5_audio_client_session_test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_audio_client_session_test.dir/build.make CMakeFiles/phase5_audio_client_session_test.dir/tests/unit/phase5_audio_client_session_test.cpp.i
-.PHONY : tests/unit/phase5_audio_client_session_test.cpp.i
-
-tests/unit/phase5_audio_client_session_test.s: tests/unit/phase5_audio_client_session_test.cpp.s
-.PHONY : tests/unit/phase5_audio_client_session_test.s
-
-# target to generate assembly for a file
-tests/unit/phase5_audio_client_session_test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_audio_client_session_test.dir/build.make CMakeFiles/phase5_audio_client_session_test.dir/tests/unit/phase5_audio_client_session_test.cpp.s
-.PHONY : tests/unit/phase5_audio_client_session_test.cpp.s
-
-tests/unit/phase5_audio_packet_test.o: tests/unit/phase5_audio_packet_test.cpp.o
-.PHONY : tests/unit/phase5_audio_packet_test.o
-
-# target to build an object file
-tests/unit/phase5_audio_packet_test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_audio_packet_test.dir/build.make CMakeFiles/phase5_audio_packet_test.dir/tests/unit/phase5_audio_packet_test.cpp.o
-.PHONY : tests/unit/phase5_audio_packet_test.cpp.o
-
-tests/unit/phase5_audio_packet_test.i: tests/unit/phase5_audio_packet_test.cpp.i
-.PHONY : tests/unit/phase5_audio_packet_test.i
-
-# target to preprocess a source file
-tests/unit/phase5_audio_packet_test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_audio_packet_test.dir/build.make CMakeFiles/phase5_audio_packet_test.dir/tests/unit/phase5_audio_packet_test.cpp.i
-.PHONY : tests/unit/phase5_audio_packet_test.cpp.i
-
-tests/unit/phase5_audio_packet_test.s: tests/unit/phase5_audio_packet_test.cpp.s
-.PHONY : tests/unit/phase5_audio_packet_test.s
-
-# target to generate assembly for a file
-tests/unit/phase5_audio_packet_test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_audio_packet_test.dir/build.make CMakeFiles/phase5_audio_packet_test.dir/tests/unit/phase5_audio_packet_test.cpp.s
-.PHONY : tests/unit/phase5_audio_packet_test.cpp.s
-
-tests/unit/phase5_audio_resilience_test.o: tests/unit/phase5_audio_resilience_test.cpp.o
-.PHONY : tests/unit/phase5_audio_resilience_test.o
-
-# target to build an object file
-tests/unit/phase5_audio_resilience_test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_audio_resilience_test.dir/build.make CMakeFiles/phase5_audio_resilience_test.dir/tests/unit/phase5_audio_resilience_test.cpp.o
-.PHONY : tests/unit/phase5_audio_resilience_test.cpp.o
-
-tests/unit/phase5_audio_resilience_test.i: tests/unit/phase5_audio_resilience_test.cpp.i
-.PHONY : tests/unit/phase5_audio_resilience_test.i
-
-# target to preprocess a source file
-tests/unit/phase5_audio_resilience_test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_audio_resilience_test.dir/build.make CMakeFiles/phase5_audio_resilience_test.dir/tests/unit/phase5_audio_resilience_test.cpp.i
-.PHONY : tests/unit/phase5_audio_resilience_test.cpp.i
-
-tests/unit/phase5_audio_resilience_test.s: tests/unit/phase5_audio_resilience_test.cpp.s
-.PHONY : tests/unit/phase5_audio_resilience_test.s
-
-# target to generate assembly for a file
-tests/unit/phase5_audio_resilience_test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_audio_resilience_test.dir/build.make CMakeFiles/phase5_audio_resilience_test.dir/tests/unit/phase5_audio_resilience_test.cpp.s
-.PHONY : tests/unit/phase5_audio_resilience_test.cpp.s
-
-tests/unit/phase5_audio_session_test.o: tests/unit/phase5_audio_session_test.cpp.o
-.PHONY : tests/unit/phase5_audio_session_test.o
-
-# target to build an object file
-tests/unit/phase5_audio_session_test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_audio_session_test.dir/build.make CMakeFiles/phase5_audio_session_test.dir/tests/unit/phase5_audio_session_test.cpp.o
-.PHONY : tests/unit/phase5_audio_session_test.cpp.o
-
-tests/unit/phase5_audio_session_test.i: tests/unit/phase5_audio_session_test.cpp.i
-.PHONY : tests/unit/phase5_audio_session_test.i
-
-# target to preprocess a source file
-tests/unit/phase5_audio_session_test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_audio_session_test.dir/build.make CMakeFiles/phase5_audio_session_test.dir/tests/unit/phase5_audio_session_test.cpp.i
-.PHONY : tests/unit/phase5_audio_session_test.cpp.i
-
-tests/unit/phase5_audio_session_test.s: tests/unit/phase5_audio_session_test.cpp.s
-.PHONY : tests/unit/phase5_audio_session_test.s
-
-# target to generate assembly for a file
-tests/unit/phase5_audio_session_test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_audio_session_test.dir/build.make CMakeFiles/phase5_audio_session_test.dir/tests/unit/phase5_audio_session_test.cpp.s
-.PHONY : tests/unit/phase5_audio_session_test.cpp.s
-
-tests/unit/phase5_multi_stream_mixer_test.o: tests/unit/phase5_multi_stream_mixer_test.cpp.o
-.PHONY : tests/unit/phase5_multi_stream_mixer_test.o
-
-# target to build an object file
-tests/unit/phase5_multi_stream_mixer_test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_multi_stream_mixer_test.dir/build.make CMakeFiles/phase5_multi_stream_mixer_test.dir/tests/unit/phase5_multi_stream_mixer_test.cpp.o
-.PHONY : tests/unit/phase5_multi_stream_mixer_test.cpp.o
-
-tests/unit/phase5_multi_stream_mixer_test.i: tests/unit/phase5_multi_stream_mixer_test.cpp.i
-.PHONY : tests/unit/phase5_multi_stream_mixer_test.i
-
-# target to preprocess a source file
-tests/unit/phase5_multi_stream_mixer_test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_multi_stream_mixer_test.dir/build.make CMakeFiles/phase5_multi_stream_mixer_test.dir/tests/unit/phase5_multi_stream_mixer_test.cpp.i
-.PHONY : tests/unit/phase5_multi_stream_mixer_test.cpp.i
-
-tests/unit/phase5_multi_stream_mixer_test.s: tests/unit/phase5_multi_stream_mixer_test.cpp.s
-.PHONY : tests/unit/phase5_multi_stream_mixer_test.s
-
-# target to generate assembly for a file
-tests/unit/phase5_multi_stream_mixer_test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_multi_stream_mixer_test.dir/build.make CMakeFiles/phase5_multi_stream_mixer_test.dir/tests/unit/phase5_multi_stream_mixer_test.cpp.s
-.PHONY : tests/unit/phase5_multi_stream_mixer_test.cpp.s
-
-tests/unit/phase5_opus_codec_test.o: tests/unit/phase5_opus_codec_test.cpp.o
-.PHONY : tests/unit/phase5_opus_codec_test.o
-
-# target to build an object file
-tests/unit/phase5_opus_codec_test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_opus_codec_test.dir/build.make CMakeFiles/phase5_opus_codec_test.dir/tests/unit/phase5_opus_codec_test.cpp.o
-.PHONY : tests/unit/phase5_opus_codec_test.cpp.o
-
-tests/unit/phase5_opus_codec_test.i: tests/unit/phase5_opus_codec_test.cpp.i
-.PHONY : tests/unit/phase5_opus_codec_test.i
-
-# target to preprocess a source file
-tests/unit/phase5_opus_codec_test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_opus_codec_test.dir/build.make CMakeFiles/phase5_opus_codec_test.dir/tests/unit/phase5_opus_codec_test.cpp.i
-.PHONY : tests/unit/phase5_opus_codec_test.cpp.i
-
-tests/unit/phase5_opus_codec_test.s: tests/unit/phase5_opus_codec_test.cpp.s
-.PHONY : tests/unit/phase5_opus_codec_test.s
-
-# target to generate assembly for a file
-tests/unit/phase5_opus_codec_test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_opus_codec_test.dir/build.make CMakeFiles/phase5_opus_codec_test.dir/tests/unit/phase5_opus_codec_test.cpp.s
-.PHONY : tests/unit/phase5_opus_codec_test.cpp.s
-
-tests/unit/phase5_voice_registration_test.o: tests/unit/phase5_voice_registration_test.cpp.o
-.PHONY : tests/unit/phase5_voice_registration_test.o
-
-# target to build an object file
-tests/unit/phase5_voice_registration_test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_registration_test.dir/build.make CMakeFiles/phase5_voice_registration_test.dir/tests/unit/phase5_voice_registration_test.cpp.o
-.PHONY : tests/unit/phase5_voice_registration_test.cpp.o
-
-tests/unit/phase5_voice_registration_test.i: tests/unit/phase5_voice_registration_test.cpp.i
-.PHONY : tests/unit/phase5_voice_registration_test.i
-
-# target to preprocess a source file
-tests/unit/phase5_voice_registration_test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_registration_test.dir/build.make CMakeFiles/phase5_voice_registration_test.dir/tests/unit/phase5_voice_registration_test.cpp.i
-.PHONY : tests/unit/phase5_voice_registration_test.cpp.i
-
-tests/unit/phase5_voice_registration_test.s: tests/unit/phase5_voice_registration_test.cpp.s
-.PHONY : tests/unit/phase5_voice_registration_test.s
-
-# target to generate assembly for a file
-tests/unit/phase5_voice_registration_test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase5_voice_registration_test.dir/build.make CMakeFiles/phase5_voice_registration_test.dir/tests/unit/phase5_voice_registration_test.cpp.s
-.PHONY : tests/unit/phase5_voice_registration_test.cpp.s
-
-tests/unit/phase6_mjpeg_frame_test.o: tests/unit/phase6_mjpeg_frame_test.cpp.o
-.PHONY : tests/unit/phase6_mjpeg_frame_test.o
-
-# target to build an object file
-tests/unit/phase6_mjpeg_frame_test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_mjpeg_frame_test.dir/build.make CMakeFiles/phase6_mjpeg_frame_test.dir/tests/unit/phase6_mjpeg_frame_test.cpp.o
-.PHONY : tests/unit/phase6_mjpeg_frame_test.cpp.o
-
-tests/unit/phase6_mjpeg_frame_test.i: tests/unit/phase6_mjpeg_frame_test.cpp.i
-.PHONY : tests/unit/phase6_mjpeg_frame_test.i
-
-# target to preprocess a source file
-tests/unit/phase6_mjpeg_frame_test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_mjpeg_frame_test.dir/build.make CMakeFiles/phase6_mjpeg_frame_test.dir/tests/unit/phase6_mjpeg_frame_test.cpp.i
-.PHONY : tests/unit/phase6_mjpeg_frame_test.cpp.i
-
-tests/unit/phase6_mjpeg_frame_test.s: tests/unit/phase6_mjpeg_frame_test.cpp.s
-.PHONY : tests/unit/phase6_mjpeg_frame_test.s
-
-# target to generate assembly for a file
-tests/unit/phase6_mjpeg_frame_test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_mjpeg_frame_test.dir/build.make CMakeFiles/phase6_mjpeg_frame_test.dir/tests/unit/phase6_mjpeg_frame_test.cpp.s
-.PHONY : tests/unit/phase6_mjpeg_frame_test.cpp.s
-
-tests/unit/phase6_video_capture_test.o: tests/unit/phase6_video_capture_test.cpp.o
-.PHONY : tests/unit/phase6_video_capture_test.o
-
-# target to build an object file
-tests/unit/phase6_video_capture_test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_capture_test.dir/build.make CMakeFiles/phase6_video_capture_test.dir/tests/unit/phase6_video_capture_test.cpp.o
-.PHONY : tests/unit/phase6_video_capture_test.cpp.o
-
-tests/unit/phase6_video_capture_test.i: tests/unit/phase6_video_capture_test.cpp.i
-.PHONY : tests/unit/phase6_video_capture_test.i
-
-# target to preprocess a source file
-tests/unit/phase6_video_capture_test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_capture_test.dir/build.make CMakeFiles/phase6_video_capture_test.dir/tests/unit/phase6_video_capture_test.cpp.i
-.PHONY : tests/unit/phase6_video_capture_test.cpp.i
-
-tests/unit/phase6_video_capture_test.s: tests/unit/phase6_video_capture_test.cpp.s
-.PHONY : tests/unit/phase6_video_capture_test.s
-
-# target to generate assembly for a file
-tests/unit/phase6_video_capture_test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_capture_test.dir/build.make CMakeFiles/phase6_video_capture_test.dir/tests/unit/phase6_video_capture_test.cpp.s
-.PHONY : tests/unit/phase6_video_capture_test.cpp.s
-
-tests/unit/phase6_video_client_test.o: tests/unit/phase6_video_client_test.cpp.o
-.PHONY : tests/unit/phase6_video_client_test.o
-
-# target to build an object file
-tests/unit/phase6_video_client_test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_client_test.dir/build.make CMakeFiles/phase6_video_client_test.dir/tests/unit/phase6_video_client_test.cpp.o
-.PHONY : tests/unit/phase6_video_client_test.cpp.o
-
-tests/unit/phase6_video_client_test.i: tests/unit/phase6_video_client_test.cpp.i
-.PHONY : tests/unit/phase6_video_client_test.i
-
-# target to preprocess a source file
-tests/unit/phase6_video_client_test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_client_test.dir/build.make CMakeFiles/phase6_video_client_test.dir/tests/unit/phase6_video_client_test.cpp.i
-.PHONY : tests/unit/phase6_video_client_test.cpp.i
-
-tests/unit/phase6_video_client_test.s: tests/unit/phase6_video_client_test.cpp.s
-.PHONY : tests/unit/phase6_video_client_test.s
-
-# target to generate assembly for a file
-tests/unit/phase6_video_client_test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_client_test.dir/build.make CMakeFiles/phase6_video_client_test.dir/tests/unit/phase6_video_client_test.cpp.s
-.PHONY : tests/unit/phase6_video_client_test.cpp.s
-
-tests/unit/phase6_video_control_test.o: tests/unit/phase6_video_control_test.cpp.o
-.PHONY : tests/unit/phase6_video_control_test.o
-
-# target to build an object file
-tests/unit/phase6_video_control_test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_control_test.dir/build.make CMakeFiles/phase6_video_control_test.dir/tests/unit/phase6_video_control_test.cpp.o
-.PHONY : tests/unit/phase6_video_control_test.cpp.o
-
-tests/unit/phase6_video_control_test.i: tests/unit/phase6_video_control_test.cpp.i
-.PHONY : tests/unit/phase6_video_control_test.i
-
-# target to preprocess a source file
-tests/unit/phase6_video_control_test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_control_test.dir/build.make CMakeFiles/phase6_video_control_test.dir/tests/unit/phase6_video_control_test.cpp.i
-.PHONY : tests/unit/phase6_video_control_test.cpp.i
-
-tests/unit/phase6_video_control_test.s: tests/unit/phase6_video_control_test.cpp.s
-.PHONY : tests/unit/phase6_video_control_test.s
-
-# target to generate assembly for a file
-tests/unit/phase6_video_control_test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_control_test.dir/build.make CMakeFiles/phase6_video_control_test.dir/tests/unit/phase6_video_control_test.cpp.s
-.PHONY : tests/unit/phase6_video_control_test.cpp.s
-
-tests/unit/phase6_video_frame_test.o: tests/unit/phase6_video_frame_test.cpp.o
-.PHONY : tests/unit/phase6_video_frame_test.o
-
-# target to build an object file
-tests/unit/phase6_video_frame_test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_frame_test.dir/build.make CMakeFiles/phase6_video_frame_test.dir/tests/unit/phase6_video_frame_test.cpp.o
-.PHONY : tests/unit/phase6_video_frame_test.cpp.o
-
-tests/unit/phase6_video_frame_test.i: tests/unit/phase6_video_frame_test.cpp.i
-.PHONY : tests/unit/phase6_video_frame_test.i
-
-# target to preprocess a source file
-tests/unit/phase6_video_frame_test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_frame_test.dir/build.make CMakeFiles/phase6_video_frame_test.dir/tests/unit/phase6_video_frame_test.cpp.i
-.PHONY : tests/unit/phase6_video_frame_test.cpp.i
-
-tests/unit/phase6_video_frame_test.s: tests/unit/phase6_video_frame_test.cpp.s
-.PHONY : tests/unit/phase6_video_frame_test.s
-
-# target to generate assembly for a file
-tests/unit/phase6_video_frame_test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase6_video_frame_test.dir/build.make CMakeFiles/phase6_video_frame_test.dir/tests/unit/phase6_video_frame_test.cpp.s
-.PHONY : tests/unit/phase6_video_frame_test.cpp.s
-
-tests/unit/phase7_screen_capture_contract_test.o: tests/unit/phase7_screen_capture_contract_test.cpp.o
-.PHONY : tests/unit/phase7_screen_capture_contract_test.o
-
-# target to build an object file
-tests/unit/phase7_screen_capture_contract_test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase7_screen_capture_contract_test.dir/build.make CMakeFiles/phase7_screen_capture_contract_test.dir/tests/unit/phase7_screen_capture_contract_test.cpp.o
-.PHONY : tests/unit/phase7_screen_capture_contract_test.cpp.o
-
-tests/unit/phase7_screen_capture_contract_test.i: tests/unit/phase7_screen_capture_contract_test.cpp.i
-.PHONY : tests/unit/phase7_screen_capture_contract_test.i
-
-# target to preprocess a source file
-tests/unit/phase7_screen_capture_contract_test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase7_screen_capture_contract_test.dir/build.make CMakeFiles/phase7_screen_capture_contract_test.dir/tests/unit/phase7_screen_capture_contract_test.cpp.i
-.PHONY : tests/unit/phase7_screen_capture_contract_test.cpp.i
-
-tests/unit/phase7_screen_capture_contract_test.s: tests/unit/phase7_screen_capture_contract_test.cpp.s
-.PHONY : tests/unit/phase7_screen_capture_contract_test.s
-
-# target to generate assembly for a file
-tests/unit/phase7_screen_capture_contract_test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase7_screen_capture_contract_test.dir/build.make CMakeFiles/phase7_screen_capture_contract_test.dir/tests/unit/phase7_screen_capture_contract_test.cpp.s
-.PHONY : tests/unit/phase7_screen_capture_contract_test.cpp.s
-
-tests/unit/phase7_screen_frame_encoder_test.o: tests/unit/phase7_screen_frame_encoder_test.cpp.o
-.PHONY : tests/unit/phase7_screen_frame_encoder_test.o
-
-# target to build an object file
-tests/unit/phase7_screen_frame_encoder_test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase7_screen_frame_encoder_test.dir/build.make CMakeFiles/phase7_screen_frame_encoder_test.dir/tests/unit/phase7_screen_frame_encoder_test.cpp.o
-.PHONY : tests/unit/phase7_screen_frame_encoder_test.cpp.o
-
-tests/unit/phase7_screen_frame_encoder_test.i: tests/unit/phase7_screen_frame_encoder_test.cpp.i
-.PHONY : tests/unit/phase7_screen_frame_encoder_test.i
-
-# target to preprocess a source file
-tests/unit/phase7_screen_frame_encoder_test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase7_screen_frame_encoder_test.dir/build.make CMakeFiles/phase7_screen_frame_encoder_test.dir/tests/unit/phase7_screen_frame_encoder_test.cpp.i
-.PHONY : tests/unit/phase7_screen_frame_encoder_test.cpp.i
-
-tests/unit/phase7_screen_frame_encoder_test.s: tests/unit/phase7_screen_frame_encoder_test.cpp.s
-.PHONY : tests/unit/phase7_screen_frame_encoder_test.s
-
-# target to generate assembly for a file
-tests/unit/phase7_screen_frame_encoder_test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase7_screen_frame_encoder_test.dir/build.make CMakeFiles/phase7_screen_frame_encoder_test.dir/tests/unit/phase7_screen_frame_encoder_test.cpp.s
-.PHONY : tests/unit/phase7_screen_frame_encoder_test.cpp.s
-
-tests/unit/phase7_screen_video_client_test.o: tests/unit/phase7_screen_video_client_test.cpp.o
-.PHONY : tests/unit/phase7_screen_video_client_test.o
-
-# target to build an object file
-tests/unit/phase7_screen_video_client_test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase7_screen_video_client_test.dir/build.make CMakeFiles/phase7_screen_video_client_test.dir/tests/unit/phase7_screen_video_client_test.cpp.o
-.PHONY : tests/unit/phase7_screen_video_client_test.cpp.o
-
-tests/unit/phase7_screen_video_client_test.i: tests/unit/phase7_screen_video_client_test.cpp.i
-.PHONY : tests/unit/phase7_screen_video_client_test.i
-
-# target to preprocess a source file
-tests/unit/phase7_screen_video_client_test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase7_screen_video_client_test.dir/build.make CMakeFiles/phase7_screen_video_client_test.dir/tests/unit/phase7_screen_video_client_test.cpp.i
-.PHONY : tests/unit/phase7_screen_video_client_test.cpp.i
-
-tests/unit/phase7_screen_video_client_test.s: tests/unit/phase7_screen_video_client_test.cpp.s
-.PHONY : tests/unit/phase7_screen_video_client_test.s
-
-# target to generate assembly for a file
-tests/unit/phase7_screen_video_client_test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/phase7_screen_video_client_test.dir/build.make CMakeFiles/phase7_screen_video_client_test.dir/tests/unit/phase7_screen_video_client_test.cpp.s
-.PHONY : tests/unit/phase7_screen_video_client_test.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -2634,80 +721,15 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... test"
-	@echo "... Continuous"
-	@echo "... ContinuousBuild"
-	@echo "... ContinuousConfigure"
-	@echo "... ContinuousCoverage"
-	@echo "... ContinuousMemCheck"
-	@echo "... ContinuousStart"
-	@echo "... ContinuousSubmit"
-	@echo "... ContinuousTest"
-	@echo "... ContinuousUpdate"
-	@echo "... Experimental"
-	@echo "... ExperimentalBuild"
-	@echo "... ExperimentalConfigure"
-	@echo "... ExperimentalCoverage"
-	@echo "... ExperimentalMemCheck"
-	@echo "... ExperimentalStart"
-	@echo "... ExperimentalSubmit"
-	@echo "... ExperimentalTest"
-	@echo "... ExperimentalUpdate"
-	@echo "... Nightly"
-	@echo "... NightlyBuild"
-	@echo "... NightlyConfigure"
-	@echo "... NightlyCoverage"
-	@echo "... NightlyMemCheck"
-	@echo "... NightlyMemoryCheck"
-	@echo "... NightlyStart"
-	@echo "... NightlySubmit"
-	@echo "... NightlyTest"
-	@echo "... NightlyUpdate"
 	@echo "... audio_transport"
 	@echo "... communication_client"
 	@echo "... communication_server"
-	@echo "... phase1_connection_test"
-	@echo "... phase2_io_uring_test"
-	@echo "... phase3_chat_frame_test"
-	@echo "... phase3_display_name_test"
-	@echo "... phase3_handshake_test"
-	@echo "... phase3_invalid_input_test"
-	@echo "... phase3_message_relay_test"
-	@echo "... phase3_order_disconnect_test"
-	@echo "... phase3_slow_client_test"
-	@echo "... phase4_container_connection_test"
-	@echo "... phase4_five_client_test"
-	@echo "... phase4_multi_client_test"
-	@echo "... phase5_audio_client_session_test"
-	@echo "... phase5_audio_packet_test"
-	@echo "... phase5_audio_resilience_test"
-	@echo "... phase5_audio_session_test"
-	@echo "... phase5_multi_stream_mixer_test"
-	@echo "... phase5_opus_codec_test"
-	@echo "... phase5_udp_transport_test"
-	@echo "... phase5_unified_text_client_test"
-	@echo "... phase5_voice_e2e_test"
-	@echo "... phase5_voice_registration_integration_test"
-	@echo "... phase5_voice_registration_test"
-	@echo "... phase6_mjpeg_frame_test"
 	@echo "... phase6_video_capture_smoke"
-	@echo "... phase6_video_capture_test"
-	@echo "... phase6_video_client_test"
-	@echo "... phase6_video_control_test"
-	@echo "... phase6_video_frame_test"
 	@echo "... phase6_video_receive_smoke"
-	@echo "... phase6_video_registration_integration_test"
-	@echo "... phase6_video_udp_transport_test"
 	@echo "... phase7_portal_capture_smoke"
-	@echo "... phase7_screen_capture_contract_test"
-	@echo "... phase7_screen_frame_encoder_test"
-	@echo "... phase7_screen_video_client_test"
 	@echo "... screen_frame_encoder"
 	@echo "... video_protocol"
 	@echo "... wayland_screen_capture"
-	@echo "... client/src/audio_client_session.o"
-	@echo "... client/src/audio_client_session.i"
-	@echo "... client/src/audio_client_session.s"
 	@echo "... client/src/main.o"
 	@echo "... client/src/main.i"
 	@echo "... client/src/main.s"
@@ -2726,21 +748,12 @@ help:
 	@echo "... client/src/wayland_portal_capture.o"
 	@echo "... client/src/wayland_portal_capture.i"
 	@echo "... client/src/wayland_portal_capture.s"
-	@echo "... common/src/audio_codec.o"
-	@echo "... common/src/audio_codec.i"
-	@echo "... common/src/audio_codec.s"
-	@echo "... common/src/audio_jitter_buffer.o"
-	@echo "... common/src/audio_jitter_buffer.i"
-	@echo "... common/src/audio_jitter_buffer.s"
 	@echo "... common/src/audio_packet.o"
 	@echo "... common/src/audio_packet.i"
 	@echo "... common/src/audio_packet.s"
 	@echo "... common/src/audio_session.o"
 	@echo "... common/src/audio_session.i"
 	@echo "... common/src/audio_session.s"
-	@echo "... common/src/audio_stream_mixer.o"
-	@echo "... common/src/audio_stream_mixer.i"
-	@echo "... common/src/audio_stream_mixer.s"
 	@echo "... common/src/audio_udp_transport.o"
 	@echo "... common/src/audio_udp_transport.i"
 	@echo "... common/src/audio_udp_transport.s"
@@ -2765,54 +778,6 @@ help:
 	@echo "... server/src/main.o"
 	@echo "... server/src/main.i"
 	@echo "... server/src/main.s"
-	@echo "... tests/integration/phase1/phase1_connection_test.o"
-	@echo "... tests/integration/phase1/phase1_connection_test.i"
-	@echo "... tests/integration/phase1/phase1_connection_test.s"
-	@echo "... tests/integration/phase2/phase2_io_uring_test.o"
-	@echo "... tests/integration/phase2/phase2_io_uring_test.i"
-	@echo "... tests/integration/phase2/phase2_io_uring_test.s"
-	@echo "... tests/integration/phase3_handshake_test.o"
-	@echo "... tests/integration/phase3_handshake_test.i"
-	@echo "... tests/integration/phase3_handshake_test.s"
-	@echo "... tests/integration/phase3_invalid_input_test.o"
-	@echo "... tests/integration/phase3_invalid_input_test.i"
-	@echo "... tests/integration/phase3_invalid_input_test.s"
-	@echo "... tests/integration/phase3_message_relay_test.o"
-	@echo "... tests/integration/phase3_message_relay_test.i"
-	@echo "... tests/integration/phase3_message_relay_test.s"
-	@echo "... tests/integration/phase3_order_disconnect_test.o"
-	@echo "... tests/integration/phase3_order_disconnect_test.i"
-	@echo "... tests/integration/phase3_order_disconnect_test.s"
-	@echo "... tests/integration/phase3_slow_client_test.o"
-	@echo "... tests/integration/phase3_slow_client_test.i"
-	@echo "... tests/integration/phase3_slow_client_test.s"
-	@echo "... tests/integration/phase4_container_connection_test.o"
-	@echo "... tests/integration/phase4_container_connection_test.i"
-	@echo "... tests/integration/phase4_container_connection_test.s"
-	@echo "... tests/integration/phase4_five_client_test.o"
-	@echo "... tests/integration/phase4_five_client_test.i"
-	@echo "... tests/integration/phase4_five_client_test.s"
-	@echo "... tests/integration/phase4_multi_client_test.o"
-	@echo "... tests/integration/phase4_multi_client_test.i"
-	@echo "... tests/integration/phase4_multi_client_test.s"
-	@echo "... tests/integration/phase5_udp_transport_test.o"
-	@echo "... tests/integration/phase5_udp_transport_test.i"
-	@echo "... tests/integration/phase5_udp_transport_test.s"
-	@echo "... tests/integration/phase5_unified_text_client_test.o"
-	@echo "... tests/integration/phase5_unified_text_client_test.i"
-	@echo "... tests/integration/phase5_unified_text_client_test.s"
-	@echo "... tests/integration/phase5_voice_e2e_test.o"
-	@echo "... tests/integration/phase5_voice_e2e_test.i"
-	@echo "... tests/integration/phase5_voice_e2e_test.s"
-	@echo "... tests/integration/phase5_voice_registration_integration_test.o"
-	@echo "... tests/integration/phase5_voice_registration_integration_test.i"
-	@echo "... tests/integration/phase5_voice_registration_integration_test.s"
-	@echo "... tests/integration/phase6_video_registration_integration_test.o"
-	@echo "... tests/integration/phase6_video_registration_integration_test.i"
-	@echo "... tests/integration/phase6_video_registration_integration_test.s"
-	@echo "... tests/integration/phase6_video_udp_transport_test.o"
-	@echo "... tests/integration/phase6_video_udp_transport_test.i"
-	@echo "... tests/integration/phase6_video_udp_transport_test.s"
 	@echo "... tests/manual/phase6_video_capture_smoke.o"
 	@echo "... tests/manual/phase6_video_capture_smoke.i"
 	@echo "... tests/manual/phase6_video_capture_smoke.s"
@@ -2822,57 +787,6 @@ help:
 	@echo "... tests/manual/phase7_portal_capture_smoke.o"
 	@echo "... tests/manual/phase7_portal_capture_smoke.i"
 	@echo "... tests/manual/phase7_portal_capture_smoke.s"
-	@echo "... tests/unit/phase3_chat_frame_test.o"
-	@echo "... tests/unit/phase3_chat_frame_test.i"
-	@echo "... tests/unit/phase3_chat_frame_test.s"
-	@echo "... tests/unit/phase3_display_name_test.o"
-	@echo "... tests/unit/phase3_display_name_test.i"
-	@echo "... tests/unit/phase3_display_name_test.s"
-	@echo "... tests/unit/phase5_audio_client_session_test.o"
-	@echo "... tests/unit/phase5_audio_client_session_test.i"
-	@echo "... tests/unit/phase5_audio_client_session_test.s"
-	@echo "... tests/unit/phase5_audio_packet_test.o"
-	@echo "... tests/unit/phase5_audio_packet_test.i"
-	@echo "... tests/unit/phase5_audio_packet_test.s"
-	@echo "... tests/unit/phase5_audio_resilience_test.o"
-	@echo "... tests/unit/phase5_audio_resilience_test.i"
-	@echo "... tests/unit/phase5_audio_resilience_test.s"
-	@echo "... tests/unit/phase5_audio_session_test.o"
-	@echo "... tests/unit/phase5_audio_session_test.i"
-	@echo "... tests/unit/phase5_audio_session_test.s"
-	@echo "... tests/unit/phase5_multi_stream_mixer_test.o"
-	@echo "... tests/unit/phase5_multi_stream_mixer_test.i"
-	@echo "... tests/unit/phase5_multi_stream_mixer_test.s"
-	@echo "... tests/unit/phase5_opus_codec_test.o"
-	@echo "... tests/unit/phase5_opus_codec_test.i"
-	@echo "... tests/unit/phase5_opus_codec_test.s"
-	@echo "... tests/unit/phase5_voice_registration_test.o"
-	@echo "... tests/unit/phase5_voice_registration_test.i"
-	@echo "... tests/unit/phase5_voice_registration_test.s"
-	@echo "... tests/unit/phase6_mjpeg_frame_test.o"
-	@echo "... tests/unit/phase6_mjpeg_frame_test.i"
-	@echo "... tests/unit/phase6_mjpeg_frame_test.s"
-	@echo "... tests/unit/phase6_video_capture_test.o"
-	@echo "... tests/unit/phase6_video_capture_test.i"
-	@echo "... tests/unit/phase6_video_capture_test.s"
-	@echo "... tests/unit/phase6_video_client_test.o"
-	@echo "... tests/unit/phase6_video_client_test.i"
-	@echo "... tests/unit/phase6_video_client_test.s"
-	@echo "... tests/unit/phase6_video_control_test.o"
-	@echo "... tests/unit/phase6_video_control_test.i"
-	@echo "... tests/unit/phase6_video_control_test.s"
-	@echo "... tests/unit/phase6_video_frame_test.o"
-	@echo "... tests/unit/phase6_video_frame_test.i"
-	@echo "... tests/unit/phase6_video_frame_test.s"
-	@echo "... tests/unit/phase7_screen_capture_contract_test.o"
-	@echo "... tests/unit/phase7_screen_capture_contract_test.i"
-	@echo "... tests/unit/phase7_screen_capture_contract_test.s"
-	@echo "... tests/unit/phase7_screen_frame_encoder_test.o"
-	@echo "... tests/unit/phase7_screen_frame_encoder_test.i"
-	@echo "... tests/unit/phase7_screen_frame_encoder_test.s"
-	@echo "... tests/unit/phase7_screen_video_client_test.o"
-	@echo "... tests/unit/phase7_screen_video_client_test.i"
-	@echo "... tests/unit/phase7_screen_video_client_test.s"
 .PHONY : help
 
 

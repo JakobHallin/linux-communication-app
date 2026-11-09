@@ -5,13 +5,17 @@
 
 #include <gio/gio.h>
 #include <pipewire/pipewire.h>
+#include <spa/pod/vararg.h>
+#include <spa/param/format.h>
 #include <spa/param/video/raw-utils.h>
 
 #include <condition_variable>
+#include <atomic>
 #include <iostream>
 #include <mutex>
 #include <thread>
 #include <unistd.h>
+#include <string>
 
 namespace client {
     struct WaylandPortalCapture::Impl {
@@ -25,6 +29,7 @@ namespace client {
         pw_stream* stream = nullptr;
         spa_hook streamListener{};
         std::thread loopThread;
+        std::atomic_bool loopStop{false};
         std::mutex frameMutex;
         std::condition_variable frameReady;
         Frame latestFrame;
@@ -32,12 +37,6 @@ namespace client {
     };
 
     namespace {
-        int leaveLoop(spa_loop*, bool, uint32_t, const void*, size_t, void* userData) {
-            auto* impl = static_cast<WaylandPortalCapture::Impl*>(userData);
-            pw_loop_leave(impl->loop);
-            return 0;
-        }
-
         struct StartOperation {
             GMainLoop* loop = nullptr;
             XdpPortal* portal = nullptr;
@@ -194,6 +193,8 @@ namespace client {
             PW_KEY_MEDIA_CATEGORY, "Capture",
             PW_KEY_MEDIA_ROLE, "Screen",
             nullptr);
+        const auto target = std::to_string(nodeId);
+        pw_properties_set(streamProperties, PW_KEY_TARGET_OBJECT, target.c_str());
         impl->stream = pw_stream_new(impl->core, "communication-app screen capture",
                                       streamProperties);
         if (impl->stream == nullptr) {
@@ -203,28 +204,43 @@ namespace client {
         pw_stream_add_listener(impl->stream, &impl->streamListener, &streamEvents, impl);
         std::uint8_t podBuffer[1024];
         spa_pod_builder builder = SPA_POD_BUILDER_INIT(podBuffer, sizeof(podBuffer));
-        spa_video_info_raw videoInfo = SPA_VIDEO_INFO_RAW_INIT(
-            .format = SPA_VIDEO_FORMAT_BGRx);
-        const spa_pod* format = spa_format_video_raw_build(
-            &builder, SPA_PARAM_EnumFormat, &videoInfo);
-        if (pw_stream_connect(impl->stream, PW_DIRECTION_INPUT, nodeId,
-                              PW_STREAM_FLAG_MAP_BUFFERS, &format, 1) < 0) {
+        const spa_rectangle size{1920, 1080};
+        const spa_fraction rate{30, 1};
+        const auto* format = static_cast<const spa_pod*>(spa_pod_builder_add_object(
+            &builder, SPA_TYPE_OBJECT_Format, SPA_PARAM_EnumFormat,
+            SPA_FORMAT_mediaType, SPA_POD_Id(SPA_MEDIA_TYPE_video),
+            SPA_FORMAT_mediaSubtype, SPA_POD_Id(SPA_MEDIA_SUBTYPE_raw),
+            SPA_FORMAT_VIDEO_format,
+            SPA_POD_CHOICE_ENUM_Id(4, SPA_VIDEO_FORMAT_BGRx,
+                                   SPA_VIDEO_FORMAT_BGRA,
+                                   SPA_VIDEO_FORMAT_RGBx,
+                                   SPA_VIDEO_FORMAT_RGBA),
+            SPA_FORMAT_VIDEO_size, SPA_POD_Rectangle(&size),
+            SPA_FORMAT_VIDEO_framerate, SPA_POD_Fraction(&rate)));
+        if (pw_stream_connect(impl->stream, PW_DIRECTION_INPUT, PW_ID_ANY,
+                              static_cast<pw_stream_flags>(
+                                  PW_STREAM_FLAG_AUTOCONNECT | PW_STREAM_FLAG_MAP_BUFFERS),
+                              &format, 1) < 0) {
             stop();
             return false;
         }
         impl->active = true;
+        impl->loopStop = false;
         impl->loopThread = std::thread([this] {
             pw_loop_enter(impl->loop);
-            while (pw_loop_iterate(impl->loop, -1) >= 0) {}
+            pw_stream_set_active(impl->stream, true);
+            while (!impl->loopStop.load()) {
+                pw_loop_iterate(impl->loop, 100);
+            }
             pw_loop_leave(impl->loop);
         });
         return true;
     }
 
     void WaylandPortalCapture::stop() {
-        if (impl->loop != nullptr && impl->loopThread.joinable()) {
-            pw_loop_invoke(impl->loop, leaveLoop, 0, nullptr, 0, false, impl);
-        }
+        impl->active = false;
+        impl->frameReady.notify_all();
+        impl->loopStop = true;
         if (impl->loopThread.joinable()) impl->loopThread.join();
         if (impl->stream != nullptr) {
             pw_stream_destroy(impl->stream);
