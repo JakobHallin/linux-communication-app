@@ -66,6 +66,7 @@ int main(int argc, char** argv) {
         : std::chrono::steady_clock::time_point::max();
     std::vector<std::uint8_t> buffer(media::maximumVideoFrameBytes + 26);
     int receivedFrames = 0;
+    media::VideoFrameReassembler reassembler;
     while (std::chrono::steady_clock::now() < deadline) {
         pollfd descriptor{socketFd, POLLIN, 0};
         if (poll(&descriptor, 1, 250) <= 0) continue;
@@ -73,7 +74,7 @@ int main(int argc, char** argv) {
                                        nullptr, nullptr);
         if (received <= 0) continue;
         buffer.resize(static_cast<std::size_t>(received));
-        const auto frame = media::deserializeVideoFrame(buffer);
+        const auto frame = reassembler.accept(buffer);
         buffer.resize(media::maximumVideoFrameBytes + 26);
         if (!frame.has_value()) continue;
 

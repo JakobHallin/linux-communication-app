@@ -509,6 +509,18 @@ if(BUILD_TESTING)
     set_tests_properties(phase7_screen_frame_encoder_test PROPERTIES
         LABELS "phase7;unit")
 
+    add_executable(phase7_video_fragmentation_test
+        tests/unit/phase7_video_fragmentation_test.cpp
+        common/src/video_frame.cpp
+    )
+    target_include_directories(phase7_video_fragmentation_test PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/common/include
+    )
+    add_test(NAME phase7_video_fragmentation_test
+        COMMAND phase7_video_fragmentation_test)
+    set_tests_properties(phase7_video_fragmentation_test PROPERTIES
+        LABELS "phase7;unit")
+
     if(ENABLE_WAYLAND_SCREEN_CAPTURE)
         add_executable(phase7_screen_video_client_test
             tests/unit/phase7_screen_video_client_test.cpp

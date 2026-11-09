@@ -35,6 +35,7 @@ namespace media {
         std::unordered_map<std::uint32_t, std::unordered_set<std::uint32_t>> senders;
         std::unordered_map<std::uint32_t,
                            std::unordered_map<std::uint32_t, sockaddr_in>> endpoints;
+        VideoFrameReassembler reassembler;
     };
 }
 

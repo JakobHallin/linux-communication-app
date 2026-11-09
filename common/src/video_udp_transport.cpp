@@ -101,7 +101,7 @@ namespace media {
             if (received <= 0) continue;
             const std::vector<std::uint8_t> bytes(buffer.begin(),
                                                   buffer.begin() + received);
-            const auto frame = deserializeVideoFrame(bytes);
+            const auto frame = reassembler.accept(bytes);
             if (frame && senders.contains(frame->sessionId) &&
                 senders.at(frame->sessionId).contains(frame->senderId)) {
                 return frame;
@@ -118,16 +118,23 @@ namespace media {
 
         const auto endpointSession = endpoints.find(frame.sessionId);
         if (endpointSession == endpoints.end()) return 0;
-        const auto bytes = serializeVideoFrame(frame);
-        if (bytes.empty() || bytes.size() > maximumVideoDatagramBytes) return 0;
+        const auto datagrams = serializeVideoFrameDatagrams(frame);
+        if (datagrams.empty()) return 0;
 
         std::size_t forwarded = 0;
         for (const auto& [participantId, endpoint] : endpointSession->second) {
             if (participantId == frame.senderId) continue;
-            const auto sent = sendto(socketFd, bytes.data(), bytes.size(), 0,
-                                     reinterpret_cast<const sockaddr*>(&endpoint),
-                                     sizeof(endpoint));
-            if (sent == static_cast<ssize_t>(bytes.size())) ++forwarded;
+            bool delivered = true;
+            for (const auto& datagram : datagrams) {
+                const auto sent = sendto(socketFd, datagram.data(), datagram.size(), 0,
+                                         reinterpret_cast<const sockaddr*>(&endpoint),
+                                         sizeof(endpoint));
+                if (sent != static_cast<ssize_t>(datagram.size())) {
+                    delivered = false;
+                    break;
+                }
+            }
+            if (delivered) ++forwarded;
         }
         return forwarded;
     }

@@ -107,14 +107,17 @@ namespace client {
             const auto frame = media::makeMjpegVideoFrameFromBgra(
                 sessionId, senderId, sequence++, raw);
             if (!frame.has_value()) continue;
-            const auto bytes = media::serializeVideoFrame(*frame);
-            if (bytes.empty()) continue;
-            const auto sent = sendto(socketFd, bytes.data(), bytes.size(), 0,
-                                     reinterpret_cast<sockaddr*>(&destination),
-                                     sizeof(destination));
-            if (sent != static_cast<ssize_t>(bytes.size())) {
-                std::cerr << "Screen video frame send failed\n";
-                break;
+            const auto datagrams = media::serializeVideoFrameDatagrams(*frame);
+            if (datagrams.empty()) continue;
+            for (const auto& datagram : datagrams) {
+                const auto sent = sendto(socketFd, datagram.data(), datagram.size(), 0,
+                                         reinterpret_cast<sockaddr*>(&destination),
+                                         sizeof(destination));
+                if (sent != static_cast<ssize_t>(datagram.size())) {
+                    std::cerr << "Screen video fragment send failed\n";
+                    running = false;
+                    break;
+                }
             }
         }
         running = false;

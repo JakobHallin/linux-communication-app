@@ -80,6 +80,11 @@ session cleanly. The backend resolves the screen node through the private
 PipeWire registry, negotiates mapped memory buffers, and supports the portal's
 legacy stream response when `pipewire-serial` is not included.
 
+Large desktop JPEGs are fragmented into UDP-sized datagrams and reassembled
+by the server and receiving client. This is required because a full-screen
+`1920x1080` MJPEG frame is larger than the maximum safe UDP datagram, even
+though ordinary webcam frames may fit in one packet.
+
 ## Planned flow
 
 ```mermaid
@@ -137,6 +142,21 @@ For a receiving client, use the existing video viewer:
 
 ```bash
 ./build-wayland/phase6_video_receive_smoke 127.0.0.1 8080 Bob 10
+```
+
+For a visible local demonstration, pipe the receiving client's MJPEG output
+to `ffplay`:
+
+```bash
+./build-wayland/phase6_video_receive_smoke \
+  127.0.0.1 8080 Bob 0 --stdout-mjpeg \
+  | ffplay -fflags nobuffer -f mjpeg -i -
+```
+
+Then run the sender in another terminal:
+
+```bash
+./build-wayland/communication_client 127.0.0.1 8080 Alice --screen-share
 ```
 
 The Phase 7 integration test verifies that an encoded screen frame reaches an
