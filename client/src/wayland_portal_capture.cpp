@@ -301,6 +301,13 @@ namespace client {
             const auto target = std::to_string(pipeWireSerial);
             pw_properties_set(streamProperties, PW_KEY_TARGET_OBJECT, target.c_str());
             std::cerr << "PipeWire screen target: " << target << " (serial)\n";
+        } else if (!impl->targetObject.empty()) {
+            // Older portals omit pipewire-serial from Start(), but the
+            // private registry still exposes object.serial for the node.
+            pw_properties_set(streamProperties, PW_KEY_TARGET_OBJECT,
+                              impl->targetObject.c_str());
+            std::cerr << "PipeWire screen target: " << impl->targetObject
+                      << " (registry property)\n";
         } else {
             // Older portals expose only the node ID.  PipeWire clients such
             // as GNOME's screen-capture backend use that ID as target_id.

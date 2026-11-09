@@ -37,7 +37,7 @@ connection and delivery acceptance tests.
 | 4 — LAN text chat | Dockerized server and five native clients exchange text | Complete |
 | 5 — Group voice | Build real voice clients and let three to five LAN users speak and listen together | In progress |
 | 6 — Webcam video | Share webcam streams alongside voice and text | Complete |
-| 7 — Screen sharing | Share a desktop or supported application window | In progress |
+| 7 — Screen sharing | Share a desktop or supported application window | Complete |
 | 8 — Multiple rooms | Isolate text and media among independently managed rooms | Planned |
 | 9 — Persistence | Add SQLite only if retained data is wanted | Optional |
 

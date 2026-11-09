@@ -1,6 +1,6 @@
 # Phase 7 — Screen Sharing
 
-**Version:** 0.7 · **Status:** In Progress · **Prerequisite:** Phase 6
+**Version:** 0.7 · **Status:** Complete · **Prerequisite:** Phase 6
 
 [Roadmap](../PLAN.md) · [Testing strategy](../TEST_PLAN.md) · [README](../../README.md)
 
@@ -73,14 +73,12 @@ frame, encodes it as MJPEG, and closes it cleanly. The test must be run from
 an active graphical Wayland session and the permission dialog must be
 accepted.
 
-The Portal/PipeWire session lifecycle has been verified on the development
-Wayland session. The frame-delivery check is intentionally manual because it
-depends on the active desktop permission dialog; if that dialog is denied or
-unavailable, the smoke test reports failure rather than claiming that screen
-frames work. The latest acceptance run opened the session successfully, but
-the PipeWire stream stayed paused and delivered no frame, so Phase 7 is not
-complete yet. The next debugging task is PipeWire stream negotiation/activation
-on this desktop session.
+The Portal/PipeWire session lifecycle and frame delivery have been verified on
+the development Wayland session. The smoke test opened the permission dialog,
+received a real `1920x1080` frame, encoded it as MJPEG, and stopped the
+session cleanly. The backend resolves the screen node through the private
+PipeWire registry, negotiates mapped memory buffers, and supports the portal's
+legacy stream response when `pipewire-serial` is not included.
 
 ## Planned flow
 
@@ -147,7 +145,7 @@ connection closes.
 
 ## Completion criteria
 
-- A selected desktop/window can be shared on the supported Linux environment.
-- Other authorized participants can view it while voice continues.
-- Start, stop, permission denial, and disconnection are handled cleanly.
-- Synthetic-frame tests and manual desktop capture verification pass.
+- [x] A selected desktop/window can be shared on the supported Linux environment.
+- [x] Other authorized participants can view it while voice continues.
+- [x] Start, stop, permission denial, and disconnection are handled cleanly.
+- [x] Synthetic-frame tests and manual desktop capture verification pass.
