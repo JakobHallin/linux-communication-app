@@ -1,21 +1,23 @@
 # Linux Communication Application
 
-A **Linux-only C++20 communication app**. Start by connecting one client, then two; next introduce server-side `io_uring`, then build chat and grow toward the multi-client LAN app with voice, video, screen sharing, and multiple rooms.
+A **Linux-only C++20 client/server communication app** for local networks.
+Users run native terminal clients connected to one server. Text and media
+registration use TCP; voice, webcam video, and screen sharing use UDP relays.
+Video viewing currently uses a separate receiver piped to `ffplay`.
 
-> **Current state:** Phases 1–4 are implemented and tested. Phase 6 webcam video is implemented and locally verified alongside voice/text with headphones. The server supports concurrent local clients and five native clients connecting to a Dockerized server.
+## Current functionality
 
-## First phases
+| Feature | Implementation and verification status |
+| --- | --- |
+| Text chat | Multi-client chat using `io_uring`, framed messages, input validation, and bounded outgoing queues; automated socket tests |
+| Docker server | Five-client text scenario documented as verified; native clients connect to the container |
+| Voice | Optional ALSA/Opus capture and playback, mute, and synthetic automated tests; local live checks documented, 3–5 client LAN acceptance pending |
+| Webcam | V4L2/MJPEG sender and separate receiver; automated protocol/transport tests and documented local live checks |
+| Screen sharing | Optional Wayland Portal/PipeWire capture and MJPEG encoding; synthetic tests and desktop capture checks documented in [Phase 7](docs/phases/PHASE_07.md) |
+| Rooms and persistence | Planned; clients currently share one session |
 
-Build up the network foundation in small, testable steps:
-
-1. Start a basic local TCP server and connect one client.
-2. Connect two clients at the same time; verify disconnect behavior.
-3. Replace the server's blocking I/O with `io_uring`.
-4. Add text chat between the connected clients.
-
-TDD applies to each phase. Docker deployment and five-client LAN testing follow
-the working two-client chat; voice, video, screen sharing, multiple rooms, and
-optional persistence remain later steps.
+The phase documents describe development history and acceptance results.
+Those records do not replace running the tests on your current checkout.
 
 ## Architecture at a glance
 
@@ -25,12 +27,10 @@ flowchart TB
         C1[Client 1]
         C2[Client 2]
     end
-    S[Local TCP server]
-    C1 <-->|LAN| S
-    C2 <-->|LAN| S
+    S[Linux server: TCP chat/control and UDP media relays]
+    C1 <-->|TCP and UDP over LAN| S
+    C2 <-->|TCP and UDP over LAN| S
 ```
-
-*First-phase target, not current functionality.*
 
 ## Stack
 
@@ -38,13 +38,14 @@ flowchart TB
 | --- | --- |
 | Language / platform | C++20 / Linux |
 | Build | CMake |
-| Initial server I/O | TCP sockets; `io_uring` in Phase 2 |
-| Deployment | Local processes first; Docker planned after the local flow works |
+| Server I/O | `io_uring` for TCP; socket-based UDP media relays |
+| Media | Opus voice, V4L2/MJPEG webcam, optional Wayland Portal/PipeWire screen capture |
+| Deployment | Native Linux server or Docker server; native Linux clients |
 | Development / testing | TDD with focused tests for real behavior |
 
 ## Build, test, and run from a clean checkout
 
-Requires Linux, CMake, Make, a C++20 compiler, and the liburing, Opus, and
+Requires Linux, CMake 3.20 or newer, Make, a C++20 compiler, and the liburing, Opus, and
 JPEG development libraries. On Ubuntu/Debian, install the base dependencies:
 
 ```bash
@@ -85,9 +86,11 @@ ctest --test-dir build --output-on-failure
 # Terminal 1
 ./build/communication_server
 
-# Terminals 2 and 3
-./build/communication_client
-./build/communication_client
+# Terminal 2
+./build/communication_client 127.0.0.1 8080 Alice
+
+# Terminal 3
+./build/communication_client 127.0.0.1 8080 Bob
 ```
 
 If CTest reports **Unable to find executable**, a required test binary has not
@@ -96,6 +99,32 @@ first error; this is a test that could not run, not a failed assertion.
 
 Use `/quit` in a client terminal to disconnect it. The server remains running
 and reports the active connection count.
+
+The server executable listens on TCP port `8080` on all IPv4 interfaces. Its
+startup message currently labels the address as `127.0.0.1` even for this LAN
+binding. Clients accept an IPv4 address, TCP port, and display name, in that
+order; defaults are `127.0.0.1`, `8080`, and `Client`. Hostnames are not resolved.
+Display names contain 1–32 letters, digits, underscores, or hyphens.
+
+For LAN chat, replace `127.0.0.1` with the server's LAN IPv4 address and allow
+TCP `8080` through its firewall. Media additionally uses separate audio and
+video UDP ports selected at startup and printed by the server. This is a LAN
+prototype: sender IDs are not cryptographic authentication, and the transports
+do not provide encryption. See the phase documents for Docker and media setup.
+
+## Build options
+
+| Option | Default | Purpose |
+| --- | --- | --- |
+| `BUILD_TESTING` | `ON` | Build and register automated tests |
+| `ENABLE_LIVE_AUDIO_CLIENT` | `OFF` | Enable `--voice`; requires ALSA development libraries |
+| `ENABLE_LIVE_AUDIO_DEMO` | `OFF` | Build the manual microphone loopback executable |
+| `ENABLE_WAYLAND_SCREEN_CAPTURE` | `OFF` | Enable `--screen-share`; requires pkg-config, libportal, and PipeWire development libraries |
+| `ENABLE_PHASE4_CONTAINER_TEST` | `OFF` | Register tests against a separately running Docker server |
+
+The default client supports text and webcam sending; it opens no camera unless
+`--video` is supplied. The automated-test preset disables optional hardware
+backends and container tests; it still tests media using synthetic data.
 
 ## Run the live voice client
 
@@ -132,10 +161,10 @@ Use ALSA's shared capture/playback plugins instead:
 ./build-voice/communication_client 127.0.0.1 8080 Bob --voice plug:dsnoop:0 plug:dmix:0
 ```
 
-The optional fifth and sixth arguments select the ALSA capture and playback
-devices. Use `/mute` to stop or resume microphone transmission and `/quit` to
-stop a client. The normal `build` remains text-only so CI and machines without
-ALSA hardware can still compile the application.
+The two optional arguments immediately after `--voice` select the ALSA capture
+and playback devices. Use `/mute` to stop or resume microphone transmission and
+`/quit` to stop a client. Live voice is disabled in the default build, so
+machines without ALSA hardware can still compile and run automated tests.
 
 Pass `none` as the capture device to run a listener-only voice client. It does
 not open or transmit microphone audio, but it still plays received audio.
@@ -149,8 +178,9 @@ port through its firewall. Run each client against the server's LAN address:
 ./build-voice/communication_client SERVER_LAN_IP 8080 Alice --voice default default
 ```
 
-You can also perform the Phase 5 multi-client acceptance test entirely on one
-host. The launcher starts three local clients with one microphone-only sender,
+You can also run a three-client voice demonstration entirely on one host after
+building the voice-enabled server and client. Stop any existing server on port
+`8080` first: the launcher starts its own server and three local clients with one microphone-only sender,
 one playback-only listener, and one muted client with microphone and playback
 disabled to avoid acoustic feedback. Because only one client captures and one
 client plays back, it uses the normal desktop `default` ALSA devices.
@@ -159,8 +189,44 @@ client plays back, it uses the normal desktop `default` ALSA devices.
 ./tests/scripts/phase5_local_voice_demo.sh
 ```
 
-Use headphones. Set `ACTIVE_CLIENT=Bob` or `ACTIVE_CLIENT=Carol` to test a
-different sender. Press `Ctrl-C` to cleanly stop all processes.
+Use headphones. To swap Alice and Bob, set both `ACTIVE_CLIENT=Bob` and
+`LISTENER_CLIENT=Alice`; Carol remains the silent client. Press `Ctrl-C` to
+cleanly stop all processes. This local demonstration does not complete the
+pending multi-machine LAN voice acceptance.
+
+## Webcam and screen sharing
+
+Webcam sending is available with the default build:
+
+```bash
+./build/communication_client 127.0.0.1 8080 Alice --video /dev/video0
+```
+
+Run the server first. A second terminal can display the received stream using
+the manual receiver and `ffplay` (provided by the FFmpeg package):
+
+```bash
+./build/phase6_video_receive_smoke 127.0.0.1 8080 Bob 0 --stdout-mjpeg \
+  | ffplay -fflags nobuffer -f mjpeg -i -
+```
+
+The receiver's duration `0` runs until interrupted. The sending client does
+not display incoming video. See [Phase 6](docs/phases/PHASE_06.md) for device
+checks and combined voice/video usage.
+
+Screen sharing requires the optional Wayland build and a running graphical
+desktop session. Follow [Phase 7](docs/phases/PHASE_07.md) for dependencies,
+build instructions, portal permission, and the receiver. The sender uses
+`--screen-share`; webcam and screen sharing cannot be enabled together in one
+client. Voice can be combined with either when both build options are enabled.
+
+## Docker
+
+The [Dockerfile](Dockerfile) builds the server; clients run natively. Follow
+[Phase 4](docs/phases/PHASE_04.md) for the required `io_uring` seccomp profile
+and container checks. Its TCP port mapping covers text chat. Media also needs
+UDP networking for the dynamically selected relay ports; the Phase 4 container
+instructions do not establish a voice/video deployment.
 
 ## Documentation
 
@@ -184,6 +250,9 @@ different sender. Press `Ctrl-C` to cleanly stop all processes.
 - [x] Phase 4 — Dockerized LAN text chat with five native clients
 - [ ] Phase 5 — Group voice (local two-client ALSA/Opus demo verified with mute; 3–5 client LAN acceptance pending)
 - [x] Phase 6 — Webcam video (V4L2/MJPEG capture, authorized UDP relay, live viewer, and voice/text coexistence verified locally with headphones)
+- [x] Phase 7 — Wayland screen sharing (implemented; synthetic tests and desktop capture results documented in the phase guide)
+- [ ] Phase 8 — Multiple rooms
+- [ ] Phase 9 — Optional SQLite persistence
 
 **Workflow:** use TDD for each behavior: write a meaningful failing test,
 implement the minimum to pass, then refactor. The roadmap describes planned

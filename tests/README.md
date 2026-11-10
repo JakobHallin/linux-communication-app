@@ -43,6 +43,29 @@ must permit `io_uring` and local TCP/UDP sockets for integration tests.
 This preset disables hardware-dependent features and container tests. Manual
 audio, camera, screen-capture, and container acceptance checks remain separate.
 
+The preset uses `build-tests/`, while the root README's explicit build steps
+use `build/`. Both are supported; run tests against the same directory that you
+just configured and built. Do not use results from an older build directory
+as verification of a new build.
+
+Local automated integration tests create their own servers on ephemeral ports;
+you do not need to launch `communication_server` first. The opt-in container
+tests are the exception: they require an externally running server as described
+in [Phase 4](../docs/phases/PHASE_04.md).
+
+## What a passing suite establishes
+
+Automated tests cover the implemented scenarios: protocol validation, codecs,
+framing, component lifecycle, and real local TCP/UDP exchanges. Synthetic media
+tests do not require a microphone, webcam, or graphical desktop. Manual smoke
+executables may be built alongside the suite without being registered as tests.
+
+A passing suite does not establish live device quality, multi-machine LAN
+behavior, or performance under sustained load. Record those acceptance checks
+separately, including the environment and any remaining limitations. The
+current suite is not a complete security audit; packet sender verification
+and video reassembly resource limits still require hardening.
+
 ## Test organization
 
 Tests are grouped by how they run. Phase prefixes connect each scenario to

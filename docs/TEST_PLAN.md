@@ -53,8 +53,10 @@ test infrastructure is not a meaningful failing behavior test.
 - **Phase 8:** room membership and cross-room text/media isolation.
 - **Phase 9 (optional):** isolated SQLite tests for persistence and failures.
 
-Activate these checks as each phase begins; they are not expected to pass in
-the current bootstrap.
+These categories follow the roadmap. Phases 1–7 now have implemented tests;
+rooms and persistence remain planned. See the root README for current feature
+status. Keep tests for existing guarantees as features evolve, and update
+assertions when an earlier protocol is deliberately replaced.
 
 ## Phase 5 live audio check
 
@@ -91,8 +93,8 @@ device name can be supplied when `default` is not appropriate:
 ```
 
 List available ALSA devices with `arecord -l` and `aplay -l`. This is a local
-capture/codec/playback check, not yet the Phase 5 LAN test; UDP forwarding and
-multi-client playback still need to be implemented. Do not register this in
+capture/codec/playback check, separate from the implemented UDP forwarding and
+multi-client playback paths. It does not establish LAN acceptance. Do not register this in
 CTest because CI machines commonly have no sound hardware.
 
 ## Phase 5 real-client acceptance
