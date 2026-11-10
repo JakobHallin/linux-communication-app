@@ -230,17 +230,25 @@ instructions do not establish a voice/video deployment.
 
 ## Documentation
 
-- [Project plan](docs/PLAN.md) — first phase and longer-term roadmap
-- [Testing plan](docs/TEST_PLAN.md) — focused checks for implemented behavior
-- [Phase 1 — Basic connections](docs/phases/PHASE_01.md) — one client, then two
-- [Phase 2 — `io_uring` server](docs/phases/PHASE_02.md)
-- [Phase 3 — Text chat](docs/phases/PHASE_03.md)
-- [Phase 4 — LAN text chat](docs/phases/PHASE_04.md) — Docker and five clients
-- [Phase 5 — Group voice](docs/phases/PHASE_05.md)
-- [Phase 6 — Webcam video](docs/phases/PHASE_06.md) — complete
-- [Phase 7 — Screen sharing](docs/phases/PHASE_07.md)
-- [Phase 8 — Multiple rooms](docs/phases/PHASE_08.md)
-- [Phase 9 — SQLite persistence](docs/phases/PHASE_09.md) — optional
+- [Project roadmap](docs/PLAN.md) — development stages, scope, and future work
+- [Test suite guide](tests/README.md) — automated tests, shared helpers, and result reporting
+- [Testing and acceptance plan](docs/TEST_PLAN.md) — behavior coverage and manual device/LAN checks
+
+The phase guides record implementation steps and acceptance results. Their
+status distinguishes implemented features from work still awaiting acceptance
+or planned for later.
+
+| Guide | Covers | Status |
+| --- | --- | --- |
+| [Phase 1 — Basic connections](docs/phases/PHASE_01.md) | Client connections and disconnects | Implemented |
+| [Phase 2 — `io_uring` server](docs/phases/PHASE_02.md) | Asynchronous TCP I/O and operation lifetimes | Implemented |
+| [Phase 3 — Text chat](docs/phases/PHASE_03.md) | Framing, validation, message delivery, and ordering | Implemented |
+| [Phase 4 — LAN text chat](docs/phases/PHASE_04.md) | Docker server and five-client checks | Implemented; acceptance documented |
+| [Phase 5 — Group voice](docs/phases/PHASE_05.md) | ALSA/Opus audio, mute, and UDP relay | Implemented; 3–5 client LAN acceptance pending |
+| [Phase 6 — Webcam video](docs/phases/PHASE_06.md) | V4L2/MJPEG capture, relay, and separate viewer | Implemented; local live checks documented |
+| [Phase 7 — Screen sharing](docs/phases/PHASE_07.md) | Wayland Portal/PipeWire capture and screen streaming | Implemented; desktop capture checks documented |
+| [Phase 8 — Multiple rooms](docs/phases/PHASE_08.md) | Room membership and communication isolation | Planned |
+| [Phase 9 — SQLite persistence](docs/phases/PHASE_09.md) | Optional persistent storage | Planned; optional |
 
 ## Development status
 
